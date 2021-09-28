@@ -11,17 +11,17 @@ This project uses YARN as package manager.
 This will install all dependencies:
 
 ```sh
-  yarn install
+  npm install
 ```
 
 This will start the project:
 
 ```sh
-  yarn start
+  npm start
 ```
 
 To run test:
 
 ```sh
-  yarn run test
+  npm run test
 ```

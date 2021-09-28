@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  web:
+    build: ./front-end
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+      - db
+  api:
+    build: ./back-end
+    depends_on:
+      - db
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - "dbdata:/var/lib/mysql"
+
+volumes:
+  dbdata:

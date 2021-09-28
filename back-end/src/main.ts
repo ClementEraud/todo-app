@@ -5,8 +5,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-    .setTitle('Template NestJS - API')
-    .setDescription('This API is a template for nest js api')
+    .setTitle('Todo App - API')
+    .setDescription('This describes the Todo App API')
     .setVersion('2.1.0')
     .addTag('users')
     .build();
