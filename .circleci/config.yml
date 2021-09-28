@@ -1,0 +1,62 @@
+version: 2.1
+
+jobs:
+  build-back:
+    docker:
+      - image: circleci/node:14.15.0
+    working_directory: ~/project
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run: 
+          name: Login to Scaleway image registry
+          command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
+      - run: 
+          name: Build docker image
+          command: docker build -t rg.fr-par.scw.cloud/clement-registry/todo-back-end back-end
+      - run:
+          name: Push image to registry
+          command: docker push rg.fr-par.scw.cloud/clement-registry/todo-back-end
+  build-front:
+    docker:
+      - image: circleci/node:14.15.0
+    working_directory: ~/project
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run: 
+          name: Login to Scaleway image registry
+          command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
+      - run: 
+          name: Build docker image
+          command: docker build -t rg.fr-par.scw.cloud/clement-registry/todo-front-end front-end
+      - run:
+          name: Push image to registry
+          command: docker push rg.fr-par.scw.cloud/clement-registry/todo-front-end
+  deploy:
+    docker:
+      - image: circleci/node:14.15.0
+    working_directory: ~/project
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Delete containers on remote host
+          command: docker-compose -H ssh://root@163.172.190.45 down
+      - run:
+          name: Up containers on remote host
+          command: docker-compose -f docker-compose.prod.yml -H ssh://root@163.172.190.45 up -d
+
+workflows:
+  version: "2"
+  build:
+    jobs:
+      - build-back
+      - build-front
+      - deploy:
+          requires:
+            - build-back
+            - build-front
