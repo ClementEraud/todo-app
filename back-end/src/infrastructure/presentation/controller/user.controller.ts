@@ -8,10 +8,10 @@ import {
   Post
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { User } from '../../domain/user';
-import { CreateUserDto } from '../../use_cases/dto/create-user.dto';
-import { UpdateUserDto } from '../../use_cases/dto/update-user.dto';
-import { UserService } from '../../use_cases/user.service';
+import { User } from '../../../domain/user/user';
+import { CreateUserDto } from '../../../use_cases/dto/create-user.dto';
+import { UpdateUserDto } from '../../../use_cases/dto/update-user.dto';
+import { UserService } from '../../../use_cases/user.service';
 
 @ApiTags('users')
 @Controller('users')

@@ -1,0 +1,15 @@
+{
+    "type": "mysql",
+    "host": "db",
+    "port": 3306,
+    "username": "root",
+    "password": "password",
+    "database": "todo",
+    "entities": ["dist/**/*.entity.js"],
+    "synchronize": false,
+    "autoLoadEntities": true,
+    "migrations": ["migration/*.js"],
+    "cli": {
+        "migrationsDir": "migration"
+    }
+}

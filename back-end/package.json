@@ -27,26 +27,30 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^7.6.15",
     "@nestjs/swagger": "^4.8.0",
+    "@nestjs/typeorm": "^8.0.2",
     "@types/uuid": "^8.3.0",
     "joi": "^17.4.0",
+    "mysql2": "^2.3.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
     "swagger-ui-express": "^4.1.6",
+    "typeorm": "^0.2.37",
     "uuid": "^8.3.2",
     "yarn": "^1.22.10"
   },
   "devDependencies": {
     "@nestjs/schematics": "^7.3.0",
-    "@nestjs/testing": "^7.6.15",
+    "@nestjs/testing": "^7.6.18",
     "@types/express": "^4.17.11",
-    "@types/jest": "^26.0.22",
+    "@types/jest": "^26.0.24",
     "@types/node": "^14.14.36",
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
-    "eslint": "^7.22.0",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
@@ -55,7 +59,7 @@
     "ts-loader": "^8.0.18",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.3"
   },
   "jest": {
     "moduleFileExtensions": [

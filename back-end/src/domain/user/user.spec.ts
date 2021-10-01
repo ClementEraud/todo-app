@@ -1,4 +1,5 @@
 import { User } from './user';
+import { v4 as uuidv4 } from 'uuid';
 
 describe('domain/User', () => {
   describe('constructor', () => {
@@ -8,7 +9,7 @@ describe('domain/User', () => {
       const lastName = 'Marx';
 
       // WHEN
-      const user = new User(firstName, lastName);
+      const user = new User(uuidv4(), firstName, lastName);
 
       // THEN
       expect(user.id).toBeDefined();
@@ -22,7 +23,7 @@ describe('domain/User', () => {
       const lastName = 'Marx';
 
       // WHEN
-      const result = () => new User(firstName, lastName);
+      const result = () => new User(uuidv4(), firstName, lastName);
 
       // THEN
       expect(result).toThrowError('Names cannot be null or empty.');
@@ -34,7 +35,7 @@ describe('domain/User', () => {
       const lastName = '';
 
       // WHEN
-      const result = () => new User(firstName, lastName);
+      const result = () => new User(uuidv4(), firstName, lastName);
 
       // THEN
       expect(result).toThrowError('Names cannot be null or empty.');

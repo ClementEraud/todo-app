@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersRepository } from '../infrastructure/gateways/in_memory/UsersRepository';
+import { UsersRepository } from '../infrastructure/database/repositories/UsersRepository';
 import { IUsersRepository } from './ports/UsersRepository.interface';
 import { UserService } from './user.service';
 

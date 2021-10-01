@@ -29,7 +29,7 @@ services:
     volumes:
       - "dbdata:/var/lib/mysql"
     ports:
-      - "5432:5432"
+      - "3306:3306"
   adminer:
     image: adminer
     restart: always
