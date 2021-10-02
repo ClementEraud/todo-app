@@ -26,6 +26,7 @@ services:
     image: mysql:8
     environment:
       MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: todo
     volumes:
       - "dbdata:/var/lib/mysql"
     ports:
