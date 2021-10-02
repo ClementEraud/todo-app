@@ -11,7 +11,6 @@ services:
       - "${HOME}/Project/todo-app/front-end/src:/app/src"
     depends_on:
       - api
-      - db
   api:
     build: 
       context: ./back-end
@@ -36,8 +35,6 @@ services:
     restart: always
     ports:
       - 8080:8080
-    depends_on:
-      - db
 
 volumes:
   dbdata:

@@ -7,7 +7,6 @@ services:
       - "80:80"
     depends_on:
       - api
-      - db
   api:
     image: rg.fr-par.scw.cloud/clement-registry/todo-back-end
     depends_on:

@@ -3,11 +3,9 @@ import { UserController } from '../infrastructure/presentation/controller/user.c
 import { UsersRepository } from '../infrastructure/database/repositories/UsersRepository';
 import { IUsersRepository } from '../use_cases/ports/UsersRepository.interface';
 import { UserService } from '../use_cases/user.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from '../infrastructure/database/mapper/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [],
   controllers: [UserController],
   providers: [
     UserService,
