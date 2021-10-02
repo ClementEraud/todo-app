@@ -1,4 +1,4 @@
-import { IUsersRepository } from '../../../application/ports/UsersRepository.interface';
+import { IUserRepository } from '../../../application/ports/UsersRepository.interface';
 import { User } from '../../../domain/models/user/user';
 import { InjectConnection } from '@nestjs/typeorm';
 import { Connection, EntityManager, QueryRunner } from 'typeorm';
@@ -6,7 +6,7 @@ import { UserSchema } from '../mapper/UserSchema';
 import { CreateUserDto } from '../../../application/dto/create-user.dto';
 import { UpdateUserDto } from '../../../application/dto/update-user.dto';
 
-export class UsersRepository implements IUsersRepository {
+export class UserRepository implements IUserRepository {
     readonly manager: EntityManager;
     readonly queryRunner?: QueryRunner;
 
@@ -16,15 +16,13 @@ export class UsersRepository implements IUsersRepository {
     }
 
     fromEntity(user: User): User {
-        return new User(user.id, user.firstName, user.lastName);
+        return new User(user.firstName, user.lastName, user.id);
     }
 
-    async save(user: CreateUserDto): Promise<User> {
-        const newUser = this.manager.create(
-            UserSchema,
-            user
-        );
-        return this.fromEntity(newUser);
+    async insert(user: CreateUserDto): Promise<User> {
+        const insertResult = await this.manager.insert(User, user);
+
+        return this.findOne(insertResult.raw.insertId);
     }
 
     async findAll(): Promise<User[]> {
@@ -33,7 +31,7 @@ export class UsersRepository implements IUsersRepository {
     }
 
     async findOne(userId: number): Promise<User> {
-       const userEntity = await this.manager.findOne(UserSchema, userId);
+       const userEntity = await this.manager.findOne(UserSchema, userId, { relations: ['tasks'] });
        return this.fromEntity(userEntity);
     }
 
@@ -44,13 +42,16 @@ export class UsersRepository implements IUsersRepository {
 
     async remove(userId: number): Promise<boolean> {
         try {
-            const userToRemove = await this.manager.findOne(UserSchema, userId);
-            await this.manager.remove(UserSchema, userToRemove);
+            await this.manager.delete(UserSchema, {id: userId});
         }
         catch {
             return false;
         }
 
         return true;
+    }
+
+    async save(user: User): Promise<User> {
+        return this.manager.save(user);
     }
 }

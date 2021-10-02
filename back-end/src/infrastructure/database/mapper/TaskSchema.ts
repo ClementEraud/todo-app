@@ -2,29 +2,27 @@ import { EntitySchema } from 'typeorm';
 import { Task } from '../../../domain/models/task/task';
 import { User } from '../../../domain/models/user/user';
 
-export const UserSchema = new EntitySchema<User>({
-  name: 'User',
-  target: User,
+export const TaskSchema = new EntitySchema<Task>({
+  name: 'Task',
+  target: Task,
   columns: {
     id: {
       type: Number,
       primary: true,
       generated: true,
     },
-    firstName: {
+    title: {
       type: String,
     },
-    lastName: {
+    description: {
       type: String,
     },
   },
   relations: {
-    tasks: {
-        type: 'one-to-many',
-        target: () => Task, // TaskEntity
-        cascade: ['insert', 'update'],
-        onDelete: 'CASCADE',
-        inverseSide: 'user',
+    user: {
+        type: 'many-to-one',
+        target: () => User, // UserEntity
+        joinColumn: true,
     }
   }
 });

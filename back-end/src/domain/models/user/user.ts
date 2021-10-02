@@ -1,18 +1,23 @@
+import { Task } from '../task/task';
+
 export class User {
-  private _id: number;
+  id: number;
+  firstName: string;
+  lastName: string;
+  tasks: Task[];
 
-  private _firstName: string;
+  constructor(firstName: string, lastName: string, id?: number, tasks?: Task[]) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.tasks = tasks;
+  }
 
-  private _lastName: string;
-
-
-  get id() { return this._id; }
-  get firstName() { return this._firstName; }
-  get lastName() { return this._lastName; }
-
-  constructor(id: number, firstName: string, lastName: string) {
-    this._id = id;
-    this._firstName = firstName;
-    this._lastName = lastName;
+  addTask(task: Task) {
+    if (this.tasks) {
+      this.tasks.push(task); 
+    } else {
+      this.tasks = [task];
+    }
   }
 }
