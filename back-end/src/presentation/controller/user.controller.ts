@@ -41,7 +41,7 @@ export class UserController {
     description: 'The User has been found.',
     type: User,
   })
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: number): Promise<User> {
     return this.userUseCases.findOne(id);
   }
 
@@ -50,7 +50,7 @@ export class UserController {
     description: 'The user has been successfully updated.',
     type: User,
   })
-  update(@Param('id') id: number, @Body() updateUser: UpdateUserVM) {
+  update(@Param('id') id: number, @Body() updateUser: UpdateUserVM): Promise<User> {
     return this.userUseCases.update(id, updateUser);
   }
 

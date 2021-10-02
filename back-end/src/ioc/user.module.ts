@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { UserController } from '../infrastructure/presentation/controller/user.controller';
+import { UserController } from '../presentation/controller/user.controller';
 import { UsersRepository } from '../infrastructure/database/repositories/UsersRepository';
-import { IUsersRepository } from '../use_cases/ports/UsersRepository.interface';
-import { UserService } from '../use_cases/user.service';
+import { IUsersRepository } from '../application/ports/UsersRepository.interface';
+import { UserUseCases } from '../application/use_cases/UserUseCases';
 
 @Module({
   imports: [],
   controllers: [UserController],
   providers: [
-    UserService,
+    UserUseCases,
     { provide: IUsersRepository, useClass: UsersRepository },
   ],
 })
