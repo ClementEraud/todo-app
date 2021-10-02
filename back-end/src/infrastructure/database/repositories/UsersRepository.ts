@@ -1,45 +1,51 @@
-import { IUsersRepository } from '../../../use_cases/ports/UsersRepository.interface';
-import { User } from '../../../domain/user/user';
-import { UpdateUserDto } from '../../../use_cases/dto/update-user.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { UserEntity } from '../mapper/user.entity';
-import { CreateUserDto } from '../../../use_cases/dto/create-user.dto';
+import { IUsersRepository } from '../../../application/ports/UsersRepository.interface';
+import { User } from '../../../domain/models/user/user';
+import { InjectConnection } from '@nestjs/typeorm';
+import { Connection, EntityManager, QueryRunner } from 'typeorm';
+import { UserSchema } from '../mapper/UserSchema';
+import { CreateUserDto } from '../../../application/dto/create-user.dto';
+import { UpdateUserDto } from '../../../application/dto/update-user.dto';
 
 export class UsersRepository implements IUsersRepository {
+    readonly manager: EntityManager;
+    readonly queryRunner?: QueryRunner;
 
-    constructor(
-        @InjectRepository(User)
-        private usersRepository: Repository<UserEntity>,
-    ) {}
+    constructor(@InjectConnection() connection: Connection) {
+        this.queryRunner = connection.createQueryRunner();
+        this.manager = this.queryRunner.manager;
+    }
 
-    fromEntity(user: UserEntity): User {
+    fromEntity(user: User): User {
         return new User(user.id, user.firstName, user.lastName);
     }
 
     async save(user: CreateUserDto): Promise<User> {
-        return this.fromEntity(this.usersRepository.create(user));
+        const newUser = this.manager.create(
+            UserSchema,
+            user
+        );
+        return this.fromEntity(newUser);
     }
 
     async findAll(): Promise<User[]> {
-        const users = await this.usersRepository.find();
-        return users.map(this.fromEntity)
+        const users = await this.manager.find(UserSchema);
+        return users.map(this.fromEntity);
     }
 
-    async findOne(userId: string): Promise<User> {
-       const userEntity = await this.usersRepository.findOne(userId);
+    async findOne(userId: number): Promise<User> {
+       const userEntity = await this.manager.findOne(UserSchema, userId);
        return this.fromEntity(userEntity);
     }
 
-    async update(userId: string, updateUser: UpdateUserDto): Promise<User> {
-        await this.usersRepository.update({id: userId}, updateUser);
+    async update(userId: number, updateUser: UpdateUserDto): Promise<User> {
+        await this.manager.update(UserSchema, {id: userId}, updateUser);
         return this.findOne(userId);
     }
 
-    async remove(userId: string): Promise<boolean> {
+    async remove(userId: number): Promise<boolean> {
         try {
-            const userToRemove = await this.usersRepository.findOne(userId);
-            await this.usersRepository.remove(userToRemove);
+            const userToRemove = await this.manager.findOne(UserSchema, userId);
+            await this.manager.remove(UserSchema, userToRemove);
         }
         catch {
             return false;

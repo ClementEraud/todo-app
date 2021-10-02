@@ -7,7 +7,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Todo App - API')
     .setDescription('This describes the Todo App API')
-    .setVersion('2.1.0')
+    .setVersion('0.0.1')
     .addTag('users')
     .build();
   

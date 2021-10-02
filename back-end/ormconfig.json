@@ -5,11 +5,11 @@
     "username": "root",
     "password": "password",
     "database": "todo",
-    "entities": ["dist/**/*.entity.js"],
+    "entities": ["dist/infrastructure/database/mapper/*.js"],
     "synchronize": false,
     "autoLoadEntities": true,
-    "migrations": ["migration/*.js"],
+    "migrations": ["migrations/*.ts"],
     "cli": {
-        "migrationsDir": "migration"
+        "migrationsDir": "migrations"
     }
 }
