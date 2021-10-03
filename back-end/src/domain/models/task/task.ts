@@ -7,9 +7,9 @@ export class Task {
     user: User;
 
     constructor(title: string, description: string, id?: number, user?: User) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.user = user;
+    	this.id = id;
+    	this.title = title;
+    	this.description = description;
+    	this.user = user;
     }
 }

@@ -5,9 +5,9 @@ import { UseCase } from '../use_cases/UseCase.interface';
 
 @Injectable()
 export class GetAllUsers implements UseCase {
-  constructor(private readonly userRepository: IUserRepository) {}
+	constructor(private readonly userRepository: IUserRepository) {}
 
-  async execute(): Promise<User[]> {
-    return this.userRepository.findAll();
-  }
+	async execute(): Promise<User[]> {
+		return this.userRepository.findAll();
+	}
 }

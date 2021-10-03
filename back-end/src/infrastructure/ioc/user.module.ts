@@ -12,17 +12,17 @@ import { ITasksRepository } from '../../application/ports/TaskRepository.interfa
 import { TaskRepository } from '../database/repositories/TaskRepository';
 
 @Module({
-  imports: [],
-  controllers: [UserController],
-  providers: [
-    CreateUser,
-    DeleteUser,
-    GetAllUsers,
-    GetUser,
-    UpdateUser,
-    AddTaskToUser,
-    { provide: IUserRepository, useClass: UserRepository },
-    { provide: ITasksRepository, useClass: TaskRepository },
-  ],
+	imports: [],
+	controllers: [UserController],
+	providers: [
+		CreateUser,
+		DeleteUser,
+		GetAllUsers,
+		GetUser,
+		UpdateUser,
+		AddTaskToUser,
+		{ provide: IUserRepository, useClass: UserRepository },
+		{ provide: ITasksRepository, useClass: TaskRepository },
+	],
 })
 export class UserModule {}

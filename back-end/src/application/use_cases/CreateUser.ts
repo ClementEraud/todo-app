@@ -6,9 +6,9 @@ import { UseCase } from '../use_cases/UseCase.interface';
 
 @Injectable()
 export class CreateUser implements UseCase {
-  constructor(private readonly userRepository: IUserRepository) {}
+	constructor(private readonly userRepository: IUserRepository) {}
 
-  async execute(createUser: CreateUserDto): Promise<User> {
-    return this.userRepository.insert(createUser);
-  }
+	async execute(createUser: CreateUserDto): Promise<User> {
+		return this.userRepository.insert(createUser);
+	}
 }

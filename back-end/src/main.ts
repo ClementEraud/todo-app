@@ -3,25 +3,25 @@ import { DocumentBuilder, SwaggerDocumentOptions, SwaggerModule } from '@nestjs/
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const config = new DocumentBuilder()
-    .setTitle('Todo App - API')
-    .setDescription('This describes the Todo App API')
-    .setVersion('0.0.1')
-    .addTag('users')
-    .build();
+	const app = await NestFactory.create(AppModule);
+	const config = new DocumentBuilder()
+		.setTitle('Todo App - API')
+		.setDescription('This describes the Todo App API')
+		.setVersion('0.0.1')
+		.addTag('users')
+		.build();
   
-  const options: SwaggerDocumentOptions =  {
-    operationIdFactory: (
-      controllerKey: string,
-      methodKey: string
-    ) => methodKey
-  };
+	const options: SwaggerDocumentOptions = {
+		operationIdFactory: (
+			controllerKey: string,
+			methodKey: string
+		) => methodKey
+	};
 
-  const document = SwaggerModule.createDocument(app, config, options);
-  SwaggerModule.setup('', app, document);
-  const port = process.env.API_PORT ? process.env.API_PORT : 3000;
-  await app.listen(port);
-  console.info(`Listenning to port ${port} !`);
+	const document = SwaggerModule.createDocument(app, config, options);
+	SwaggerModule.setup('', app, document);
+	const port = process.env.API_PORT ? process.env.API_PORT : 3000;
+	await app.listen(port);
+	console.info(`Listenning to port ${port} !`);
 }
 bootstrap();

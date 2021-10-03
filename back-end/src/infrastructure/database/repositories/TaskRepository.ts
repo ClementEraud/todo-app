@@ -10,11 +10,11 @@ export class TaskRepository implements ITasksRepository {
     readonly queryRunner?: QueryRunner;
 
     constructor(@InjectConnection() connection: Connection) {
-        this.queryRunner = connection.createQueryRunner();
-        this.manager = this.queryRunner.manager;
+    	this.queryRunner = connection.createQueryRunner();
+    	this.manager = this.queryRunner.manager;
     }
 
     async insert(taskToCreate: CreateTaskDto): Promise<Task> {
-        return this.manager.create(TaskSchema, taskToCreate);
+    	return this.manager.create(TaskSchema, taskToCreate);
     }
 }

@@ -7,16 +7,16 @@ import { UseCase } from './UseCase.interface';
 
 @Injectable()
 export class AddTaskToUser implements UseCase {
-    constructor(
+	constructor(
         private readonly userRepository: IUserRepository,
         private readonly taskRepository: ITasksRepository,
-    ) {}
+	) {}
 
-    async execute(userId: number, taskToAdd: CreateTaskDto): Promise<User> {
-        const user = await this.userRepository.findOne(userId);
-        const task = await this.taskRepository.insert(taskToAdd);
-        user.addTask(task);
-        return await this.userRepository.save(user);
-    }
+	async execute(userId: number, taskToAdd: CreateTaskDto): Promise<User> {
+		const user = await this.userRepository.findOne(userId);
+		const task = await this.taskRepository.insert(taskToAdd);
+		user.addTask(task);
+		return await this.userRepository.save(user);
+	}
 
 }
