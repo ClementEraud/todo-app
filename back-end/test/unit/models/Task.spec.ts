@@ -8,7 +8,7 @@ describe('domain/Task', () => {
 			const description = 'Very important';
 
 			// WHEN
-			const task = new Task(title, description, 1);
+			const task = new Task(1, title, description);
 
 			// THEN
 			expect(task.id).toBe(1);

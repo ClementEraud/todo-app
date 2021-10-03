@@ -16,7 +16,7 @@ export class UserRepository implements IUserRepository {
 	}
 
 	fromEntity(user: User): User {
-		return new User(user.firstName, user.lastName, user.id);
+		return new User(user.id, user.firstName, user.lastName);
 	}
 
 	async insert(user: CreateUserDto): Promise<User> {

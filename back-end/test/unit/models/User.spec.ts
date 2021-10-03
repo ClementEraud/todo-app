@@ -9,7 +9,7 @@ describe('domain/User', () => {
 			const lastName = 'Marx';
 
 			// WHEN
-			const user = new User(firstName, lastName, 1);
+			const user = new User(1, firstName, lastName);
 
 			// THEN
 			expect(user.id).toBe(1);
@@ -21,8 +21,8 @@ describe('domain/User', () => {
 	describe('addTask', () => {
 		it('should add a task to empty task list of user', () => {
 			// GIVEN
-			const user = new User('Joel', 'Knight', 1);
-			const task = new Task('Task 1', 'Description', 1);
+			const user = new User(1, 'Joel', 'Knight');
+			const task = new Task(1, 'Task 1', 'Description');
 
 			// WHEN
 			user.addTask(task);
@@ -32,9 +32,9 @@ describe('domain/User', () => {
 		});
 		it('should add both tasks to task list of user', () => {
 			// GIVEN
-			const user = new User('Joel', 'Knight', 1);
-			const task = new Task('Task 1', 'Description', 1);
-			const task2 = new Task('Task 2', 'Description', 2);
+			const user = new User(1, 'Joel', 'Knight');
+			const task = new Task(1, 'Task 1', 'Description');
+			const task2 = new Task(1, 'Task 2', 'Description');
 
 			// WHEN
 			user.addTask(task);

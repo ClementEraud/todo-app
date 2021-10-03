@@ -6,12 +6,7 @@ export class User {
 	lastName: string;
 	tasks: Task[];
 
-	constructor(
-		firstName: string,
-		lastName: string,
-		id?: number,
-		tasks?: Task[],
-	) {
+	constructor(id: number, firstName: string, lastName: string, tasks?: Task[]) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
