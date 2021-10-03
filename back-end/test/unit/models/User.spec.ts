@@ -1,5 +1,5 @@
-import { Task } from '../../../src/domain/models/task/task';
-import { User } from '../../../src/domain/models/user/user';
+import { Task } from '../../../src/domain/models/Task';
+import { User } from '../../../src/domain/models/User';
 
 describe('domain/User', () => {
 	describe('constructor', () => {

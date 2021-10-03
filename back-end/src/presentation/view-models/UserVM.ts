@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from '../../domain/models/user/user';
+import { User } from '../../domain/models/User';
 import { TaskVM } from './TaskVM';
 
 export class UserVM {

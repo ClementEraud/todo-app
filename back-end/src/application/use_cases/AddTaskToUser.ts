@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '../../domain/models/user/user';
+import { User } from '../../domain/models/User';
 import { CreateTaskDto } from '../dto/create-task.dto';
 import { ITasksRepository } from '../ports/TaskRepository.interface';
 import { IUserRepository } from '../ports/UsersRepository.interface';

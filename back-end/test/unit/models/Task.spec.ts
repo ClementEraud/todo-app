@@ -1,4 +1,4 @@
-import { Task } from '../../../src/domain/models/task/task';
+import { Task } from '../../../src/domain/models/Task';
 
 describe('domain/Task', () => {
 	describe('constructor', () => {

@@ -2,7 +2,7 @@ import { InjectConnection } from '@nestjs/typeorm';
 import { Connection, EntityManager, QueryRunner } from 'typeorm';
 import { CreateTaskDto } from '../../../application/dto/create-task.dto';
 import { ITasksRepository } from '../../../application/ports/TaskRepository.interface';
-import { Task } from '../../../domain/models/task/task';
+import { Task } from '../../../domain/models/Task';
 import { TaskSchema } from '../mapper/TaskSchema';
 
 export class TaskRepository implements ITasksRepository {

@@ -1,4 +1,4 @@
-import { User } from '../user/user';
+import { User } from './User';
 
 export class Task {
 	id: number;

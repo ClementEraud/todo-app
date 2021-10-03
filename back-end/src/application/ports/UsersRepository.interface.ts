@@ -1,4 +1,4 @@
-import { User } from '../../domain/models/user/user';
+import { User } from '../../domain/models/User';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 

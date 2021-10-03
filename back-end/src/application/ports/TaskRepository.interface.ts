@@ -1,4 +1,4 @@
-import { Task } from '../../domain/models/task/task';
+import { Task } from '../../domain/models/Task';
 import { CreateTaskDto } from '../dto/create-task.dto';
 
 export abstract class ITasksRepository {

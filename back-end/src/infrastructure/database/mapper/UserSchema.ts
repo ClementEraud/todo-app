@@ -1,6 +1,6 @@
 import { EntitySchema } from 'typeorm';
-import { Task } from '../../../domain/models/task/task';
-import { User } from '../../../domain/models/user/user';
+import { Task } from '../../../domain/models/Task';
+import { User } from '../../../domain/models/User';
 
 export const UserSchema = new EntitySchema<User>({
 	name: 'User',
