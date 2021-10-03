@@ -43,5 +43,5 @@ describe('domain/User', () => {
 			// THEN
 			expect(user.tasks.length).toBe(2);
 		});
-	})
+	});
 });

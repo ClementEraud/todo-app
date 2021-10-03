@@ -1,4 +1,4 @@
 export interface CreateTaskDto {
-    title: string;
-    description: string;
+	title: string;
+	description: string;
 }

@@ -8,8 +8,8 @@ import { UseCase } from './UseCase.interface';
 @Injectable()
 export class AddTaskToUser implements UseCase {
 	constructor(
-        private readonly userRepository: IUserRepository,
-        private readonly taskRepository: ITasksRepository,
+		private readonly userRepository: IUserRepository,
+		private readonly taskRepository: ITasksRepository,
 	) {}
 
 	async execute(userId: number, taskToAdd: CreateTaskDto): Promise<User> {
@@ -18,5 +18,4 @@ export class AddTaskToUser implements UseCase {
 		user.addTask(task);
 		return await this.userRepository.save(user);
 	}
-
 }

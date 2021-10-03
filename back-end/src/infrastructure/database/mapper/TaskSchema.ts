@@ -23,6 +23,6 @@ export const TaskSchema = new EntitySchema<Task>({
 			type: 'many-to-one',
 			target: () => User, // UserEntity
 			joinColumn: true,
-		}
-	}
+		},
+	},
 });

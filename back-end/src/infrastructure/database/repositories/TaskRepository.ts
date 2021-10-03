@@ -6,15 +6,15 @@ import { Task } from '../../../domain/models/task/task';
 import { TaskSchema } from '../mapper/TaskSchema';
 
 export class TaskRepository implements ITasksRepository {
-    readonly manager: EntityManager;
-    readonly queryRunner?: QueryRunner;
+	readonly manager: EntityManager;
+	readonly queryRunner?: QueryRunner;
 
-    constructor(@InjectConnection() connection: Connection) {
-    	this.queryRunner = connection.createQueryRunner();
-    	this.manager = this.queryRunner.manager;
-    }
+	constructor(@InjectConnection() connection: Connection) {
+		this.queryRunner = connection.createQueryRunner();
+		this.manager = this.queryRunner.manager;
+	}
 
-    async insert(taskToCreate: CreateTaskDto): Promise<Task> {
-    	return this.manager.create(TaskSchema, taskToCreate);
-    }
+	async insert(taskToCreate: CreateTaskDto): Promise<Task> {
+		return this.manager.create(TaskSchema, taskToCreate);
+	}
 }

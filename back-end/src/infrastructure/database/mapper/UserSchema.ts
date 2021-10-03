@@ -25,6 +25,6 @@ export const UserSchema = new EntitySchema<User>({
 			cascade: ['insert', 'update'],
 			onDelete: 'CASCADE',
 			inverseSide: 'user',
-		}
-	}
+		},
+	},
 });
