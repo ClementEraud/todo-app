@@ -1,15 +1,15 @@
 {
-    "type": "mysql",
-    "host": "db",
-    "port": 3306,
-    "username": "root",
-    "password": "password",
-    "database": "todo",
-    "entities": ["dist/infrastructure/database/mapper/*.js"],
-    "synchronize": false,
-    "autoLoadEntities": true,
-    "migrations": ["migrations/*.ts"],
-    "cli": {
-        "migrationsDir": "migrations"
-    }
+	"type": "mysql",
+	"host": "localhost",
+	"port": 3306,
+	"username": "root",
+	"password": "password",
+	"database": "todo",
+	"entities": ["dist/infrastructure/database/mapper/*.js"],
+	"synchronize": false,
+	"autoLoadEntities": true,
+	"migrations": ["migrations/*.ts"],
+	"cli": {
+		"migrationsDir": "migrations"
+	}
 }

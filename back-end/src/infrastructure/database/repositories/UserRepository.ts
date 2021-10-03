@@ -16,7 +16,7 @@ export class UserRepository implements IUserRepository {
 	}
 
 	fromEntity(user: User): User {
-		return new User(user.id, user.firstName, user.lastName);
+		return new User(user.id, user.firstName, user.lastName, user.tasks);
 	}
 
 	async insert(user: CreateUserDto): Promise<User> {
@@ -26,7 +26,7 @@ export class UserRepository implements IUserRepository {
 	}
 
 	async findAll(): Promise<User[]> {
-		const users = await this.manager.find(UserSchema);
+		const users = await this.manager.find(UserSchema, { relations: ['tasks'] });
 		return users.map(this.fromEntity);
 	}
 
