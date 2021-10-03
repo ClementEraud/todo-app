@@ -1,6 +1,27 @@
 version: 2.1
 
 jobs:
+  back-end-checks:
+    docker:
+      - image: circleci/node:14.15.0
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Install Tools
+          command: cd back-end && npm i
+      - run:
+          name: Lint Check
+          command: cd back-end && npm run lint
+      - run:
+          name: Format Check
+          command: cd back-end && npm run format:check
+      - run:
+          name: Unit Test
+          command: cd back-end && npm run test
+      # - run:
+      #     name: E2E Test back-end
+      #     command: cd back-end && npm run test:e2e
   build-back:
     docker:
       - image: circleci/node:14.15.0
@@ -9,10 +30,10 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: 19.03.13
-      - run: 
+      - run:
           name: Login to Scaleway image registry
           command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
-      - run: 
+      - run:
           name: Build docker image
           command: docker build -t rg.fr-par.scw.cloud/clement-registry/todo-back-end back-end
       - run:
@@ -26,10 +47,10 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: 19.03.13
-      - run: 
+      - run:
           name: Login to Scaleway image registry
           command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
-      - run: 
+      - run:
           name: Build docker image
           command: docker build -t rg.fr-par.scw.cloud/clement-registry/todo-front-end front-end
       - run:
@@ -43,16 +64,16 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: 19.03.13
-      - run: 
+      - run:
           name: Login to Scaleway image registry
           command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
-      - run: 
+      - run:
           name: Setup Docker context
           command: unset DOCKER_HOST && docker context create scaleway --docker host=ssh://root@163.172.190.45
       - run:
           name: Delete containers on remote host
           command: docker-compose --context scaleway down
-      - run: 
+      - run:
           name: Pulling images
           command: docker-compose --context scaleway -f docker-compose.prod.yml pull
       - run:
@@ -66,12 +87,15 @@ jobs:
           command: ssh -o StrictHostKeyChecking=no root@163.172.190.45 docker exec project_api_1 ts-node node_modules/.bin/typeorm migration:run || true
 
 workflows:
-  version: "2"
+  version: 2
   build:
     jobs:
-      - build-back
+      - back-end-checks
+      - build-back:
+          requires:
+            - back-end-checks
       - build-front
       - deploy:
           requires:
             - build-back
-            - build-front     
+            - build-front
