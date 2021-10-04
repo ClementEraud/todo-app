@@ -22,7 +22,7 @@ module.exports = {
 		node: true,
 		jest: true,
 	},
-	ignorePatterns: ['.eslintrc.js'],
+	ignorePatterns: ['.eslintrc.js', 'migrations/*'],
 	rules: {
 		quotes: ['error', 'single', 'avoid-escape'],
 		'no-irregular-whitespace': ['error', { skipComments: true }],
