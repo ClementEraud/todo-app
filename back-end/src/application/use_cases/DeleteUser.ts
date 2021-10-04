@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
 import { IUserRepository } from '../ports/UsersRepository.interface';
+import { Injectable } from '@nestjs/common';
 import { UseCase } from '../use_cases/UseCase.interface';
 
 @Injectable()

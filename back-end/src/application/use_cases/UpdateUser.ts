@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { User } from '../../domain/models/User';
-import { UpdateUserDto } from '../dto/update-user.dto';
 import { IUserRepository } from '../ports/UsersRepository.interface';
+import { Injectable } from '@nestjs/common';
+import { UpdateUserDto } from '../dto/update-user.dto';
 import { UseCase } from '../use_cases/UseCase.interface';
+import { User } from '../../domain/models/User';
 
 @Injectable()
 export class UpdateUser implements UseCase {

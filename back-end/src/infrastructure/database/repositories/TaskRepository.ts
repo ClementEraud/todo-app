@@ -1,7 +1,7 @@
-import { InjectConnection } from '@nestjs/typeorm';
 import { Connection, EntityManager, QueryRunner } from 'typeorm';
 import { CreateTaskDto } from '../../../application/dto/create-task.dto';
 import { ITasksRepository } from '../../../application/ports/TaskRepository.interface';
+import { InjectConnection } from '@nestjs/typeorm';
 import { Task } from '../../../domain/models/Task';
 import { TaskSchema } from '../mapper/TaskSchema';
 

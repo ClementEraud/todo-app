@@ -1,10 +1,10 @@
-import { IUserRepository } from '../../../application/ports/UsersRepository.interface';
-import { User } from '../../../domain/models/User';
-import { InjectConnection } from '@nestjs/typeorm';
 import { Connection, EntityManager, QueryRunner } from 'typeorm';
-import { UserSchema } from '../mapper/UserSchema';
 import { CreateUserDto } from '../../../application/dto/create-user.dto';
+import { IUserRepository } from '../../../application/ports/UsersRepository.interface';
+import { InjectConnection } from '@nestjs/typeorm';
 import { UpdateUserDto } from '../../../application/dto/update-user.dto';
+import { User } from '../../../domain/models/User';
+import { UserSchema } from '../mapper/UserSchema';
 
 export class UserRepository implements IUserRepository {
 	readonly manager: EntityManager;

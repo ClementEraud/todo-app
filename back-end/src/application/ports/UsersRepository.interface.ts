@@ -1,6 +1,6 @@
-import { User } from '../../domain/models/User';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { User } from '../../domain/models/User';
 
 export abstract class IUserRepository {
 	abstract insert(user: CreateUserDto): Promise<User>;

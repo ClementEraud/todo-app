@@ -1,3 +1,4 @@
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
 	Body,
 	Controller,
@@ -7,15 +8,14 @@ import {
 	Patch,
 	Post,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AddTaskToUser } from '../../application/use_cases/AddTaskToUser';
+import { CreateTaskVM } from '../view-models/CreateTaskVM';
 import { CreateUser } from '../../application/use_cases/CreateUser';
+import { CreateUserVM } from '../view-models/CreateUserVM';
 import { DeleteUser } from '../../application/use_cases/DeleteUser';
 import { GetAllUsers } from '../../application/use_cases/GetAllUsers';
 import { GetUser } from '../../application/use_cases/GetUser';
 import { UpdateUser } from '../../application/use_cases/UpdateUser';
-import { CreateTaskVM } from '../view-models/CreateTaskVM';
-import { CreateUserVM } from '../view-models/CreateUserVM';
 import { UpdateUserVM } from '../view-models/UpdateUserVM';
 import { UserVM } from '../view-models/UserVM';
 

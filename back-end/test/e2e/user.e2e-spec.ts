@@ -1,10 +1,10 @@
-import { INestApplication } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from 'supertest';
+import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../../src/app.module';
+import { INestApplication } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-describe('AppController (e2e)', () => {
+describe('UserController (e2e)', () => {
 	let app: INestApplication;
 
 	beforeEach(async () => {
@@ -17,7 +17,7 @@ describe('AppController (e2e)', () => {
 					port: 3306,
 					username: 'root',
 					password: 'password',
-					database: 'todo',
+					database: 'e2e_test',
 					entities: ['../src/infrastructure/database/mapper/*.ts'],
 				}),
 			],
