@@ -1,13 +1,14 @@
 import { User } from './User';
+import { v4 as uuidv4 } from 'uuid';
 
 export class Task {
-	id: number;
+	id: string;
 	title: string;
 	description: string;
-	user: User;
+	user?: User;
 
-	constructor(id: number, title: string, description: string, user: User) {
-		this.id = id;
+	constructor(title: string, description: string, id?: string, user?: User) {
+		this.id = id ? id : uuidv4();
 		this.title = title;
 		this.description = description;
 		this.user = user;

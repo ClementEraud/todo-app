@@ -13,9 +13,8 @@ export class CreateUserTable1633385179161 implements MigrationInterface {
 		columns: [
 			{
 				name: 'id',
-				type: 'int',
+				type: 'varchar',
 				isPrimary: true,
-				isGenerated: true,
 			},
 			{
 				name: 'firstName',
@@ -35,9 +34,8 @@ export class CreateUserTable1633385179161 implements MigrationInterface {
 		columns: [
 			{
 				name: 'id',
-				type: 'int',
+				type: 'varchar',
 				isPrimary: true,
-				isGenerated: true,
 			},
 			{
 				name: 'title',
@@ -51,7 +49,7 @@ export class CreateUserTable1633385179161 implements MigrationInterface {
 			},
 			{
 				name: 'userId',
-				type: 'int',
+				type: 'varchar',
 			},
 		],
 	});

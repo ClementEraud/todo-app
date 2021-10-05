@@ -55,7 +55,7 @@ export class UserController {
 		description: 'The User has been found.',
 		type: UserVM,
 	})
-	async findOne(@Param('id') id: number): Promise<UserVM> {
+	async findOne(@Param('id') id: string): Promise<UserVM> {
 		return UserVM.toViewModel(await this.getUser.execute(id));
 	}
 
@@ -65,7 +65,7 @@ export class UserController {
 		type: UserVM,
 	})
 	async update(
-		@Param('id') id: number,
+		@Param('id') id: string,
 		@Body() updateUser: UpdateUserVM,
 	): Promise<UserVM> {
 		return UserVM.toViewModel(await this.updateUser.execute(id, updateUser));
@@ -75,7 +75,7 @@ export class UserController {
 	@ApiCreatedResponse({
 		description: 'The user has been successfully deleted.',
 	})
-	remove(@Param('id') id: number) {
+	remove(@Param('id') id: string) {
 		return this.deleteUser.execute(id);
 	}
 
@@ -84,7 +84,7 @@ export class UserController {
 		type: UserVM,
 	})
 	async addTask(
-		@Param('id') userId: number,
+		@Param('id') userId: string,
 		@Body() createTask: CreateTaskVM,
 	): Promise<UserVM> {
 		return UserVM.toViewModel(

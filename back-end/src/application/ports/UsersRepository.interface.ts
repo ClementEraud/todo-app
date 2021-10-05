@@ -1,12 +1,11 @@
-import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../../domain/models/User';
 
 export abstract class IUserRepository {
-	abstract insert(user: CreateUserDto): Promise<User>;
+	abstract insert(user: User): Promise<User>;
 	abstract findAll(): Promise<User[]>;
-	abstract findOne(userId: number): Promise<User>;
-	abstract update(userId: number, updateUserDto: UpdateUserDto): Promise<User>;
-	abstract remove(userId: number): Promise<boolean>;
+	abstract findOne(userId: string): Promise<User>;
+	abstract update(userId: string, updateUserDto: UpdateUserDto): Promise<User>;
+	abstract remove(userId: string): Promise<boolean>;
 	abstract save(user: User): Promise<User>;
 }

@@ -6,7 +6,7 @@ import { UseCase } from '../use_cases/UseCase.interface';
 export class DeleteUser implements UseCase {
 	constructor(private readonly userRepository: IUserRepository) {}
 
-	async execute(id: number): Promise<boolean> {
+	async execute(id: string): Promise<boolean> {
 		return this.userRepository.remove(id);
 	}
 }

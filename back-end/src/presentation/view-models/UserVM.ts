@@ -7,7 +7,7 @@ export class UserVM {
 		description: 'ID of user.',
 		example: 1,
 	})
-	id: number;
+	id: string;
 
 	@ApiProperty({
 		description: 'First name of user.',
@@ -32,7 +32,7 @@ export class UserVM {
 	tasks?: TaskVM[];
 
 	constructor(
-		id: number,
+		id: string,
 		firstName: string,
 		lastName: string,
 		tasks?: TaskVM[],

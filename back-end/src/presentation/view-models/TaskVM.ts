@@ -6,7 +6,7 @@ export class TaskVM {
 		description: 'ID of task.',
 		example: 1,
 	})
-	id: number;
+	id: string;
 
 	@ApiProperty({
 		description: 'Title of task.',
@@ -20,7 +20,7 @@ export class TaskVM {
 	})
 	description: string;
 
-	constructor(id: number, title: string, description: string) {
+	constructor(id: string, title: string, description: string) {
 		this.id = id;
 		this.title = title;
 		this.description = description;

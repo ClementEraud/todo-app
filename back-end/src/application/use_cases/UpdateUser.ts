@@ -8,7 +8,7 @@ import { User } from '../../domain/models/User';
 export class UpdateUser implements UseCase {
 	constructor(private readonly userRepository: IUserRepository) {}
 
-	async execute(id: number, updateUser: UpdateUserDto): Promise<User> {
+	async execute(id: string, updateUser: UpdateUserDto): Promise<User> {
 		return this.userRepository.update(id, updateUser);
 	}
 }

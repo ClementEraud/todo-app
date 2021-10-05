@@ -12,7 +12,7 @@ export class AddTaskToUser implements UseCase {
 		private readonly taskRepository: ITasksRepository,
 	) {}
 
-	async execute(userId: number, taskToAdd: CreateTaskDto): Promise<User> {
+	async execute(userId: string, taskToAdd: CreateTaskDto): Promise<User> {
 		const user = await this.userRepository.findOne(userId);
 		const task = await this.taskRepository.insert(taskToAdd);
 		user.addTask(task);

@@ -1,5 +1,4 @@
 import { Connection, EntityManager, QueryRunner } from 'typeorm';
-import { CreateUserDto } from '../../../application/dto/create-user.dto';
 import { IUserRepository } from '../../../application/ports/UsersRepository.interface';
 import { InjectConnection } from '@nestjs/typeorm';
 import { UpdateUserDto } from '../../../application/dto/update-user.dto';
@@ -15,34 +14,28 @@ export class UserRepository implements IUserRepository {
 		this.manager = this.queryRunner.manager;
 	}
 
-	fromEntity(user: User): User {
-		return new User(user.id, user.firstName, user.lastName, user.tasks);
-	}
-
-	async insert(user: CreateUserDto): Promise<User> {
-		const insertResult = await this.manager.insert(User, user);
-
-		return this.findOne(insertResult.raw.insertId);
+	async insert(user: User): Promise<User> {
+		const id = user.id;
+		await this.manager.insert(UserSchema, user);
+		return this.findOne(id);
 	}
 
 	async findAll(): Promise<User[]> {
-		const users = await this.manager.find(UserSchema, { relations: ['tasks'] });
-		return users.map(this.fromEntity);
+		return await this.manager.find(UserSchema, { relations: ['tasks'] });
 	}
 
-	async findOne(userId: number): Promise<User> {
-		const userEntity = await this.manager.findOne(UserSchema, userId, {
+	async findOne(userId: string): Promise<User> {
+		return await this.manager.findOne(UserSchema, userId, {
 			relations: ['tasks'],
 		});
-		return this.fromEntity(userEntity);
 	}
 
-	async update(userId: number, updateUser: UpdateUserDto): Promise<User> {
+	async update(userId: string, updateUser: UpdateUserDto): Promise<User> {
 		await this.manager.update(UserSchema, { id: userId }, updateUser);
 		return this.findOne(userId);
 	}
 
-	async remove(userId: number): Promise<boolean> {
+	async remove(userId: string): Promise<boolean> {
 		try {
 			await this.manager.delete(UserSchema, { id: userId });
 		} catch {

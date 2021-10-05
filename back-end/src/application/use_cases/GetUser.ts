@@ -7,7 +7,7 @@ import { User } from '../../domain/models/User';
 export class GetUser implements UseCase {
 	constructor(private readonly userRepository: IUserRepository) {}
 
-	async execute(userId: number): Promise<User> {
+	async execute(userId: string): Promise<User> {
 		return this.userRepository.findOne(userId);
 	}
 }

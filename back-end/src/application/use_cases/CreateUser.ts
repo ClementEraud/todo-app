@@ -9,6 +9,8 @@ export class CreateUser implements UseCase {
 	constructor(private readonly userRepository: IUserRepository) {}
 
 	async execute(createUser: CreateUserDto): Promise<User> {
-		return this.userRepository.insert(createUser);
+		return this.userRepository.insert(
+			new User(createUser.firstName, createUser.lastName),
+		);
 	}
 }

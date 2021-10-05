@@ -7,15 +7,17 @@ export const UserSchema = new EntitySchema<User>({
 	target: User,
 	columns: {
 		id: {
-			type: Number,
+			type: String,
 			primary: true,
 			generated: true,
 		},
 		firstName: {
 			type: String,
+			nullable: false,
 		},
 		lastName: {
 			type: String,
+			nullable: false,
 		},
 	},
 	relations: {
@@ -25,6 +27,7 @@ export const UserSchema = new EntitySchema<User>({
 			cascade: ['insert', 'update'],
 			onDelete: 'CASCADE',
 			inverseSide: 'user',
+			joinTable: true,
 		},
 	},
 });

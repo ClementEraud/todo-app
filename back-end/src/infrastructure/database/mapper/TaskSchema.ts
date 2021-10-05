@@ -7,15 +7,17 @@ export const TaskSchema = new EntitySchema<Task>({
 	target: Task,
 	columns: {
 		id: {
-			type: Number,
+			type: String,
 			primary: true,
 			generated: true,
 		},
 		title: {
 			type: String,
+			nullable: false,
 		},
 		description: {
 			type: String,
+			nullable: false,
 		},
 	},
 	relations: {
@@ -23,6 +25,7 @@ export const TaskSchema = new EntitySchema<Task>({
 			type: 'many-to-one',
 			target: () => User, // UserEntity
 			joinColumn: true,
+			joinTable: true,
 		},
 	},
 });
