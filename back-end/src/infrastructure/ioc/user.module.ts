@@ -3,13 +3,15 @@ import { CreateUser } from '../../application/use_cases/CreateUser';
 import { DeleteUser } from '../../application/use_cases/DeleteUser';
 import { GetAllUsers } from '../../application/use_cases/GetAllUsers';
 import { GetUser } from '../../application/use_cases/GetUser';
-import { ITasksRepository } from '../../application/ports/TaskRepository.interface';
-import { IUserRepository } from '../../application/ports/UsersRepository.interface';
+import { ITaskWriteRepository } from '../../application/ports/task/TaskWriteRepository.interface';
+import { IUserReadRepository } from '../../application/ports/user/UserReadRepository.interface';
+import { IUserWriteRepository } from '../../application/ports/user/UserWriteRepository.interface';
 import { Module } from '@nestjs/common';
-import { TaskRepository } from '../database/repositories/TaskRepository';
+import { TaskWriteRepository } from '../database/repositories/task/TaskWriteRepository';
 import { UpdateUser } from '../../application/use_cases/UpdateUser';
 import { UserController } from '../../presentation/controller/user.controller';
-import { UserRepository } from '../database/repositories/UserRepository';
+import { UserReadRepository } from '../database/repositories/user/UserReadRepository';
+import { UserWriteRepository } from '../database/repositories/user/UserWriteRepository';
 
 @Module({
 	imports: [],
@@ -21,8 +23,9 @@ import { UserRepository } from '../database/repositories/UserRepository';
 		GetUser,
 		UpdateUser,
 		AddTaskToUser,
-		{ provide: IUserRepository, useClass: UserRepository },
-		{ provide: ITasksRepository, useClass: TaskRepository },
+		{ provide: IUserReadRepository, useClass: UserReadRepository },
+		{ provide: IUserWriteRepository, useClass: UserWriteRepository },
+		{ provide: ITaskWriteRepository, useClass: TaskWriteRepository },
 	],
 })
 export class UserModule {}

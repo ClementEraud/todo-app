@@ -1,11 +1,11 @@
 import { Connection, EntityManager, QueryRunner } from 'typeorm';
-import { CreateTaskDto } from '../../../application/dto/create-task.dto';
-import { ITasksRepository } from '../../../application/ports/TaskRepository.interface';
+import { CreateTaskDto } from '../../../../application/command/create-task.dto';
+import { ITaskWriteRepository } from '../../../../application/ports/task/TaskWriteRepository.interface';
 import { InjectConnection } from '@nestjs/typeorm';
-import { Task } from '../../../domain/models/Task';
-import { TaskSchema } from '../mapper/TaskSchema';
+import { Task } from '../../../../domain/models/Task';
+import { TaskSchema } from '../../mapper/TaskSchema';
 
-export class TaskRepository implements ITasksRepository {
+export class TaskWriteRepository implements ITaskWriteRepository {
 	readonly manager: EntityManager;
 	readonly queryRunner?: QueryRunner;
 

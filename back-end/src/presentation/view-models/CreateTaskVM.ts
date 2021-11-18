@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateTaskDto } from '../../application/dto/create-task.dto';
+import { CreateTaskDto } from '../../application/command/create-task.dto';
 
 export class CreateTaskVM implements CreateTaskDto {
 	@ApiProperty({
