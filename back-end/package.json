@@ -20,7 +20,8 @@
 		"test:watch": "jest --watch",
 		"test:cov": "jest --coverage",
 		"test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-		"test:e2e": "jest --config ./test/e2e/jest-e2e.json"
+		"test:e2e": "jest --config ./test/e2e/jest-e2e.json",
+		"sort-import": "js-import-sort --path ./*"
 	},
 	"dependencies": {
 		"@nestjs/cli": "^8.1.2",
@@ -43,7 +44,7 @@
 	},
 	"devDependencies": {
 		"@nestjs/schematics": "^8.0.3",
-		"@nestjs/testing": "^8.0.9",
+		"@nestjs/testing": "^8.2.2",
 		"@types/express": "^4.17.11",
 		"@types/jest": "^26.0.24",
 		"@types/node": "^14.14.36",

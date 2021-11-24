@@ -19,7 +19,7 @@ describe('UserController (e2e)', () => {
 					entities: ['src/infrastructure/database/mapper/*.ts'],
 					migrations: [
 						'src/infrastructure/database/migrations/*.ts',
-						'test/e2e/dataset.ts',
+						'test/e2e/dataset-user.ts',
 					],
 					migrationsRun: true,
 					logging: false,

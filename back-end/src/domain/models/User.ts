@@ -26,4 +26,14 @@ export class User {
 			this.tasks = [task];
 		}
 	}
+
+	update(firstName?: string, lastName?: string) {
+		if (firstName) {
+			this.firstName = firstName;
+		}
+
+		if (lastName) {
+			this.lastName = lastName;
+		}
+	}
 }

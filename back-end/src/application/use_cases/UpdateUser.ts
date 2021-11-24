@@ -1,7 +1,7 @@
 import { IUserReadRepository } from '../ports/user/UserReadRepository.interface';
 import { IUserWriteRepository } from '../ports/user/UserWriteRepository.interface';
 import { Injectable } from '@nestjs/common';
-import { UpdateUserDto } from '../command/update-user.dto';
+import { UpdateUserCommand } from '../command/update-user';
 import { UseCase } from '../use_cases/UseCase.interface';
 import { User } from '../../domain/models/User';
 
@@ -12,8 +12,9 @@ export class UpdateUser implements UseCase {
 		private readonly userWriteRepository: IUserWriteRepository,
 	) {}
 
-	async execute(id: string, updateUser: UpdateUserDto): Promise<User> {
-		await this.userWriteRepository.update(id, updateUser);
-		return await this.userReadRepository.findOne(id);
+	async execute(id: string, updateUser: UpdateUserCommand): Promise<User> {
+		const user: User = await this.userReadRepository.findOne(id);
+		user.update(updateUser.firstName, updateUser.lastName);
+		return await this.userWriteRepository.update(user);
 	}
 }
