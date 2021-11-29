@@ -11,16 +11,19 @@ import { User } from '../../domain/models/User';
 export class AddTaskToUser implements UseCase {
 	constructor(
 		private readonly userReadRepository: IUserReadRepository,
-		private readonly taskWriteRepository: ITaskWriteRepository,
 		private readonly userWriteRepository: IUserWriteRepository,
+		private readonly taskWriteRepository: ITaskWriteRepository,
 	) {}
 
 	async execute(userId: string, taskToAdd: CreateTaskCommand): Promise<User> {
 		const user = await this.userReadRepository.findOne(userId);
+
 		const task = await this.taskWriteRepository.insert(
-			new Task(taskToAdd.title, taskToAdd.description),
+			new Task(taskToAdd.title, taskToAdd.description, user),
 		);
+
 		user.addTask(task);
+
 		return await this.userWriteRepository.update(user);
 	}
 }

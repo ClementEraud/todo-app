@@ -7,7 +7,7 @@ export class Task {
 	description: string;
 	user?: User;
 
-	constructor(title: string, description: string, id?: string, user?: User) {
+	constructor(title: string, description: string, user?: User, id?: string) {
 		this.id = id ? id : uuidv4();
 		this.title = title;
 		this.description = description;

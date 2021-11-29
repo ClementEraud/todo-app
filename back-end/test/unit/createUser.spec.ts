@@ -3,15 +3,15 @@ import { User } from '../../src/domain/models/User';
 import { UserWriteRepository } from '../../src/infrastructure/in_memory/repositories/user/UserWriteRepository';
 
 describe('CreateUser', () => {
-	let createUser: CreateUser;
+	let useCase: CreateUser;
 	const userList: User[] = [];
 
-	beforeEach(async () => {
-		createUser = new CreateUser(new UserWriteRepository(userList));
+	beforeAll(async () => {
+		useCase = new CreateUser(new UserWriteRepository(userList));
 	});
 
 	it('GIVEN a valid user SHOULD insert a new user and return it', async () => {
-		const userCreated = await createUser.execute({
+		const userCreated = await useCase.execute({
 			firstName: 'Bernice',
 			lastName: 'McDonald',
 		});
