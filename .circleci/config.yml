@@ -93,3 +93,7 @@ workflows:
           requires:
             - build-back
             - build-front
+          filters:
+            branches:
+              only:
+                - main
