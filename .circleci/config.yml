@@ -11,6 +11,9 @@ jobs:
           name: Install Tools
           command: cd back-end && npm i
       - run:
+          name: Build Check
+          command: cd back-end && npm run build
+      - run:
           name: Lint Check
           command: cd back-end && npm run lint
       - run:
@@ -22,6 +25,21 @@ jobs:
       - run:
           name: E2E Test back-end
           command: cd back-end && npm run test:e2e
+  front-end-checks:
+    docker:
+      - image: circleci/node:14.15.0
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Install Tools
+          command: cd front-end && npm i
+      - run:
+          name: Build Check
+          command: cd front-end && npm run build
+      - run:
+          name: Unit Test
+          command: cd front-end && npm run test
   build-back:
     docker:
       - image: circleci/node:14.15.0
@@ -85,10 +103,21 @@ workflows:
   build:
     jobs:
       - back-end-checks
+      - front-end-checks
       - build-back:
           requires:
             - back-end-checks
-      - build-front
+          filters:
+            branches:
+              only:
+                - main
+      - build-front:
+          requires:
+            - front-end-checks
+          filters:
+            branches:
+              only:
+                - main
       - deploy:
           requires:
             - build-back
