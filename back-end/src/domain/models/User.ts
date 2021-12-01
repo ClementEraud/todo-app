@@ -6,10 +6,14 @@ export class User {
 	firstName: string;
 	lastName: string;
 	tasks: Task[];
+	username: string;
+	password: string;
 
 	constructor(
 		firstName: string,
 		lastName: string,
+		username: string,
+		password: string,
 		tasks?: Task[],
 		id?: string,
 	) {
@@ -17,6 +21,8 @@ export class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.tasks = tasks;
+		this.username = username;
+		this.password = password;
 	}
 
 	addTask(task: Task) {

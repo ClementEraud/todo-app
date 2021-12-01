@@ -19,6 +19,14 @@ export const UserSchema = new EntitySchema<User>({
 			type: String,
 			nullable: false,
 		},
+		username: {
+			type: String,
+			nullable: false,
+		},
+		password: {
+			type: String,
+			nullable: false,
+		},
 	},
 	relations: {
 		tasks: {

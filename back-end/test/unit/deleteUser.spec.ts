@@ -5,7 +5,14 @@ import { UserWriteRepository } from '../../src/infrastructure/in_memory/reposito
 describe('DeleteUser', () => {
 	let useCase: DeleteUser;
 	const userList: User[] = [
-		new User('Marian', 'Thompson', [], '41482d04-68c9-46a9-8ab2-5d8daf6f2aaf'),
+		new User(
+			'Marian',
+			'Thompson',
+			'username',
+			'password',
+			[],
+			'41482d04-68c9-46a9-8ab2-5d8daf6f2aaf',
+		),
 	];
 
 	beforeAll(() => {

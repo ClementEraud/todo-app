@@ -5,8 +5,22 @@ import { UserReadRepository } from '../../src/infrastructure/in_memory/repositor
 describe('GetAllUser', () => {
 	let useCase: GetAllUsers;
 	const userList: User[] = [
-		new User('Verna', 'Tran', [], 'df15fecb-2baf-419f-858e-abae3ac1454b'),
-		new User('Susan', 'Willis', [], 'a8e249fa-e38c-47b8-8439-c3fa51e0f118'),
+		new User(
+			'Verna',
+			'Tran',
+			'username',
+			'password',
+			[],
+			'df15fecb-2baf-419f-858e-abae3ac1454b',
+		),
+		new User(
+			'Susan',
+			'Willis',
+			'username',
+			'password',
+			[],
+			'a8e249fa-e38c-47b8-8439-c3fa51e0f118',
+		),
 	];
 
 	beforeAll(async () => {

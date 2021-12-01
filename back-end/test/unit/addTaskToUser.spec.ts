@@ -8,7 +8,14 @@ import { UserWriteRepository } from '../../src/infrastructure/in_memory/reposito
 describe('AddTaskToUser', () => {
 	let useCase: AddTaskToUser;
 	const userList: User[] = [
-		new User('Verna', 'Tran', [], 'df15fecb-2baf-419f-858e-abae3ac1454b'),
+		new User(
+			'Verna',
+			'Tran',
+			'username',
+			'password',
+			[],
+			'df15fecb-2baf-419f-858e-abae3ac1454b',
+		),
 	];
 	const taskList: Task[] = [];
 

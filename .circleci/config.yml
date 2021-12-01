@@ -22,9 +22,6 @@ jobs:
       - run:
           name: Unit Test
           command: cd back-end && npm run test
-      - run:
-          name: E2E Test back-end
-          command: cd back-end && npm run test:e2e
   front-end-checks:
     docker:
       - image: circleci/node:14.15.0

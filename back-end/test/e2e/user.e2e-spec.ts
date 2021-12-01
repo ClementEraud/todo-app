@@ -48,7 +48,12 @@ describe('UserController (e2e)', () => {
 	it('/users (POST)', async () => {
 		return request(app.getHttpServer())
 			.post('/users')
-			.send({ firstName: 'Jean', lastName: 'Michel' })
+			.send({
+				firstName: 'Jean',
+				lastName: 'Michel',
+				username: 'JeanMichel',
+				password: 'password',
+			})
 			.expect(201)
 			.expect((res: request.Response) => {
 				expect(res.body.firstName).toBe('Jean');
