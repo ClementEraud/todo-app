@@ -9,7 +9,6 @@ export const TaskSchema = new EntitySchema<Task>({
 		id: {
 			type: String,
 			primary: true,
-			generated: true,
 		},
 		title: {
 			type: String,
