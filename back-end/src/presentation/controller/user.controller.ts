@@ -4,9 +4,11 @@ import {
 	Controller,
 	Delete,
 	Get,
+	HttpCode,
 	Param,
 	Patch,
 	Post,
+	Response,
 } from '@nestjs/common';
 import { AddTaskToUser } from '../../application/use_cases/AddTaskToUser';
 import { CreateTaskVM } from '../view-models/CreateTaskVM';
@@ -15,8 +17,10 @@ import { CreateUserVM } from '../view-models/CreateUserVM';
 import { DeleteUser } from '../../application/use_cases/DeleteUser';
 import { GetAllUsers } from '../../application/use_cases/GetAllUsers';
 import { GetUser } from '../../application/use_cases/GetUser';
+import { LoginUser } from '../../application/use_cases/LoginUser';
 import { UpdateUser } from '../../application/use_cases/UpdateUser';
 import { UpdateUserVM } from '../view-models/UpdateUserVM';
+import { UserLoginVM } from '../view-models/UserLoginVM';
 import { UserVM } from '../view-models/UserVM';
 
 @ApiTags('users')
@@ -29,6 +33,7 @@ export class UserController {
 		private readonly updateUser: UpdateUser,
 		private readonly deleteUser: DeleteUser,
 		private readonly addTaskUser: AddTaskToUser,
+		private readonly loginUser: LoginUser,
 	) {}
 
 	@Post()
@@ -89,6 +94,17 @@ export class UserController {
 	): Promise<UserVM> {
 		return UserVM.toViewModel(
 			await this.addTaskUser.execute(userId, createTask),
+		);
+	}
+
+	@Post('login')
+	@ApiCreatedResponse({
+		type: UserVM,
+	})
+	@HttpCode(200)
+	async login(@Body() userLogin: UserLoginVM): Promise<UserVM> {
+		return UserVM.toViewModel(
+			await this.loginUser.execute(userLogin.username, userLogin.password),
 		);
 	}
 }

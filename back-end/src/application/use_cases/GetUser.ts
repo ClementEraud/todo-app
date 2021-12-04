@@ -8,6 +8,6 @@ export class GetUser implements UseCase {
 	constructor(private readonly userReadRepository: IUserReadRepository) {}
 
 	async execute(userId: string): Promise<User> {
-		return this.userReadRepository.findOne(userId);
+		return this.userReadRepository.findById(userId);
 	}
 }

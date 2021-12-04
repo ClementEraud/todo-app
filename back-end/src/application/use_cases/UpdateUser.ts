@@ -13,7 +13,7 @@ export class UpdateUser implements UseCase {
 	) {}
 
 	async execute(id: string, updateUser: UpdateUserCommand): Promise<User> {
-		const user: User = await this.userReadRepository.findOne(id);
+		const user: User = await this.userReadRepository.findById(id);
 		user.update(updateUser.firstName, updateUser.lastName);
 		return await this.userWriteRepository.update(user);
 	}

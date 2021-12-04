@@ -16,7 +16,7 @@ export class AddTaskToUser implements UseCase {
 	) {}
 
 	async execute(userId: string, taskToAdd: CreateTaskCommand): Promise<User> {
-		const user = await this.userReadRepository.findOne(userId);
+		const user = await this.userReadRepository.findById(userId);
 
 		const task = await this.taskWriteRepository.insert(
 			new Task(taskToAdd.title, taskToAdd.description, user),

@@ -1,3 +1,5 @@
+import { APP_FILTER } from '@nestjs/core';
+import { ExceptionsFilter } from '../../src/presentation/filters/ExceptionsFilter';
 import { Test } from '@nestjs/testing/test';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from '../../src/infrastructure/ioc/user.module';
@@ -21,5 +23,11 @@ export const buildTestModule = async (datasetPath: string) =>
 				logging: false,
 				synchronize: true,
 			}),
+		],
+		providers: [
+			{
+				provide: APP_FILTER,
+				useClass: ExceptionsFilter,
+			},
 		],
 	}).compile();

@@ -6,6 +6,7 @@ import { GetUser } from '../../application/use_cases/GetUser';
 import { ITaskWriteRepository } from '../../application/ports/task/TaskWriteRepository.interface';
 import { IUserReadRepository } from '../../application/ports/user/UserReadRepository.interface';
 import { IUserWriteRepository } from '../../application/ports/user/UserWriteRepository.interface';
+import { LoginUser } from '../../application/use_cases/LoginUser';
 import { Module } from '@nestjs/common';
 import { TaskWriteRepository } from '../database/repositories/task/TaskWriteRepository';
 import { UpdateUser } from '../../application/use_cases/UpdateUser';
@@ -23,6 +24,7 @@ import { UserWriteRepository } from '../database/repositories/user/UserWriteRepo
 		GetUser,
 		UpdateUser,
 		AddTaskToUser,
+		LoginUser,
 		{ provide: IUserReadRepository, useClass: UserReadRepository },
 		{ provide: IUserWriteRepository, useClass: UserWriteRepository },
 		{ provide: ITaskWriteRepository, useClass: TaskWriteRepository },
