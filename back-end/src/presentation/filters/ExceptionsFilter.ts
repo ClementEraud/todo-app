@@ -15,6 +15,10 @@ const ExceptionsResponseMapper = {
 		statusCode: 400,
 		message: 'Bad Password',
 	},
+	UsernameAlreadyUsed: {
+		statusCode: 400,
+		message: 'Username already used',
+	},
 };
 
 @Catch()

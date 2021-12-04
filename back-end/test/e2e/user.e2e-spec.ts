@@ -47,6 +47,20 @@ describe('UserController (e2e)', () => {
 					expect(res.body.firstName).toBe('Jean');
 					expect(res.body.lastName).toBe('Michel');
 				}));
+
+		it('GIVEN used username SHOULD return 400 and Username already used error.', async () =>
+			request(app.getHttpServer())
+				.post('/users')
+				.send({
+					firstName: 'Jean',
+					lastName: 'Michel',
+					username: 'JeanMichel',
+					password: 'password',
+				})
+				.expect(400)
+				.expect((res: request.Response) => {
+					expect(res.body.message).toBe('Username already used');
+				}));
 	});
 
 	describe('/users/:id (GET)', () => {

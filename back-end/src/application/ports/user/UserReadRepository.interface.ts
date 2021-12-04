@@ -3,9 +3,10 @@ import { User } from '../../../domain/models/User';
 export abstract class IUserReadRepository {
 	/**
 	 * Returns all users in DB.
+	 * @param {Partial<User>} filters - optionnal - filters to apply to findAll.
 	 * @returns {Promise<User[]>}
 	 */
-	abstract findAll(): Promise<User[]>;
+	abstract findAll(filters?: Partial<User>): Promise<User[]>;
 
 	/**
 	 * Finds a user by its ID and returns it.

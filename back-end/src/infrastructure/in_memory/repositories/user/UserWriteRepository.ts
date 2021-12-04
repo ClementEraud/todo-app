@@ -21,7 +21,7 @@ export class UserWriteRepository implements IUserWriteRepository {
 	}
 
 	async remove(userId: string): Promise<boolean> {
-		const idx = this.userList.findIndex((user) => user.id === userId);
+		const idx = this.userList.findIndex(user => user.id === userId);
 		this.userList.splice(idx);
 		return true;
 	}

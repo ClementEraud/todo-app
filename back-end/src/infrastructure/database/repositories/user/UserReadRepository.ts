@@ -14,8 +14,11 @@ export class UserReadRepository implements IUserReadRepository {
 		this.manager = this.queryRunner.manager;
 	}
 
-	async findAll(): Promise<User[]> {
-		return await this.manager.find(UserSchema, { relations: ['tasks'] });
+	async findAll(filters?: Partial<User>): Promise<User[]> {
+		return await this.manager.find(UserSchema, {
+			relations: ['tasks'],
+			where: filters,
+		});
 	}
 
 	async findById(userId: string): Promise<User> {

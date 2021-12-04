@@ -12,7 +12,10 @@ describe('LoginUser', () => {
 
 	beforeAll(async () => {
 		useCase = new LoginUser(new UserReadRepository(userList));
-		createUser = new CreateUser(new UserWriteRepository(userList));
+		createUser = new CreateUser(
+			new UserWriteRepository(userList),
+			new UserReadRepository(userList),
+		);
 
 		await createUser.execute({
 			firstName: 'Bernice',
