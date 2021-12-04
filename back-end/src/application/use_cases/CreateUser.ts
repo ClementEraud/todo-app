@@ -1,5 +1,5 @@
-import * as bcrypt from 'bcrypt';
 import { CreateUserCommand } from '../command/create-user';
+import { IEncryptionService } from '../ports/services/EncryptionService';
 import { IUserReadRepository } from '../ports/user/UserReadRepository.interface';
 import { IUserWriteRepository } from '../ports/user/UserWriteRepository.interface';
 import { Injectable } from '@nestjs/common';
@@ -12,11 +12,11 @@ export class CreateUser implements UseCase {
 	constructor(
 		private readonly userWriteRepository: IUserWriteRepository,
 		private readonly userReadRepository: IUserReadRepository,
+		private readonly encryptionService: IEncryptionService,
 	) {}
 
 	async execute(createUser: CreateUserCommand): Promise<User> {
-		const salt = await bcrypt.genSalt(10);
-		const hash_password = await bcrypt.hash(createUser.password, salt);
+		const hash_password = this.encryptionService.hash(createUser.password);
 		const usersWithSameUsernameFound = await this.userReadRepository.findAll({
 			username: createUser.username,
 		});

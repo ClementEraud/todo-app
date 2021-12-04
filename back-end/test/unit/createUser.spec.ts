@@ -1,5 +1,5 @@
-import * as bcrypt from 'bcrypt';
 import { CreateUser } from '../../src/application/use_cases/CreateUser';
+import { EncryptionServiceFake } from '../fakes/EncryptionServiceStubs';
 import { User } from '../../src/domain/models/User';
 import { UserReadRepository } from '../../src/infrastructure/in_memory/repositories/user/UserReadRepository';
 import { UserWriteRepository } from '../../src/infrastructure/in_memory/repositories/user/UserWriteRepository';
@@ -13,6 +13,7 @@ describe('CreateUser', () => {
 		useCase = new CreateUser(
 			new UserWriteRepository(userList),
 			new UserReadRepository(userList),
+			new EncryptionServiceFake(),
 		);
 	});
 
@@ -28,7 +29,7 @@ describe('CreateUser', () => {
 		expect(userCreated.firstName).toBe('Bernice');
 		expect(userCreated.lastName).toBe('McDonald');
 		expect(userCreated.username).toBe('McDoDu44');
-		expect(await bcrypt.compare('password', userCreated.password)).toBe(true);
+		expect(userCreated.password).toBe('password');
 		expect(userList.length).toBe(1);
 	});
 
