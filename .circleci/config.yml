@@ -87,7 +87,7 @@ jobs:
           command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
       - run:
           name: Setup Docker context
-          command: unset DOCKER_HOST && docker context create scaleway --docker host=ssh://root@163.172.190.45
+          command: unset DOCKER_HOST && docker context create scaleway --docker host=ssh://root@51.159.163.97
       - run:
           name: Delete containers on remote host
           command: docker-compose --context scaleway down
@@ -96,11 +96,11 @@ jobs:
           command: docker-compose --context scaleway -f docker-compose.prod.yml pull
       - run:
           name: Up containers on remote host
-          command: docker-compose --context scaleway -f docker-compose.prod.yml up -d
+          command: docker-compose --context scaleway -f docker-compose.prod.yml up -d db api web
 
 workflows:
   version: 2
-  build:
+  build-and-deploy:
     jobs:
       - back-end-checks
       - front-end-checks
