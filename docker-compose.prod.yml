@@ -24,6 +24,7 @@ services:
     volumes:
       - /etc/letsencrypt/:/etc/nginx/ssl/:rw
       - /var/www/certbot/:/var/www/certbot/:rw
+      - /var/log/nginx/:/var/log/nginx/:rw
 
 volumes:
   dbdata:

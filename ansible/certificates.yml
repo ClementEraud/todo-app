@@ -1,0 +1,18 @@
+---
+- hosts: todo-app
+  become: true
+
+  tasks:
+    - name: Ensure certbot is installed
+      community.general.snap:
+        name: certbot
+        state: present
+
+    - name: Ensure certbot command can be used
+      ansible.builtin.shell: ln -sf /snap/bin/certbot /usr/bin/certbot
+
+    - name: Get certificates
+      ansible.builtin.shell: certbot certonly --webroot -w /var/www/certbot --agree-tos --email clement.eraud@gmail.com -n -v -d clementeraud.site -d www.clementeraud.site --debug-challenges
+
+    - name: Reload nginx
+      ansible.builtin.shell: docker exec -d project_web_1 nginx -s reload

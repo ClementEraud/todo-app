@@ -24,18 +24,33 @@ This app is deployed using CircleCi to deploy it to Scaleway on [clementeraud.si
 
 It uses the docker-compose.prod.yml.
 
-## Things that need to be put in an Ansible file
+## Server configuration
 
-### SSH
+Server configuration is managed by Ansible under `ansible/setup.yml`.
+You will need ansible installed and hosts configured for your server.
 
-SSH configuration for maximum sessions -> See [here](https://linuxhint.com/ssh-maxsessions-configuration/)
-
-### Certificates
-
-Request certificates
+Then run :
 
 ```sh
-certbot certonly --webroot -w /var/www/certbot --agree-tos --email clement.eraud@gmail.com -n -v -d clementeraud.site -d www.clementeraud.site --debug-challenges
+ansible-playbook ansible/setup.yml
 ```
 
-Certbot automatically adds a cron job to renew certificates.
+## SSL Certificates
+
+In order to pass challenges of let's encrypt, we need a running web server, that is why the web service in the [Dockerfile](./front-end/Dockerfile) it is set to start using this [endpoint](./front-end/endpoint.sh).
+
+So before launching the certification playbook, you will need to have setup your server and deployed the app with [circle ci](https://app.circleci.com)
+
+This endpoint makes sure that if there is no certificates, then it creates dummy certificates, so the web server can run and the challenges for let's encrypt certificates can pass. After that Certbot will place the files in a shared directory with the Front-End container, and then the playbook will reload nginx with the new certificates.
+
+This project is using certbot to handle SSL Certificates.
+It is managed by Ansible.
+
+Run :
+
+```sh
+ansible-playbook ansible/certificates.yml
+```
+
+This makes sure certbot is installed and then get certificates.
+Certbot creates a cron-job to handle renewal of certificates so you should not have to run certificates.yml playbook twice.
