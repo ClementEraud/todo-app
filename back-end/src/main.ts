@@ -10,8 +10,8 @@ import { ExceptionsFilter } from './presentation/filters/ExceptionsFilter';
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 	app.enableCors();
-	const { httpAdapter } = app.get(HttpAdapterHost);
-	app.useGlobalFilters(new ExceptionsFilter(httpAdapter));
+
+	app.useGlobalFilters(new ExceptionsFilter(app.get(HttpAdapterHost)));
 
 	const config = new DocumentBuilder()
 		.setTitle('Todo App - API')

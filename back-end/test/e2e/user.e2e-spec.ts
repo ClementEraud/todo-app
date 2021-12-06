@@ -19,19 +19,6 @@ describe('UserController (e2e)', () => {
 
 	afterAll(() => app.close());
 
-	describe('/users (GET)', () => {
-		it('SHOULD return all users', async () =>
-			request(app.getHttpServer())
-				.get('/users')
-				.expect(200)
-				.expect((res: request.Response) => {
-					expect(res.body[0].firstName).toBe('Tyler');
-					expect(res.body[0].lastName).toBe('Chavez');
-					expect(res.body[1].firstName).toBe('Ricardo');
-					expect(res.body[1].lastName).toBe('Munoz');
-				}));
-	});
-
 	describe('/users (POST)', () => {
 		it('GIVEN valid datas SHOULD return newly created user.', async () =>
 			request(app.getHttpServer())
@@ -63,17 +50,6 @@ describe('UserController (e2e)', () => {
 				}));
 	});
 
-	describe('/users/:id (GET)', () => {
-		it('GIVEN valid id SHOULD return user assigned to ID.', async () =>
-			request(app.getHttpServer())
-				.get('/users/0f9a61c0-9c3f-4fe9-afe0-47876d18f8c0')
-				.expect(200)
-				.expect((res: request.Response) => {
-					expect(res.body.firstName).toBe('Tyler');
-					expect(res.body.lastName).toBe('Chavez');
-				}));
-	});
-
 	describe('/users/:id/add-task (POST)', () => {
 		it('GIVEN valid task SHOULD add task to user.', async () =>
 			request(app.getHttpServer())
@@ -87,34 +63,6 @@ describe('UserController (e2e)', () => {
 					expect(res.body.tasks[0].title).toBe('Task 1');
 					expect(res.body.tasks[0].description).toBe('Task description');
 				}));
-	});
-
-	describe('/users/:id (PATCH)', () => {
-		it('GIVEN valid ID and datas SHOULD update user and return updated user.', async () =>
-			request(app.getHttpServer())
-				.patch('/users/0f9a61c0-9c3f-4fe9-afe0-47876d18f8c0')
-				.send({ firstName: 'Michou' })
-				.expect(200)
-				.expect((res: request.Response) => {
-					expect(res.body.firstName).toBe('Michou');
-					expect(res.body.lastName).toBe('Chavez');
-				}));
-	});
-
-	describe('/users/:id (DELETE)', () => {
-		it('GIVEN valid ID SHOULD delete user assigned to ID.', async () => {
-			await request(app.getHttpServer())
-				.delete('/users/0f9a61c0-9c3f-4fe9-afe0-47876d18f8c0')
-				.expect(200);
-
-			return request(app.getHttpServer())
-				.get('/users')
-				.expect(200)
-				.expect((res: request.Response) => {
-					expect(res.body[0].firstName).toBe('Ricardo');
-					expect(res.body[0].lastName).toBe('Munoz');
-				});
-		});
 	});
 
 	describe('/users/login (POST)', () => {
