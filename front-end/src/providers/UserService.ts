@@ -1,3 +1,4 @@
+import { ConfigProvider } from './ConfigProvider';
 import { IUserService } from '../core/ports/UserService.interface';
 import { User } from '../core/models/User';
 
@@ -5,17 +6,22 @@ export class UserService implements IUserService {
 	private currentUser: User | undefined;
 
 	async login(username: string, password: string): Promise<User> {
-		const response = await fetch('http://localhost:3001/users/login', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				accept: 'application/json',
+		const config = await ConfigProvider.getConfig();
+
+		const response = await fetch(
+			`http://${config.API_HOSTNAME}:${config.API_PORT}/users/login`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					accept: 'application/json',
+				},
+				body: JSON.stringify({
+					username,
+					password,
+				}),
 			},
-			body: JSON.stringify({
-				username,
-				password,
-			}),
-		});
+		);
 
 		const responseBody = await response.json();
 

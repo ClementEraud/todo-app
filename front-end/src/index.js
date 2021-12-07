@@ -5,17 +5,20 @@ import HomePage from './views/HomePage/HomePage';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { useLoginUser } from './core/hooks/useLoginUser';
-import { UserService } from './services/UserService';
+import { UserService } from './providers/UserService';
 import { AppModule } from './AppModule';
 
-export const AppContext = React.createContext(
-	new AppModule([
-		{
-			hook: useLoginUser,
-			providers: [UserService],
+const appModule = new AppModule([
+	{
+		hook: {
+			name: 'useLoginUser',
+			function: useLoginUser,
 		},
-	]),
-);
+		providers: [UserService],
+	},
+]);
+
+export const AppContext = React.createContext(appModule);
 
 ReactDOM.render(
 	<React.StrictMode>

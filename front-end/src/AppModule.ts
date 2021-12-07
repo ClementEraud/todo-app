@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 interface HookDeclaration {
-	hook: (...dependencies: any) => (...params: any) => any;
+	hook: {
+		name: string;
+		function: (...dependencies: any) => (...params: any) => any;
+	};
 	providers: any[];
 }
 
@@ -33,7 +36,7 @@ export class AppModule {
 				return instance;
 			});
 
-			const preparedHook = hook(...providersInstances);
+			const preparedHook = hook.function(...providersInstances);
 
 			this.hooks[hook.name] = preparedHook;
 
