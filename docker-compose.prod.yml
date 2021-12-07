@@ -10,8 +10,6 @@ services:
       - dbdata:/var/lib/mysql
   api:
     image: rg.fr-par.scw.cloud/clement-registry/todo-back-end
-    ports:
-      - "3000:3000"
     environment:
       TYPEORM_HOST: db
     depends_on:
