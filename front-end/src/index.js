@@ -4,6 +4,18 @@ import './index.css';
 import HomePage from './views/HomePage/HomePage';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { useLoginUser } from './core/hooks/useLoginUser';
+import { UserService } from './services/UserService';
+import { AppModule } from './AppModule';
+
+export const AppContext = React.createContext(
+	new AppModule([
+		{
+			hook: useLoginUser,
+			providers: [UserService],
+		},
+	]),
+);
 
 ReactDOM.render(
 	<React.StrictMode>

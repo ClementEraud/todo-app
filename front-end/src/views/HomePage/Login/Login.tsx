@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { AppContext } from '../../../index';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,10 +11,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { User } from '../../../core/models/User';
-import { useLoginUser } from '../../../core/hooks/useLoginUser';
+import { useContext } from 'react';
 
 const Login = () => {
-	const [handleSubmit] = useLoginUser(
+	const appModule = useContext(AppContext);
+
+	const [handleSubmit] = appModule.hooks.useLoginUser(
 		(user: User) => {
 			console.log('connected user : ', user);
 		},

@@ -1,7 +1,10 @@
+import { IUserService } from '../core/ports/UserService.interface';
 import { User } from '../core/models/User';
 
-export class UserService {
-	static async login(username: string, password: string): Promise<User> {
+export class UserService implements IUserService {
+	private currentUser: User | undefined;
+
+	async login(username: string, password: string): Promise<User> {
 		const response = await fetch('http://localhost:3001/users/login', {
 			method: 'POST',
 			headers: {
@@ -20,6 +23,11 @@ export class UserService {
 			throw new Error(responseBody.message);
 		}
 
-		return new User(responseBody);
+		this.currentUser = new User(responseBody);
+		return this.currentUser;
+	}
+
+	getCurrentUser(): User | undefined {
+		return this.currentUser;
 	}
 }
