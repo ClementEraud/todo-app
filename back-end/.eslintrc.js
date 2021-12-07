@@ -16,6 +16,7 @@ module.exports = {
 		'plugin:import/errors',
 		'plugin:import/warnings',
 		'plugin:import/typescript',
+		'prettier',
 	],
 	root: true,
 	env: {
@@ -36,7 +37,6 @@ module.exports = {
 		'array-bracket-newline': ['error', 'consistent'],
 		'array-bracket-spacing': ['error', 'never'],
 		'array-element-newline': ['error', 'consistent'],
-		indent: ['error', 'tab'],
 		'@typescript-eslint/interface-name-prefix': 'off',
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',

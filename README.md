@@ -2,6 +2,14 @@
 
 Simple Todo app to try Docker, CircleCI, Scaleway, Clean Architecture and more
 
+## Front-end
+
+To see more about Front-end read [README.md](./front-end/README.md)
+
+## Back-end
+
+To see more about Back-end read [README.md](./back-end/README.md)
+
 ## How to run project on local machine
 
 To launch the project on local machine use docker-compose.

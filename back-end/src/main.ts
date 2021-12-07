@@ -3,11 +3,16 @@ import {
 	SwaggerDocumentOptions,
 	SwaggerModule,
 } from '@nestjs/swagger';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { NestFactory } from '@nestjs/core';
+import { ExceptionsFilter } from './presentation/filters/ExceptionsFilter';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
+	app.enableCors();
+
+	app.useGlobalFilters(new ExceptionsFilter(app.get(HttpAdapterHost)));
+
 	const config = new DocumentBuilder()
 		.setTitle('Todo App - API')
 		.setDescription('This describes the Todo App API')

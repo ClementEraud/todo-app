@@ -22,6 +22,12 @@ export class UserVM {
 	lastName: string;
 
 	@ApiProperty({
+		description: 'Username of user.',
+		example: 'AwesomeBarryWest',
+	})
+	username: string;
+
+	@ApiProperty({
 		description: 'Tasks of user.',
 		example: `[
       {id: 1, title: 'Title', description: 'Description of task 1'},
@@ -35,11 +41,13 @@ export class UserVM {
 		id: string,
 		firstName: string,
 		lastName: string,
+		username: string,
 		tasks?: TaskVM[],
 	) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.username = username;
 		this.tasks = tasks;
 	}
 
@@ -48,6 +56,7 @@ export class UserVM {
 			user.id,
 			user.firstName,
 			user.lastName,
+			user.username,
 			user.tasks ? user.tasks.map(TaskVM.toViewModel) : [],
 		);
 	}

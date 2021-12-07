@@ -13,4 +13,16 @@ export class CreateUserVM implements CreateUserCommand {
 		required: true,
 	})
 	lastName: string;
+
+	@ApiProperty({
+		description: 'Username',
+		required: true,
+	})
+	username: string;
+
+	@ApiProperty({
+		description: 'User password',
+		required: true,
+	})
+	password: string;
 }

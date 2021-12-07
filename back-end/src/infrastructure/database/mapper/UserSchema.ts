@@ -9,13 +9,20 @@ export const UserSchema = new EntitySchema<User>({
 		id: {
 			type: String,
 			primary: true,
-			generated: true,
 		},
 		firstName: {
 			type: String,
 			nullable: false,
 		},
 		lastName: {
+			type: String,
+			nullable: false,
+		},
+		username: {
+			type: String,
+			nullable: false,
+		},
+		password: {
 			type: String,
 			nullable: false,
 		},

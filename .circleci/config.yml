@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Install Tools
-          command: cd back-end && npm i
+          command: cd back-end && sudo npm install -g npm@latest && npm i
       - run:
           name: Build Check
           command: cd back-end && npm run build
@@ -22,9 +22,6 @@ jobs:
       - run:
           name: Unit Test
           command: cd back-end && npm run test
-      - run:
-          name: E2E Test back-end
-          command: cd back-end && npm run test:e2e
   front-end-checks:
     docker:
       - image: circleci/node:14.15.0
@@ -33,13 +30,10 @@ jobs:
       - checkout
       - run:
           name: Install Tools
-          command: cd front-end && npm i
+          command: cd front-end && sudo npm install -g npm@latest && npm i
       - run:
           name: Build Check
           command: cd front-end && npm run build
-      - run:
-          name: Unit Test
-          command: cd front-end && npm run test
   build-back:
     docker:
       - image: circleci/node:14.15.0

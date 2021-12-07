@@ -1,0 +1,22 @@
+{
+	"jest.jestCommandLine": "npm run test --",
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"prettier.configPath": "back-end/.prettierrc",
+	"prettier.trailingComma": "all",
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"eslint.format.enable": true,
+	"eslint.alwaysShowStatus": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll": true
+	},
+	"javascript.preferences.importModuleSpecifier": "relative",
+	"typescript.preferences.importModuleSpecifier": "relative",
+	"explorer.confirmDragAndDrop": false,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"editor.formatOnSave": true,
+	"diffEditor.ignoreTrimWhitespace": false
+}
