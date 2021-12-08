@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Login from './Login/Login';
+import { Outlet } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 
 const theme = createTheme();
@@ -37,9 +37,8 @@ const HomePage = () => {
 							display: 'flex',
 							flexDirection: 'column',
 							alignItems: 'center',
-						}}
-					>
-						<Login></Login>
+						}}>
+						<Outlet />
 					</Box>
 				</Grid>
 			</Grid>

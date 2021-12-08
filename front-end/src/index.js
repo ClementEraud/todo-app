@@ -7,6 +7,10 @@ import reportWebVitals from './reportWebVitals';
 import { useLoginUser } from './core/hooks/useLoginUser';
 import { UserService } from './providers/UserService';
 import { AppModule } from './AppModule';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { SignUp } from './views/HomePage/SignUp/SignUp';
+import { ForgotPassword } from './views/HomePage/ForgotPassword/ForgotPassword';
+import Login from './views/HomePage/Login/Login';
 
 const appModule = new AppModule([
 	{
@@ -22,7 +26,15 @@ export const AppContext = React.createContext(appModule);
 
 ReactDOM.render(
 	<React.StrictMode>
-		<HomePage />
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<HomePage />}>
+					<Route path="" element={<Login />} />
+					<Route path="sign-up" element={<SignUp />} />
+					<Route path="forgot-password" element={<ForgotPassword />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById('root'),
 );
