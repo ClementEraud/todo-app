@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { AppContext } from '../../../index';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -8,22 +9,52 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { SAlert } from './styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { User } from '../../../core/models/User';
-import { useContext } from 'react';
 
 const Login = () => {
 	const appModule = useContext(AppContext);
+	const [error, setError] = useState<string | undefined>();
+	const [usernameError, setUsernameError] = useState<boolean>(false);
+	const [passwordError, setPasswordError] = useState<boolean>(false);
+	const [username, setUsername] = useState<string | undefined>();
+	const [password, setPassword] = useState<string | undefined>();
 
 	const [handleSubmit] = appModule.hooks.useLoginUser(
 		(user: User) => {
 			console.log('connected user : ', user);
+			setError(undefined);
 		},
 		(error: Error) => {
-			console.log('connection error : ', error);
+			setError(error.message);
 		},
 	);
+
+	const handleUsernameChange = (
+		event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+	) => {
+		setUsername(event.target.value);
+
+		if (event.target.value) {
+			setUsernameError(false);
+		} else {
+			setUsernameError(true);
+		}
+	};
+
+	const handlePasswordChange = (
+		event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+	) => {
+		setPassword(event.target.value);
+
+		if (!event.target.value) {
+			setPasswordError(true);
+		} else {
+			setPasswordError(false);
+		}
+	};
 
 	return (
 		<>
@@ -43,6 +74,8 @@ const Login = () => {
 					name="username"
 					autoComplete="username"
 					autoFocus
+					onChange={handleUsernameChange}
+					error={usernameError}
 				/>
 				<TextField
 					margin="normal"
@@ -53,6 +86,8 @@ const Login = () => {
 					type="password"
 					id="password"
 					autoComplete="current-password"
+					onChange={handlePasswordChange}
+					error={passwordError}
 				/>
 				<FormControlLabel
 					control={<Checkbox value="remember" color="primary" />}
@@ -63,7 +98,7 @@ const Login = () => {
 					fullWidth
 					variant="contained"
 					sx={{ mt: 3, mb: 2 }}
-				>
+					disabled={usernameError || passwordError || !username || !password}>
 					{'Sign In'}
 				</Button>
 				<Grid container>
@@ -78,6 +113,7 @@ const Login = () => {
 						</Link>
 					</Grid>
 				</Grid>
+				{error && <SAlert severity="error">{error}</SAlert>}
 			</Box>
 		</>
 	);
