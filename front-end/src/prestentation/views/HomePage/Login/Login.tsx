@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChangeEvent, useContext, useState } from 'react';
-import { AppContext } from '../../../index';
+import { AppContext } from '../../../../index';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { SAlert } from './styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { User } from '../../../core/models/User';
+import { User } from '../../../../core/models/User';
 
 const Login = () => {
 	const appModule = useContext(AppContext);
