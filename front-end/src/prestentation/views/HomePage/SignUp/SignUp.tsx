@@ -1,9 +1,8 @@
 import * as React from 'react';
 import * as yup from 'yup';
-import { Avatar, Box, Button, Grid, Link, TextField } from '@mui/material';
+import { Box, Button, Grid, Link, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { AppContext } from '../../../..';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { User } from '../../../../core/models/User';
 
@@ -57,9 +56,6 @@ export const SignUp = () => {
 
 	return (
 		<>
-			<Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-				<LockOutlinedIcon />
-			</Avatar>
 			<Typography component="h1" variant="h5">
 				{'Sign Up'}
 			</Typography>

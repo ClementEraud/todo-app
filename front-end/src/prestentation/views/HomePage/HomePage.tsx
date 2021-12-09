@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Avatar } from '@mui/material';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Outlet } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 
@@ -38,6 +40,9 @@ const HomePage = () => {
 							flexDirection: 'column',
 							alignItems: 'center',
 						}}>
+						<Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+							<LockOutlinedIcon />
+						</Avatar>
 						<Outlet />
 					</Box>
 				</Grid>

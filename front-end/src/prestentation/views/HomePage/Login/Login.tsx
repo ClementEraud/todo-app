@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { ChangeEvent, useContext, useState } from 'react';
 import { AppContext } from '../../../../index';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { SAlert } from './styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -58,9 +56,6 @@ const Login = () => {
 
 	return (
 		<>
-			<Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-				<LockOutlinedIcon />
-			</Avatar>
 			<Typography component="h1" variant="h5">
 				{'Sign in'}
 			</Typography>
