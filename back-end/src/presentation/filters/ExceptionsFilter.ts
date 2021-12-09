@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 
-const ExceptionsResponseMapper = {
+const ExceptionsResponseMapper = (exception: any) => ({
 	UserNotFound: {
 		statusCode: 404,
 		message: 'User Not Found',
@@ -19,7 +19,14 @@ const ExceptionsResponseMapper = {
 		statusCode: 400,
 		message: 'Username already used',
 	},
-};
+	MissingRequiredProperties: {
+		statusCode: 400,
+		message: {
+			label: exception.message,
+			missingProperties: exception.missingProperties,
+		},
+	},
+});
 
 @Catch()
 export class ExceptionsFilter implements ExceptionFilter {
@@ -33,7 +40,7 @@ export class ExceptionsFilter implements ExceptionFilter {
 		const ctx = host.switchToHttp();
 
 		const exceptionResponse =
-			ExceptionsResponseMapper[exception.constructor.name];
+			ExceptionsResponseMapper(exception)[exception.constructor.name];
 
 		const httpStatus = exceptionResponse
 			? exceptionResponse.statusCode

@@ -1,5 +1,6 @@
 import { CreateUser } from '../../src/application/use_cases/CreateUser';
 import { EncryptionServiceFake } from '../fakes/EncryptionServiceStubs';
+import { MissingRequiredProperties } from './../../src/domain/exceptions/MissingRequiredProperties';
 import { User } from '../../src/domain/models/User';
 import { UserReadRepository } from '../../src/infrastructure/in_memory/repositories/user/UserReadRepository';
 import { UserWriteRepository } from '../../src/infrastructure/in_memory/repositories/user/UserWriteRepository';
@@ -33,14 +34,25 @@ describe('CreateUser', () => {
 		expect(userList.length).toBe(1);
 	});
 
-	it('GIVEN a username already used SHOULD throw UsernameAlreadyUsed error.', async () => {
+	it('GIVEN  a username already used SHOULD throw UsernameAlreadyUsed error.', async () => {
 		await expect(
 			useCase.execute({
 				firstName: 'Bernice',
 				lastName: 'McDonald',
-				username: 'McDoDu44',
 				password: 'password',
+				username: 'McDoDu44',
 			}),
 		).rejects.toBeInstanceOf(UsernameAlreadyUsed);
+	});
+
+	it('GIVEN no username SHOULD throw MissingRequiredProperty error.', async () => {
+		await expect(
+			useCase.execute({
+				firstName: 'Bernice',
+				lastName: 'McDonald',
+				password: 'password',
+				username: null,
+			}),
+		).rejects.toBeInstanceOf(MissingRequiredProperties);
 	});
 });

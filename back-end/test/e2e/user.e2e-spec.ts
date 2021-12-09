@@ -48,6 +48,21 @@ describe('UserController (e2e)', () => {
 				.expect((res: request.Response) => {
 					expect(res.body.message).toBe('Username already used');
 				}));
+
+		it('GIVEN no username and no firstName SHOULD return 400 and Missing required properties error.', async () =>
+			request(app.getHttpServer())
+				.post('/users')
+				.send({
+					lastName: 'Michel',
+					password: 'password',
+				})
+				.expect(400)
+				.expect((res: request.Response) => {
+					expect(res.body.message).toStrictEqual({
+						label: 'Missing required properties.',
+						missingProperties: ['firstName', 'username'],
+					});
+				}));
 	});
 
 	describe('/users/:id/add-task (POST)', () => {

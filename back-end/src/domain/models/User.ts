@@ -1,3 +1,4 @@
+import { MissingRequiredProperties } from './../exceptions/MissingRequiredProperties';
 import { Task } from './Task';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,5 +32,21 @@ export class User {
 		} else {
 			this.tasks = [task];
 		}
+	}
+
+	static isValid(user: {
+		username: string;
+		password: string;
+		firstName: string;
+		lastName: string;
+	}) {
+		const requiredProps = ['firstName', 'lastName', 'username', 'password'];
+		const missingProps = requiredProps.filter(prop => !user[prop]);
+
+		if (missingProps.length) {
+			throw new MissingRequiredProperties(missingProps);
+		}
+
+		return true;
 	}
 }

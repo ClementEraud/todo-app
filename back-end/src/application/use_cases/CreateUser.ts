@@ -16,6 +16,8 @@ export class CreateUser implements UseCase {
 	) {}
 
 	async execute(createUser: CreateUserCommand): Promise<User> {
+		User.isValid(createUser);
+
 		const hash_password = this.encryptionService.hash(createUser.password);
 		const usersWithSameUsernameFound = await this.userReadRepository.findAll({
 			username: createUser.username,
