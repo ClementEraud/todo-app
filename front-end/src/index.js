@@ -4,6 +4,7 @@ import './index.css';
 import HomePage from './presentation/views/HomePage/HomePage';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useLoginUser } from './core/hooks/useLoginUser';
 import { UserService } from './providers/UserService';
 import { AppModule } from './AppModule';
@@ -12,6 +13,14 @@ import { SignUp } from './presentation/views/HomePage/SignUp/SignUp';
 import { ForgotPassword } from './presentation/views/HomePage/ForgotPassword/ForgotPassword';
 import Login from './presentation/views/HomePage/Login/Login';
 import { useSignUpUser } from './core/hooks/useSignUpUser';
+import { TasksOfUser } from './presentation/views/TasksOfUser/TasksOfUser';
+import { useConnectedUser } from './core/hooks/useConnectedUser';
+
+const theme = createTheme({
+	palette: {
+		mode: 'dark',
+	},
+});
 
 const appModule = new AppModule([
 	{
@@ -28,6 +37,13 @@ const appModule = new AppModule([
 		},
 		providers: [UserService],
 	},
+	{
+		hook: {
+			name: 'useConnectedUser',
+			function: useConnectedUser,
+		},
+		providers: [UserService],
+	},
 ]);
 
 export const AppContext = React.createContext(appModule);
@@ -35,13 +51,16 @@ export const AppContext = React.createContext(appModule);
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<HomePage />}>
-					<Route path="" element={<Login />} />
-					<Route path="sign-up" element={<SignUp />} />
-					<Route path="forgot-password" element={<ForgotPassword />} />
-				</Route>
-			</Routes>
+			<ThemeProvider theme={theme}>
+				<Routes>
+					<Route path="/" element={<HomePage />}>
+						<Route path="" element={<Login />} />
+						<Route path="sign-up" element={<SignUp />} />
+						<Route path="forgot-password" element={<ForgotPassword />} />
+					</Route>
+					<Route path="/tasks-of-user" element={<TasksOfUser />}></Route>
+				</Routes>
+			</ThemeProvider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById('root'),
