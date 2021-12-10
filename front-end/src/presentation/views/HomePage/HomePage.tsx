@@ -11,6 +11,11 @@ import Paper from '@mui/material/Paper';
 const theme = createTheme();
 
 const HomePage = () => {
+	const imageLink = () => {
+		const rnd = Math.floor(Math.random() * (1 - 6) + 6);
+		return `${process.env.PUBLIC_URL}/pictures/${rnd}.jpg`;
+	};
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Grid container component="main" sx={{ height: '100vh' }}>
@@ -21,7 +26,7 @@ const HomePage = () => {
 					sm={4}
 					md={7}
 					sx={{
-						backgroundImage: 'url(https://source.unsplash.com/random)',
+						backgroundImage: `url(${imageLink()})`,
 						backgroundRepeat: 'no-repeat',
 						backgroundColor: t =>
 							t.palette.mode === 'light'
