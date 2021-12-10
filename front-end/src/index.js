@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import HomePage from './prestentation/views/HomePage/HomePage';
+import HomePage from './presentation/views/HomePage/HomePage';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { useLoginUser } from './core/hooks/useLoginUser';
 import { UserService } from './providers/UserService';
 import { AppModule } from './AppModule';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { SignUp } from './prestentation/views/HomePage/SignUp/SignUp';
-import { ForgotPassword } from './prestentation/views/HomePage/ForgotPassword/ForgotPassword';
-import Login from './prestentation/views/HomePage/Login/Login';
+import { SignUp } from './presentation/views/HomePage/SignUp/SignUp';
+import { ForgotPassword } from './presentation/views/HomePage/ForgotPassword/ForgotPassword';
+import Login from './presentation/views/HomePage/Login/Login';
 import { useSignUpUser } from './core/hooks/useSignUpUser';
 
 const appModule = new AppModule([
