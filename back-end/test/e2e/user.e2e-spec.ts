@@ -84,11 +84,12 @@ describe('UserController (e2e)', () => {
 		it('GIVEN valid username and password SHOULD return user.', async () =>
 			request(app.getHttpServer())
 				.post('/users/login')
-				.send({ username: 'JeanMichel', password: 'password' })
+				.send({ username: 'TylerChavez', password: 'password' })
 				.expect(200)
 				.expect((res: request.Response) => {
-					expect(res.body.firstName).toBe('Jean');
-					expect(res.body.lastName).toBe('Michel');
+					expect(res.body.firstName).toBe('Tyler');
+					expect(res.body.lastName).toBe('Chavez');
+					expect(res.body.tasks.length).toBe(1);
 				}));
 
 		it('GIVEN not existing username SHOULD return 400 Bad Request with User Not Found message.', async () =>

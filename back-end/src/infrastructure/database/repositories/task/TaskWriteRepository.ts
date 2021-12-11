@@ -1,5 +1,4 @@
 import { Connection, EntityManager, QueryRunner } from 'typeorm';
-import { CreateTaskCommand } from '../../../../application/command/create-task';
 import { ITaskWriteRepository } from '../../../../application/ports/task/TaskWriteRepository.interface';
 import { InjectConnection } from '@nestjs/typeorm';
 import { Task } from '../../../../domain/models/Task';
@@ -14,7 +13,8 @@ export class TaskWriteRepository implements ITaskWriteRepository {
 		this.manager = this.queryRunner.manager;
 	}
 
-	async insert(taskToCreate: CreateTaskCommand): Promise<Task> {
-		return this.manager.create(TaskSchema, taskToCreate);
+	async insert(taskToCreate: Task): Promise<Task> {
+		await this.manager.insert(TaskSchema, taskToCreate);
+		return taskToCreate;
 	}
 }

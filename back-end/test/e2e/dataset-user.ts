@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { UserSchema } from '../../src/infrastructure/database/mapper/UserSchema';
 
@@ -11,14 +12,14 @@ export class Dataset1633385179161 implements MigrationInterface {
 				firstName: 'Tyler',
 				lastName: 'Chavez',
 				username: 'TylerChavez',
-				password: 'password',
+				password: bcrypt.hashSync('password', 10),
 			},
 			{
 				id: '2d94f815-2bf0-47fe-a0e9-e0bec3d3c9bd',
 				firstName: 'Ricardo',
 				lastName: 'Munoz',
 				username: 'RicardoMunoz',
-				password: 'password',
+				password: bcrypt.hashSync('password', 10),
 			},
 		]);
 	}

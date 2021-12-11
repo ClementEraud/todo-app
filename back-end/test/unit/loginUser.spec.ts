@@ -1,6 +1,7 @@
 import { BadPassword } from '../../src/domain/exceptions/BadPassword';
 import { EncryptionServiceFake } from '../fakes/EncryptionServiceStubs';
 import { LoginUser } from '../../src/application/use_cases/LoginUser';
+import { Task } from '../../src/domain/models/Task';
 import { User } from '../../src/domain/models/User';
 import { UserReadRepository } from '../../src/infrastructure/in_memory/repositories/user/UserReadRepository';
 
@@ -12,7 +13,7 @@ describe('LoginUser', () => {
 			'Tran',
 			'username',
 			'password',
-			[],
+			[new Task('Title', 'Description')],
 			'df15fecb-2baf-419f-858e-abae3ac1454b',
 		),
 	];
@@ -28,6 +29,7 @@ describe('LoginUser', () => {
 		const user = await useCase.execute('username', 'password');
 		expect(user.firstName).toBe('Verna');
 		expect(user.lastName).toBe('Tran');
+		expect(user.tasks.length).toBe(1);
 	});
 
 	it('GIVEN a wrong password SHOULD throw a BadPassword Error', async () => {
