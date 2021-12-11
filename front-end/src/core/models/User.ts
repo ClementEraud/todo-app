@@ -1,9 +1,11 @@
+import { Task } from './Task';
+
 export class User {
 	id: string;
 	firstName: string;
 	lastName: string;
 	username: string;
-	tasks: [];
+	tasks: Task[];
 
 	constructor({ id, firstName, lastName, username, tasks }: User) {
 		this.id = id;

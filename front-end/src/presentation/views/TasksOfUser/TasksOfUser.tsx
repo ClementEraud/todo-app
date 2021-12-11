@@ -12,6 +12,7 @@ import {
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { AppContext } from '../../../index';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Task } from '../../../core/models/Task';
 import { useContext } from 'react';
 
 export const TasksOfUser = () => {
@@ -35,9 +36,8 @@ export const TasksOfUser = () => {
 						variant="h6"
 						component="div"
 						sx={{ flexGrow: 1, color: 'toolBar.text' }}>
-						{connectedUser
-							? `${connectedUser.firstName} ${connectedUser.lastName}`
-							: ''}
+						{connectedUser &&
+							`${connectedUser.firstName} ${connectedUser.lastName}`}
 					</Typography>
 				</Toolbar>
 			</AppBar>
@@ -54,22 +54,19 @@ export const TasksOfUser = () => {
 							color: '#000',
 						},
 					}}>
-					<Paper>
-						<Typography
-							variant="h6"
-							component="div"
-							sx={{ textAlign: 'center' }}>
-							Task example
-						</Typography>
-					</Paper>
-					<Paper>
-						<Typography
-							variant="h6"
-							component="div"
-							sx={{ textAlign: 'center' }}>
-							Task example 2
-						</Typography>
-					</Paper>
+					{connectedUser &&
+						connectedUser.tasks.map((task: Task, i: number) => (
+							<Paper key={i}>
+								<Typography
+									variant="h6"
+									component="div"
+									sx={{ textAlign: 'center' }}>
+									{task.title}
+								</Typography>
+								{task.description}
+							</Paper>
+						))}
+
 					<Paper
 						sx={{
 							backgroundColor: '#000 !important',
