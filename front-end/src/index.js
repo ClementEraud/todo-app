@@ -19,6 +19,10 @@ import { useConnectedUser } from './core/hooks/useConnectedUser';
 const theme = createTheme({
 	palette: {
 		mode: 'dark',
+		toolBar: {
+			background: '#ffffff',
+			text: '#000000',
+		},
 	},
 });
 
