@@ -14,8 +14,14 @@ import { ForgotPassword } from './presentation/views/HomePage/ForgotPassword/For
 import Login from './presentation/views/HomePage/Login/Login';
 import { useSignUpUser } from './core/hooks/useSignUpUser';
 import { useConnectedUser } from './core/hooks/useConnectedUser';
+import { MealPlanner } from './presentation/views/MealPlanner/MealPlanner';
+import { UserPage } from './presentation/views/UserPage/UserPage';
 
-const theme = createTheme({});
+const theme = createTheme({
+	palette: {
+		mode: 'dark',
+	},
+});
 
 const appModule = new AppModule([
 	{
@@ -52,6 +58,9 @@ ReactDOM.render(
 						<Route path="" element={<Login />} />
 						<Route path="sign-up" element={<SignUp />} />
 						<Route path="forgot-password" element={<ForgotPassword />} />
+					</Route>
+					<Route path="/user-page" element={<UserPage />}>
+						<Route path="" element={<MealPlanner />}></Route>
 					</Route>
 				</Routes>
 			</ThemeProvider>

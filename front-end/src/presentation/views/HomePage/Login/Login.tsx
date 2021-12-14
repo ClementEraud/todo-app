@@ -11,6 +11,7 @@ import { SAlert } from './styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { User } from '../../../../core/models/User';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const appModule = useContext(AppContext);
@@ -19,11 +20,13 @@ const Login = () => {
 	const [passwordError, setPasswordError] = useState<boolean>(false);
 	const [username, setUsername] = useState<string | undefined>();
 	const [password, setPassword] = useState<string | undefined>();
+	const navigate = useNavigate();
 
 	const [handleSubmit] = appModule.hooks.useLoginUser(
 		(user: User) => {
 			console.log('connected user : ', user);
 			setError(undefined);
+			navigate('/user-page');
 		},
 		(error: Error) => {
 			setError(error.message);
