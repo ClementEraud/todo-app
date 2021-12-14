@@ -13,18 +13,9 @@ import { SignUp } from './presentation/views/HomePage/SignUp/SignUp';
 import { ForgotPassword } from './presentation/views/HomePage/ForgotPassword/ForgotPassword';
 import Login from './presentation/views/HomePage/Login/Login';
 import { useSignUpUser } from './core/hooks/useSignUpUser';
-import { TasksOfUser } from './presentation/views/TasksOfUser/TasksOfUser';
 import { useConnectedUser } from './core/hooks/useConnectedUser';
 
-const theme = createTheme({
-	palette: {
-		mode: 'dark',
-		toolBar: {
-			background: '#ffffff',
-			text: '#000000',
-		},
-	},
-});
+const theme = createTheme({});
 
 const appModule = new AppModule([
 	{
@@ -62,7 +53,6 @@ ReactDOM.render(
 						<Route path="sign-up" element={<SignUp />} />
 						<Route path="forgot-password" element={<ForgotPassword />} />
 					</Route>
-					<Route path="/tasks-of-user" element={<TasksOfUser />}></Route>
 				</Routes>
 			</ThemeProvider>
 		</BrowserRouter>
