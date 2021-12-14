@@ -4,7 +4,7 @@ import { Box, Button, Grid, Link, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { AppContext } from '../../../..';
 import Typography from '@mui/material/Typography';
-import { User } from '../../../../core/models/User';
+import { useNavigate } from 'react-router-dom';
 
 export const SignUp = () => {
 	const appModule = useContext(AppContext);
@@ -14,6 +14,7 @@ export const SignUp = () => {
 		username: false,
 		password: false,
 	});
+	const navigate = useNavigate();
 
 	const [user, setUser] = useState({
 		firstName: null,
@@ -23,7 +24,7 @@ export const SignUp = () => {
 	});
 
 	const [signUpUser] = appModule.hooks.useSignUpUser(
-		(user: User) => console.log(user),
+		() => navigate('/'),
 		(error: Error) => console.error(error),
 	);
 
