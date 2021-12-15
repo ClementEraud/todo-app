@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+	Grid,
 	Paper,
 	Table,
 	TableBody,
@@ -24,38 +25,42 @@ class Row {
 export const MealPlanner = () => {
 	const rows: Row[] = [
 		new Row('Monday', 'Chicken', 'Chicken'),
-		new Row('Tuesday', 'Chicken', 'Chicken'),
-		new Row('Wednesday', 'Chicken', 'Chicken'),
-		new Row('Thursday', 'Chicken', 'Chicken'),
-		new Row('Friday', 'Chicken', 'Chicken'),
-		new Row('Saturday', 'Chicken', 'Chicken'),
-		new Row('Sunday', 'Chicken', 'Chicken'),
+		new Row('Tuesday', 'Chicken', 'Fondue'),
+		new Row('Wednesday', 'Eggs/Chorizo', 'Burger'),
+		new Row('Thursday', 'Sandwich', 'Beef with carottes'),
+		new Row('Friday', '', ''),
+		new Row('Saturday', '', 'Raclette'),
+		new Row('Sunday', '', ''),
 	];
 
 	return (
-		<TableContainer component={Paper}>
-			<Table sx={{ minWidth: 650 }} aria-label="simple table">
-				<TableHead>
-					<TableRow>
-						<TableCell>Day</TableCell>
-						<TableCell align="left">Lunch</TableCell>
-						<TableCell align="left">Dinner</TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{rows.map(row => (
-						<TableRow
-							key={row.day}
-							sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-							<TableCell component="th" scope="row">
-								{row.day}
-							</TableCell>
-							<TableCell align="left">{row.lunch}</TableCell>
-							<TableCell align="left">{row.dinner}</TableCell>
-						</TableRow>
-					))}
-				</TableBody>
-			</Table>
-		</TableContainer>
+		<Grid container component="main" sx={{ height: '100vh' }}>
+			<Grid item xs={12} sm={12} md={12}>
+				<TableContainer component={Paper}>
+					<Table aria-label="simple table">
+						<TableHead>
+							<TableRow>
+								<TableCell>Day</TableCell>
+								<TableCell align="left">Lunch</TableCell>
+								<TableCell align="left">Dinner</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{rows.map(row => (
+								<TableRow
+									key={row.day}
+									sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+									<TableCell component="th" scope="row">
+										{row.day}
+									</TableCell>
+									<TableCell align="left">{row.lunch}</TableCell>
+									<TableCell align="left">{row.dinner}</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</TableContainer>
+			</Grid>
+		</Grid>
 	);
 };

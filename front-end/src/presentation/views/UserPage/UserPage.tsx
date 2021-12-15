@@ -14,8 +14,12 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
 export const UserPage = () => {
+	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const navigate = useNavigate();
 	const drawerWidth = 100;
+	const handleDrawerToggle = () => {
+		setMobileOpen(!mobileOpen);
+	};
 
 	const onLogout = () => navigate('/');
 
@@ -23,10 +27,10 @@ export const UserPage = () => {
 		<Box sx={{ flexGrow: 1 }}>
 			<CssBaseline />
 			<AppBar
-				position="sticky"
+				position="fixed"
 				sx={{
-					width: `calc(100% - ${drawerWidth}px)`,
-					ml: `${drawerWidth}px`,
+					width: { sm: `calc(100% - ${drawerWidth}px)` },
+					ml: { sm: `${drawerWidth}px` },
 				}}>
 				<Toolbar>
 					<IconButton
@@ -34,7 +38,8 @@ export const UserPage = () => {
 						edge="start"
 						color="inherit"
 						aria-label="menu"
-						sx={{ mr: 2 }}>
+						sx={{ display: { sm: 'none' }, mr: 2 }}
+						onClick={handleDrawerToggle}>
 						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -46,8 +51,22 @@ export const UserPage = () => {
 				</Toolbar>
 			</AppBar>
 			<Drawer
+				variant="temporary"
+				open={mobileOpen}
+				onClose={handleDrawerToggle}
+				ModalProps={{
+					keepMounted: true, // Better open performance on mobile.
+				}}
 				sx={{
-					width: drawerWidth,
+					display: { xs: 'block', sm: 'none' },
+					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+				}}>
+				<Toolbar />
+				<Divider />
+			</Drawer>
+			<Drawer
+				sx={{
+					display: { xs: 'none', sm: 'block' },
 					flexShrink: 0,
 					'& .MuiDrawer-paper': {
 						width: drawerWidth,
@@ -59,7 +78,7 @@ export const UserPage = () => {
 				<Toolbar />
 				<Divider />
 			</Drawer>
-			<Box sx={{ ml: `${drawerWidth}px` }}>
+			<Box sx={{ ml: { sm: `${drawerWidth}px` } }}>
 				<Outlet />
 			</Box>
 		</Box>
