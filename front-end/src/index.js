@@ -16,7 +16,6 @@ import { useSignUpUser } from './core/hooks/useSignUpUser';
 import { useConnectedUser } from './core/hooks/useConnectedUser';
 import { MealPlanner } from './presentation/views/MealPlanner/MealPlanner';
 import { UserPage } from './presentation/views/UserPage/UserPage';
-import { store } from './core/store';
 
 const theme = createTheme({
 	palette: {

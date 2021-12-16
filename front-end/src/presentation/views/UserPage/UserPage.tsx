@@ -13,15 +13,20 @@ import {
 	createTheme,
 } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { AppContext } from '../../../index';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import MenuIcon from '@mui/icons-material/Menu';
+import { User } from '../../../core/models/User';
 import { store } from '../../../core/store';
+import { useContext } from 'react';
 
 export const UserPage = () => {
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const isDarkMode = store.useState(s => s.isDarkMode);
 	const navigate = useNavigate();
+	const appModule = useContext(AppContext);
+	const connectedUser: User = appModule.hooks.useConnectedUser();
 	const drawerWidth = 100;
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
@@ -62,7 +67,9 @@ export const UserPage = () => {
 							<MenuIcon />
 						</IconButton>
 						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-							News
+							{connectedUser
+								? `${connectedUser.firstName} ${connectedUser.lastName}`
+								: ''}
 						</Typography>
 						<IconButton
 							size="large"
