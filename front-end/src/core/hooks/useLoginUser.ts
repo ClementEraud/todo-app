@@ -9,7 +9,11 @@ export const useLoginUser =
 			const data = new FormData(event.currentTarget as HTMLFormElement);
 
 			userService
-				.login(data.get('username') as string, data.get('password') as string)
+				.login(
+					data.get('username') as string,
+					data.get('password') as string,
+					data.get('rememberMe') ? true : false,
+				)
 				.then(onUserLoggedIn)
 				.catch(onError);
 		};

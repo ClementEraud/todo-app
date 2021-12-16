@@ -12,10 +12,15 @@ export abstract class IUserService {
 	 * Calls login endpoint of API.
 	 * @param {string} username
 	 * @param {string} password
+	 * @param {boolean} rememberMe
 	 * @returns {Promise<User>} Connected user.
 	 * @throws Error if username or password is wrong.
 	 */
-	abstract login(username: string, password: string): Promise<User>;
+	abstract login(
+		username: string,
+		password: string,
+		rememberMe: boolean,
+	): Promise<User>;
 
 	/**
 	 * Calls sign-up endpoint of API.
@@ -23,4 +28,9 @@ export abstract class IUserService {
 	 * @returns {Promise<User>} User created.
 	 */
 	abstract signUp(user: CreateUserCommand): Promise<User>;
+
+	/**
+	 * Logs-out user and deletes user from WebStorage.
+	 */
+	abstract logout(): void;
 }

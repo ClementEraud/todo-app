@@ -12,20 +12,20 @@ import {
 	Typography,
 	createTheme,
 } from '@mui/material';
-import { Outlet, useNavigate } from 'react-router-dom';
 import { AppContext } from '../../../index';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Outlet } from 'react-router-dom';
 import { User } from '../../../core/models/User';
 import { store } from '../../../core/store';
 import { useContext } from 'react';
 
 export const UserPage = () => {
+	const appModule = useContext(AppContext);
+	const onLogout = appModule.hooks.useLogout();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const isDarkMode = store.useState(s => s.isDarkMode);
-	const navigate = useNavigate();
-	const appModule = useContext(AppContext);
 	const connectedUser: User = appModule.hooks.useConnectedUser();
 	const drawerWidth = 100;
 	const handleDrawerToggle = () => {
@@ -43,8 +43,6 @@ export const UserPage = () => {
 			s.isDarkMode = !isDarkMode;
 		});
 	};
-
-	const onLogout = () => navigate('/');
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>

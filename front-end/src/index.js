@@ -6,6 +6,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useLoginUser } from './core/hooks/useLoginUser';
+import { useLogout } from './core/hooks/useLogout';
 import { UserService } from './providers/UserService';
 import { AppModule } from './AppModule';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -42,6 +43,13 @@ const appModule = new AppModule([
 		hook: {
 			name: 'useConnectedUser',
 			function: useConnectedUser,
+		},
+		providers: [UserService],
+	},
+	{
+		hook: {
+			name: 'useLogout',
+			function: useLogout,
 		},
 		providers: [UserService],
 	},

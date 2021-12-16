@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../../index';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -21,6 +21,13 @@ const Login = () => {
 	const [username, setUsername] = useState<string | undefined>();
 	const [password, setPassword] = useState<string | undefined>();
 	const navigate = useNavigate();
+	const connectedUser = appModule.hooks.useConnectedUser();
+
+	useEffect(() => {
+		if (connectedUser) {
+			navigate('/user-page');
+		}
+	}, []);
 
 	const [handleSubmit] = appModule.hooks.useLoginUser(
 		(user: User) => {
@@ -89,6 +96,8 @@ const Login = () => {
 				/>
 				<FormControlLabel
 					control={<Checkbox value="remember" color="primary" />}
+					name="rememberMe"
+					id="rememberMe"
 					label="Remember me"
 				/>
 				<Button

@@ -10,7 +10,7 @@ export const useConnectedUser = (userService: IUserService) => () => {
 		if (!currentUser) {
 			navigate('/');
 		}
-	});
+	}, []);
 
 	return currentUser;
 };
