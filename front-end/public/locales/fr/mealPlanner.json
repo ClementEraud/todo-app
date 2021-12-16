@@ -1,0 +1,17 @@
+{
+	"title": "Plannificateur de repas",
+	"columns": {
+		"day": "Jour",
+		"lunch": "Midi",
+		"dinner": "Soir"
+	},
+	"daysOfTheWeek": {
+		"monday": "Lundi",
+		"tuesday": "Mardi",
+		"wednesday": "Mercredi",
+		"thursday": "Jeudi",
+		"friday": "Vendredi",
+		"saturday": "Samedi",
+		"sunday": "Dimanche"
+	}
+}

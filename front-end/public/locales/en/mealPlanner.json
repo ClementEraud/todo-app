@@ -1,0 +1,17 @@
+{
+	"title": "Meal Planner",
+	"columns": {
+		"day": "Day",
+		"lunch": "Lunch",
+		"dinner": "Dinner"
+	},
+	"daysOfTheWeek": {
+		"monday": "Monday",
+		"tuesday": "Tuesday",
+		"wednesday": "Wednesday",
+		"thursday": "Thursday",
+		"friday": "Friday",
+		"saturday": "Saturday",
+		"sunday": "Sunday"
+	}
+}
