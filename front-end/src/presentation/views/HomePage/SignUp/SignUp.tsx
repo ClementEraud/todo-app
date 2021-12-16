@@ -5,8 +5,10 @@ import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { AppContext } from '../../../..';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const SignUp = () => {
+	const { t } = useTranslation('homePage');
 	const appModule = useContext(AppContext);
 	const [errors, setErrors] = useState({
 		firstName: false,
@@ -58,7 +60,7 @@ export const SignUp = () => {
 	return (
 		<>
 			<Typography component="h1" variant="h5">
-				{'Sign Up'}
+				{t('signUpPage.title')}
 			</Typography>
 			<Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
 				<TextField
@@ -66,7 +68,7 @@ export const SignUp = () => {
 					required
 					fullWidth
 					id="firstName"
-					label="FirstName"
+					label={t('signUpPage.form.firstName')}
 					name="firstName"
 					autoComplete="firstName"
 					autoFocus
@@ -78,7 +80,7 @@ export const SignUp = () => {
 					required
 					fullWidth
 					id="lastName"
-					label="LastName"
+					label={t('signUpPage.form.lastName')}
 					name="lastName"
 					autoComplete="lastName"
 					onChange={handleDataChange}
@@ -89,7 +91,7 @@ export const SignUp = () => {
 					required
 					fullWidth
 					id="username"
-					label="Username"
+					label={t('signUpPage.form.username')}
 					name="username"
 					autoComplete="username"
 					onChange={handleDataChange}
@@ -100,7 +102,7 @@ export const SignUp = () => {
 					required
 					fullWidth
 					name="password"
-					label="Password"
+					label={t('signUpPage.form.password')}
 					type="password"
 					id="password"
 					autoComplete="current-password"
@@ -113,12 +115,12 @@ export const SignUp = () => {
 					variant="contained"
 					sx={{ mt: 3, mb: 2 }}
 					disabled={isSignUpDisabled}>
-					{'Sign In'}
+					{t('signUpPage.form.submit')}
 				</Button>
 				<Grid container>
 					<Grid item xs>
 						<Link href="/" variant="body2">
-							{'Return to login page'}
+							{t('signUpPage.links.returnToLogin')}
 						</Link>
 					</Grid>
 				</Grid>

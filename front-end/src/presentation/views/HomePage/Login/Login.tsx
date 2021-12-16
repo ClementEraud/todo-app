@@ -4,16 +4,18 @@ import { AppContext } from '../../../../index';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import { CustomLoader } from '../../../CustomLoader';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import { SAlert } from './styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { User } from '../../../../core/models/User';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
+	const { t } = useTranslation('homePage');
 	const appModule = useContext(AppContext);
 	const [error, setError] = useState<string | undefined>();
 	const [usernameError, setUsernameError] = useState<boolean>(false);
@@ -22,16 +24,8 @@ const Login = () => {
 	const [password, setPassword] = useState<string | undefined>();
 	const navigate = useNavigate();
 	const connectedUser = appModule.hooks.useConnectedUser();
-
-	useEffect(() => {
-		if (connectedUser) {
-			navigate('/user-page');
-		}
-	}, []);
-
-	const [handleSubmit] = appModule.hooks.useLoginUser(
-		(user: User) => {
-			console.log('connected user : ', user);
+	const [handleSubmit, isLoading] = appModule.hooks.useLoginUser(
+		() => {
 			setError(undefined);
 			navigate('/user-page');
 		},
@@ -39,6 +33,12 @@ const Login = () => {
 			setError(error.message);
 		},
 	);
+
+	useEffect(() => {
+		if (connectedUser) {
+			navigate('/user-page');
+		}
+	}, []);
 
 	const handleUsernameChange = (
 		event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -64,10 +64,14 @@ const Login = () => {
 		}
 	};
 
+	if (isLoading) {
+		return <CustomLoader />;
+	}
+
 	return (
 		<>
 			<Typography component="h1" variant="h5">
-				{'Sign in'}
+				{t('loginPage.title')}
 			</Typography>
 			<Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
 				<TextField
@@ -75,7 +79,7 @@ const Login = () => {
 					required
 					fullWidth
 					id="username"
-					label="Username"
+					label={t('loginPage.form.username')}
 					name="username"
 					autoComplete="username"
 					autoFocus
@@ -87,7 +91,7 @@ const Login = () => {
 					required
 					fullWidth
 					name="password"
-					label="Password"
+					label={t('loginPage.form.password')}
 					type="password"
 					id="password"
 					autoComplete="current-password"
@@ -98,7 +102,7 @@ const Login = () => {
 					control={<Checkbox value="remember" color="primary" />}
 					name="rememberMe"
 					id="rememberMe"
-					label="Remember me"
+					label={t('loginPage.form.rememberMe') as string}
 				/>
 				<Button
 					type="submit"
@@ -106,17 +110,17 @@ const Login = () => {
 					variant="contained"
 					sx={{ mt: 3, mb: 2 }}
 					disabled={usernameError || passwordError || !username || !password}>
-					{'Sign In'}
+					{t('loginPage.form.submit')}
 				</Button>
 				<Grid container>
 					<Grid item xs>
 						<Link href="/forgot-password" variant="body2">
-							{'Forgot password?'}
+							{t('loginPage.links.forgotPassword')}
 						</Link>
 					</Grid>
 					<Grid item>
 						<Link href="/sign-up" variant="body2">
-							{"Don't have an account? Sign Up"}
+							{t('loginPage.links.signUp')}
 						</Link>
 					</Grid>
 				</Grid>

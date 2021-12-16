@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import HomePage from './presentation/views/HomePage/HomePage';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Box } from '@mui/material';
 import { useLoginUser } from './core/hooks/useLoginUser';
 import { useLogout } from './core/hooks/useLogout';
 import { UserService } from './providers/UserService';
@@ -17,6 +18,11 @@ import { useSignUpUser } from './core/hooks/useSignUpUser';
 import { useConnectedUser } from './core/hooks/useConnectedUser';
 import { MealPlanner } from './presentation/views/MealPlanner/MealPlanner';
 import { UserPage } from './presentation/views/UserPage/UserPage';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
+// import i18n (needs to be bundled ;))
+import './i18n';
+import { CustomLoader } from './presentation/CustomLoader';
 
 const theme = createTheme({
 	palette: {
@@ -59,20 +65,22 @@ export const AppContext = React.createContext(appModule);
 
 ReactDOM.render(
 	<React.StrictMode>
-		<BrowserRouter>
-			<ThemeProvider theme={theme}>
-				<Routes>
-					<Route path="/" element={<HomePage />}>
-						<Route path="" element={<Login />} />
-						<Route path="sign-up" element={<SignUp />} />
-						<Route path="forgot-password" element={<ForgotPassword />} />
-					</Route>
-					<Route path="/user-page" element={<UserPage />}>
-						<Route path="" element={<MealPlanner />}></Route>
-					</Route>
-				</Routes>
-			</ThemeProvider>
-		</BrowserRouter>
+		<Suspense fallback={<CustomLoader />}>
+			<BrowserRouter>
+				<ThemeProvider theme={theme}>
+					<Routes>
+						<Route path="/" element={<HomePage />}>
+							<Route path="" element={<Login />} />
+							<Route path="sign-up" element={<SignUp />} />
+							<Route path="forgot-password" element={<ForgotPassword />} />
+						</Route>
+						<Route path="/user-page" element={<UserPage />}>
+							<Route path="" element={<MealPlanner />}></Route>
+						</Route>
+					</Routes>
+				</ThemeProvider>
+			</BrowserRouter>
+		</Suspense>
 	</React.StrictMode>,
 	document.getElementById('root'),
 );

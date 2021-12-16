@@ -1,0 +1,28 @@
+{
+	"loginPage": {
+		"title": "Sign in",
+		"form": {
+			"submit": "Sign in",
+			"username": "Username",
+			"password": "Password",
+			"rememberMe": "Remember Me"
+		},
+		"links": {
+			"forgotPassword": "Forgot password ?",
+			"signUp": "Don't have an account? Sign Up"
+		}
+	},
+	"signUpPage": {
+		"title": "Sign Up",
+		"form": {
+			"firstName": "First name",
+			"lastName": "Last name",
+			"username": "Username",
+			"password": "Password",
+			"submit": "Sign Up"
+		},
+		"links": {
+			"returnToLogin": "Return to login page"
+		}
+	}
+}

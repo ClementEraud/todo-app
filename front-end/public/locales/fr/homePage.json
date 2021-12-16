@@ -1,0 +1,28 @@
+{
+	"loginPage": {
+		"title": "Se connecter",
+		"form": {
+			"submit": "Se connecter",
+			"username": "Nom d'utilisateur",
+			"password": "Mot de passe",
+			"rememberMe": "Se rappeler de moi"
+		},
+		"links": {
+			"forgotPassword": "Mot de passe oublié ?",
+			"signUp": "Pas de compte ? S'inscrire"
+		}
+	},
+	"signUpPage": {
+		"title": "S'inscrire",
+		"form": {
+			"firstName": "Prénom",
+			"lastName": "Nom",
+			"username": "Nom d'utilisateur",
+			"password": "Mot de passe",
+			"submit": "S'incrire"
+		},
+		"links": {
+			"returnToLogin": "Retourner à la connexion"
+		}
+	}
+}
