@@ -31,6 +31,7 @@ describe('CreateUser', () => {
 		expect(userCreated.lastName).toBe('McDonald');
 		expect(userCreated.username).toBe('McDoDu44');
 		expect(userCreated.password).toBe('password');
+		expect(userCreated.mealPlanner).toBeDefined();
 		expect(userList.length).toBe(1);
 	});
 

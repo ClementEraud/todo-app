@@ -1,3 +1,4 @@
+import { MealPlanner } from './MealPlanner';
 import { MissingRequiredProperties } from './../exceptions/MissingRequiredProperties';
 import { Task } from './Task';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,6 +10,7 @@ export class User {
 	tasks: Task[];
 	username: string;
 	password: string;
+	mealPlanner: MealPlanner;
 
 	constructor(
 		firstName: string,
@@ -24,6 +26,7 @@ export class User {
 		this.tasks = tasks;
 		this.username = username;
 		this.password = password;
+		this.mealPlanner = new MealPlanner();
 	}
 
 	addTask(task: Task) {

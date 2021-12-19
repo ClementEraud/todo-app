@@ -14,8 +14,7 @@ export class UserWriteRepository implements IUserWriteRepository {
 	}
 
 	async insert(user: User): Promise<User> {
-		await this.manager.insert(UserSchema, user);
-		return user;
+		return await this.manager.save(UserSchema, user);
 	}
 
 	async update(user: User): Promise<User> {

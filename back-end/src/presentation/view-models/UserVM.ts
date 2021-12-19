@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { MealPlannerVM } from './MealPlannerVM';
 import { TaskVM } from './TaskVM';
 import { User } from '../../domain/models/User';
 
@@ -28,6 +29,20 @@ export class UserVM {
 	username: string;
 
 	@ApiProperty({
+		description: 'Meal Planner of user.',
+		example: `{
+      monday : {lunch: '', dinner: ''},
+      tuesday: {lunch: '', dinner: ''},
+      wednesday: {lunch: '', dinner: ''},
+      thursday: {lunch: '', dinner: ''},
+      friday: {lunch: '', dinner: ''},
+      saturday: {lunch: '', dinner: ''},
+      sunday: {lunch: '', dinner: ''},
+    }`,
+	})
+	mealPlanner: MealPlannerVM;
+
+	@ApiProperty({
 		description: 'Tasks of user.',
 		example: `[
       {id: 1, title: 'Title', description: 'Description of task 1'},
@@ -42,6 +57,7 @@ export class UserVM {
 		firstName: string,
 		lastName: string,
 		username: string,
+		mealPlanner: MealPlannerVM,
 		tasks?: TaskVM[],
 	) {
 		this.id = id;
@@ -49,6 +65,7 @@ export class UserVM {
 		this.lastName = lastName;
 		this.username = username;
 		this.tasks = tasks;
+		this.mealPlanner = mealPlanner;
 	}
 
 	static toViewModel(user: User): UserVM {
@@ -57,6 +74,7 @@ export class UserVM {
 			user.firstName,
 			user.lastName,
 			user.username,
+			user.mealPlanner,
 			user.tasks ? user.tasks.map(TaskVM.toViewModel) : [],
 		);
 	}

@@ -1,4 +1,5 @@
 import { EntitySchema } from 'typeorm';
+import { MealPlanner } from './../../../domain/models/MealPlanner';
 import { Task } from '../../../domain/models/Task';
 import { User } from '../../../domain/models/User';
 
@@ -34,6 +35,14 @@ export const UserSchema = new EntitySchema<User>({
 			cascade: ['insert', 'update'],
 			onDelete: 'CASCADE',
 			inverseSide: 'user',
+			joinTable: true,
+		},
+		mealPlanner: {
+			type: 'one-to-one',
+			target: () => MealPlanner,
+			cascade: ['insert', 'update'],
+			onDelete: 'CASCADE',
+			joinColumn: true,
 			joinTable: true,
 		},
 	},

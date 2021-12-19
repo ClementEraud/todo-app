@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateUserCommand } from '../../application/command/create-user';
 
-export class CreateUserVM implements CreateUserCommand {
+export class CreateUserInput implements CreateUserCommand {
 	@ApiProperty({
 		description: 'User first name',
 		required: true,

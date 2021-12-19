@@ -30,6 +30,7 @@ describe('LoginUser', () => {
 		expect(user.firstName).toBe('Verna');
 		expect(user.lastName).toBe('Tran');
 		expect(user.tasks.length).toBe(1);
+		expect(user.mealPlanner).toBeDefined();
 	});
 
 	it('GIVEN a wrong password SHOULD throw a BadPassword Error', async () => {

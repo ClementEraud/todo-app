@@ -1,11 +1,11 @@
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, HttpCode, Param, Post } from '@nestjs/common';
 import { AddTaskToUser } from '../../application/use_cases/AddTaskToUser';
-import { CreateTaskVM } from '../view-models/CreateTaskVM';
+import { CreateTaskInput } from '../inputs/CreateTaskInput';
 import { CreateUser } from '../../application/use_cases/CreateUser';
-import { CreateUserVM } from '../view-models/CreateUserVM';
+import { CreateUserInput } from '../inputs/CreateUserInput';
 import { LoginUser } from '../../application/use_cases/LoginUser';
-import { UserLoginVM } from '../view-models/UserLoginVM';
+import { UserLoginInput } from '../inputs/UserLoginInput';
 import { UserVM } from '../view-models/UserVM';
 
 @ApiTags('users')
@@ -22,7 +22,7 @@ export class UserController {
 		description: 'The User has been successfully created.',
 		type: UserVM,
 	})
-	async create(@Body() createUser: CreateUserVM): Promise<UserVM> {
+	async create(@Body() createUser: CreateUserInput): Promise<UserVM> {
 		return UserVM.toViewModel(await this.createUser.execute(createUser));
 	}
 
@@ -33,7 +33,7 @@ export class UserController {
 	})
 	async addTask(
 		@Param('id') userId: string,
-		@Body() createTask: CreateTaskVM,
+		@Body() createTask: CreateTaskInput,
 	): Promise<UserVM> {
 		return UserVM.toViewModel(
 			await this.addTaskUser.execute(userId, createTask),
@@ -46,7 +46,7 @@ export class UserController {
 		type: UserVM,
 	})
 	@HttpCode(200)
-	async login(@Body() userLogin: UserLoginVM): Promise<UserVM> {
+	async login(@Body() userLogin: UserLoginInput): Promise<UserVM> {
 		return UserVM.toViewModel(
 			await this.loginUser.execute(userLogin.username, userLogin.password),
 		);

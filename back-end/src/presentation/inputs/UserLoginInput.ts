@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UserLoginVM {
+export class UserLoginInput {
 	@ApiProperty({
 		description: 'Username of user.',
 		required: true,

@@ -16,20 +16,20 @@ export class UserReadRepository implements IUserReadRepository {
 
 	async findAll(filters?: Partial<User>): Promise<User[]> {
 		return await this.manager.find(UserSchema, {
-			relations: ['tasks'],
+			relations: ['tasks', 'mealPlanner'],
 			where: filters,
 		});
 	}
 
 	async findById(userId: string): Promise<User> {
 		return await this.manager.findOne(UserSchema, userId, {
-			relations: ['tasks'],
+			relations: ['tasks', 'mealPlanner'],
 		});
 	}
 
 	async findOneByUsernameOrDie(username: string): Promise<User> {
 		const foundUsers = await this.manager.find(UserSchema, {
-			relations: ['tasks'],
+			relations: ['tasks', 'mealPlanner'],
 			where: { username },
 		});
 

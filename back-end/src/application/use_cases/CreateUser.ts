@@ -27,13 +27,18 @@ export class CreateUser implements UseCase {
 			throw new UsernameAlreadyUsed();
 		}
 
-		return await this.userWriteRepository.insert(
-			new User(
-				createUser.firstName,
-				createUser.lastName,
-				createUser.username,
-				hash_password,
-			),
+		const user = new User(
+			createUser.firstName,
+			createUser.lastName,
+			createUser.username,
+			hash_password,
 		);
+
+		try {
+			const userCreated = await this.userWriteRepository.insert(user);
+			return userCreated;
+		} catch (e) {
+			console.error(e);
+		}
 	}
 }
