@@ -4,7 +4,7 @@ import { User } from '../../../../domain/models/User';
 export class UserWriteRepository implements IUserWriteRepository {
 	constructor(private userList: User[]) {}
 
-	async insert(user: User): Promise<User> {
+	async create(user: User): Promise<User> {
 		this.userList.push(user);
 		return user;
 	}
@@ -20,7 +20,7 @@ export class UserWriteRepository implements IUserWriteRepository {
 		return user;
 	}
 
-	async remove(userId: string): Promise<boolean> {
+	async delete(userId: string): Promise<boolean> {
 		const idx = this.userList.findIndex(user => user.id === userId);
 		this.userList.splice(idx);
 		return true;

@@ -22,12 +22,12 @@ export class MealPlanner {
 		sunday?: MealOfTheDay,
 	) {
 		this.id = id ? id : uuidv4();
-		this.monday = monday;
-		this.tuesday = tuesday;
-		this.wednesday = wednesday;
-		this.thursday = thursday;
-		this.friday = friday;
-		this.saturday = saturday;
-		this.sunday = sunday;
+		this.monday = monday ? monday : new MealOfTheDay();
+		this.tuesday = tuesday ? tuesday : new MealOfTheDay();
+		this.wednesday = wednesday ? wednesday : new MealOfTheDay();
+		this.thursday = thursday ? thursday : new MealOfTheDay();
+		this.friday = friday ? friday : new MealOfTheDay();
+		this.saturday = saturday ? saturday : new MealOfTheDay();
+		this.sunday = sunday ? sunday : new MealOfTheDay();
 	}
 }

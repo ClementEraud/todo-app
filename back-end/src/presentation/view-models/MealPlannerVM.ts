@@ -40,10 +40,6 @@ export class MealPlannerVM {
 	sunday: MealOfTheDayVM;
 
 	constructor(mealPlanner: MealPlanner) {
-		console.log(
-			'🚀 ~ file: MealPlannerVM.ts ~ line 43 ~ MealPlannerVM ~ constructor ~ mealPlanner',
-			mealPlanner,
-		);
 		this.monday = new MealOfTheDayVM(mealPlanner.monday);
 		this.tuesday = new MealOfTheDayVM(mealPlanner.tuesday);
 		this.wednesday = new MealOfTheDayVM(mealPlanner.wednesday);

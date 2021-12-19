@@ -13,7 +13,7 @@ export class UserWriteRepository implements IUserWriteRepository {
 		this.manager = this.queryRunner.manager;
 	}
 
-	async insert(user: User): Promise<User> {
+	async create(user: User): Promise<User> {
 		return await this.manager.save(UserSchema, user);
 	}
 
@@ -26,7 +26,7 @@ export class UserWriteRepository implements IUserWriteRepository {
 		return user;
 	}
 
-	async remove(userId: string): Promise<boolean> {
+	async delete(userId: string): Promise<boolean> {
 		await this.manager.delete(UserSchema, { id: userId });
 		return true;
 	}

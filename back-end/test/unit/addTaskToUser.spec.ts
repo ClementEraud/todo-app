@@ -1,4 +1,5 @@
 import { AddTaskToUser } from '../../src/application/use_cases/AddTaskToUser';
+import { MealPlanner } from './../../src/domain/models/MealPlanner';
 import { Task } from '../../src/domain/models/Task';
 import { TaskWriteRepository } from '../../src/infrastructure/in_memory/repositories/task/TaskWriteRepository';
 import { User } from '../../src/domain/models/User';
@@ -13,6 +14,7 @@ describe('AddTaskToUser', () => {
 			'Tran',
 			'username',
 			'password',
+			new MealPlanner(),
 			[],
 			'df15fecb-2baf-419f-858e-abae3ac1454b',
 		),

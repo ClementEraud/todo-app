@@ -2,11 +2,11 @@ import { User } from '../../../domain/models/User';
 
 export abstract class IUserWriteRepository {
 	/**
-	 * Inserts the user in DB and return the id.
+	 * Inserts the user in DB.
 	 * @param user User to insert in db.
 	 * @returns User inserted.
 	 *  */
-	abstract insert(user: User): Promise<User>;
+	abstract create(user: User): Promise<User>;
 
 	/**
 	 * Updates the user in DB and return updated user.
@@ -20,5 +20,5 @@ export abstract class IUserWriteRepository {
 	 * @param userId ID of user to delete.
 	 * @returns true if user has been removed.
 	 */
-	abstract remove(userId: string): Promise<boolean>;
+	abstract delete(userId: string): Promise<boolean>;
 }

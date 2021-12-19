@@ -17,9 +17,9 @@ export class User {
 		lastName: string,
 		username: string,
 		password: string,
+		mealPlanner?: MealPlanner,
 		tasks?: Task[],
 		id?: string,
-		mealPlanner?: MealPlanner,
 	) {
 		this.id = id ? id : uuidv4();
 		this.firstName = firstName;
