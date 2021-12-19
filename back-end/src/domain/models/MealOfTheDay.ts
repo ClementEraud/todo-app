@@ -5,7 +5,9 @@ export class MealOfTheDay {
 	lunch: string;
 	dinner: string;
 
-	constructor() {
-		this.id = uuidv4();
+	constructor(id?: string, lunch?: string, dinner?: string) {
+		this.id = id ? id : uuidv4();
+		this.lunch = lunch;
+		this.dinner = dinner;
 	}
 }

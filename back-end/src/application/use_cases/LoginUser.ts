@@ -16,6 +16,10 @@ export class LoginUser implements UseCase {
 		const userFound = await this.userReadRepository.findOneByUsernameOrDie(
 			username,
 		);
+		console.log(
+			'🚀 ~ file: LoginUser.ts ~ line 19 ~ LoginUser ~ execute ~ userFound',
+			userFound,
+		);
 
 		if (!this.encryptionService.compare(password, userFound.password)) {
 			throw new BadPassword();

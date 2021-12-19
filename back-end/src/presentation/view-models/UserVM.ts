@@ -52,30 +52,12 @@ export class UserVM {
 	})
 	tasks?: TaskVM[];
 
-	constructor(
-		id: string,
-		firstName: string,
-		lastName: string,
-		username: string,
-		mealPlanner: MealPlannerVM,
-		tasks?: TaskVM[],
-	) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.tasks = tasks;
-		this.mealPlanner = mealPlanner;
-	}
-
-	static toViewModel(user: User): UserVM {
-		return new UserVM(
-			user.id,
-			user.firstName,
-			user.lastName,
-			user.username,
-			user.mealPlanner,
-			user.tasks ? user.tasks.map(TaskVM.toViewModel) : [],
-		);
+	constructor(user: User) {
+		this.id = user.id;
+		this.firstName = user.firstName;
+		this.lastName = user.lastName;
+		this.username = user.username;
+		this.mealPlanner = new MealPlannerVM(user.mealPlanner);
+		this.tasks = user.tasks ? user.tasks.map(task => new TaskVM(task)) : [];
 	}
 }

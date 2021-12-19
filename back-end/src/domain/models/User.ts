@@ -19,6 +19,7 @@ export class User {
 		password: string,
 		tasks?: Task[],
 		id?: string,
+		mealPlanner?: MealPlanner,
 	) {
 		this.id = id ? id : uuidv4();
 		this.firstName = firstName;
@@ -26,7 +27,7 @@ export class User {
 		this.tasks = tasks;
 		this.username = username;
 		this.password = password;
-		this.mealPlanner = new MealPlanner();
+		this.mealPlanner = mealPlanner ? mealPlanner : new MealPlanner();
 	}
 
 	addTask(task: Task) {

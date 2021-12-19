@@ -23,7 +23,7 @@ export class UserController {
 		type: UserVM,
 	})
 	async create(@Body() createUser: CreateUserInput): Promise<UserVM> {
-		return UserVM.toViewModel(await this.createUser.execute(createUser));
+		return new UserVM(await this.createUser.execute(createUser));
 	}
 
 	@Post(':id/add-task')
@@ -35,9 +35,7 @@ export class UserController {
 		@Param('id') userId: string,
 		@Body() createTask: CreateTaskInput,
 	): Promise<UserVM> {
-		return UserVM.toViewModel(
-			await this.addTaskUser.execute(userId, createTask),
-		);
+		return new UserVM(await this.addTaskUser.execute(userId, createTask));
 	}
 
 	@Post('login')
@@ -47,7 +45,7 @@ export class UserController {
 	})
 	@HttpCode(200)
 	async login(@Body() userLogin: UserLoginInput): Promise<UserVM> {
-		return UserVM.toViewModel(
+		return new UserVM(
 			await this.loginUser.execute(userLogin.username, userLogin.password),
 		);
 	}

@@ -11,14 +11,23 @@ export class MealPlanner {
 	saturday: MealOfTheDay;
 	sunday: MealOfTheDay;
 
-	constructor() {
-		this.id = uuidv4();
-		this.monday = new MealOfTheDay();
-		this.tuesday = new MealOfTheDay();
-		this.wednesday = new MealOfTheDay();
-		this.thursday = new MealOfTheDay();
-		this.friday = new MealOfTheDay();
-		this.saturday = new MealOfTheDay();
-		this.sunday = new MealOfTheDay();
+	constructor(
+		id?: string,
+		monday?: MealOfTheDay,
+		tuesday?: MealOfTheDay,
+		wednesday?: MealOfTheDay,
+		thursday?: MealOfTheDay,
+		friday?: MealOfTheDay,
+		saturday?: MealOfTheDay,
+		sunday?: MealOfTheDay,
+	) {
+		this.id = id ? id : uuidv4();
+		this.monday = monday;
+		this.tuesday = tuesday;
+		this.wednesday = wednesday;
+		this.thursday = thursday;
+		this.friday = friday;
+		this.saturday = saturday;
+		this.sunday = sunday;
 	}
 }

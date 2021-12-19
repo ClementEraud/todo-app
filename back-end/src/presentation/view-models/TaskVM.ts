@@ -20,13 +20,9 @@ export class TaskVM {
 	})
 	description: string;
 
-	constructor(id: string, title: string, description: string) {
-		this.id = id;
-		this.title = title;
-		this.description = description;
-	}
-
-	static toViewModel(task: Task): TaskVM {
-		return new TaskVM(task.id, task.title, task.description);
+	constructor(task: Task) {
+		this.id = task.id;
+		this.title = task.title;
+		this.description = task.description;
 	}
 }
