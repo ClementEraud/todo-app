@@ -1,3 +1,4 @@
+import { MealPlanner } from './MealPlanner';
 import { Task } from './Task';
 
 export class User {
@@ -6,12 +7,14 @@ export class User {
 	lastName: string;
 	username: string;
 	tasks: Task[];
+	mealPlanner: MealPlanner;
 
-	constructor({ id, firstName, lastName, username, tasks }: User) {
+	constructor({ id, firstName, lastName, username, tasks, mealPlanner }: User) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
 		this.tasks = tasks;
+		this.mealPlanner = mealPlanner;
 	}
 }

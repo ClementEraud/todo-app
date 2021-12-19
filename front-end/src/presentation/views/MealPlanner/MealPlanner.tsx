@@ -11,31 +11,29 @@ import {
 	TableRow,
 	Typography,
 } from '@mui/material';
+import { AppContext } from '../../../index';
+import { MealOfTheDay } from '../../../core/models/MealOfTheDay';
+import { User } from '../../../core/models/User';
 import { useTranslation } from 'react-i18next';
 
-class Row {
+interface Meals {
 	day: string;
 	lunch: string;
 	dinner: string;
-
-	constructor(day: string, lunch: string, dinner: string) {
-		this.day = day;
-		this.lunch = lunch;
-		this.dinner = dinner;
-	}
 }
 
 export const MealPlanner = () => {
 	const { t } = useTranslation('mealPlanner');
-	const rows: Row[] = [
-		new Row(t('daysOfTheWeek.monday'), 'Chicken', 'Chicken'),
-		new Row(t('daysOfTheWeek.tuesday'), 'Chicken', 'Fondue'),
-		new Row(t('daysOfTheWeek.wednesday'), 'Eggs/Chorizo', 'Burger'),
-		new Row(t('daysOfTheWeek.thursday'), 'Sandwich', 'Beef with carottes'),
-		new Row(t('daysOfTheWeek.friday'), '', ''),
-		new Row(t('daysOfTheWeek.saturday'), '', 'Raclette'),
-		new Row(t('daysOfTheWeek.sunday'), '', ''),
-	];
+	const appModule = React.useContext(AppContext);
+	const connectedUser: User = appModule.hooks.useConnectedUser();
+
+	const mealsOfWeek: Meals[] = Object.keys(connectedUser.mealPlanner).map(
+		(key: string) => ({
+			day: key,
+			lunch: (connectedUser.mealPlanner[key] as MealOfTheDay).lunch,
+			dinner: (connectedUser.mealPlanner[key] as MealOfTheDay).dinner,
+		}),
+	);
 
 	return (
 		<Box
@@ -68,15 +66,15 @@ export const MealPlanner = () => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{rows.map(row => (
+						{mealsOfWeek.map(meal => (
 							<TableRow
-								key={row.day}
+								key={meal.day}
 								sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 								<TableCell component="th" scope="row">
-									{row.day}
+									{t(`daysOfTheWeek.${meal.day}`)}
 								</TableCell>
-								<TableCell>{row.lunch}</TableCell>
-								<TableCell>{row.dinner}</TableCell>
+								<TableCell>{meal.lunch}</TableCell>
+								<TableCell>{meal.dinner}</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

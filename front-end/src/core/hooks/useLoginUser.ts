@@ -23,7 +23,10 @@ export const useLoginUser =
 					setLoading(false);
 					onUserLoggedIn(user);
 				})
-				.catch(onError);
+				.catch((error: Error) => {
+					setLoading(false);
+					onError(error);
+				});
 		};
 
 		return [handleSubmit, isLoading];
