@@ -18,6 +18,15 @@ export class UserReadRepository implements IUserReadRepository {
 		return this.userList.find(user => user.id === userId);
 	}
 
+	async findByIdOrDie(userId: string): Promise<User> {
+		const user = this.userList.find(user => user.id === userId);
+		if (!user) {
+			throw new UserNotFound();
+		}
+
+		return user;
+	}
+
 	async findOneByUsernameOrDie(username: string): Promise<User> {
 		const foundUsers = this.userList.filter(user => user.username === username);
 		if (foundUsers.length === 0 || foundUsers.length > 1) {

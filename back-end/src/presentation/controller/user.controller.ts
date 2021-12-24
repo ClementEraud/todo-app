@@ -1,10 +1,12 @@
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { Body, Controller, HttpCode, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
 import { AddTaskToUser } from '../../application/use_cases/AddTaskToUser';
 import { CreateTaskInput } from '../inputs/CreateTaskInput';
 import { CreateUser } from '../../application/use_cases/CreateUser';
 import { CreateUserInput } from '../inputs/CreateUserInput';
+import { GetMealPlannerOfUser } from './../../application/use_cases/GetMealPlannerOfUser';
 import { LoginUser } from '../../application/use_cases/LoginUser';
+import { MealPlannerVM } from '../view-models/MealPlannerVM';
 import { UserLoginInput } from '../inputs/UserLoginInput';
 import { UserVM } from '../view-models/UserVM';
 
@@ -15,6 +17,7 @@ export class UserController {
 		private readonly createUser: CreateUser,
 		private readonly addTaskUser: AddTaskToUser,
 		private readonly loginUser: LoginUser,
+		private readonly getMealPlannerOfUser: GetMealPlannerOfUser,
 	) {}
 
 	@Post()
@@ -48,5 +51,15 @@ export class UserController {
 		return new UserVM(
 			await this.loginUser.execute(userLogin.username, userLogin.password),
 		);
+	}
+
+	@Get(':id/get-meal-planner')
+	@ApiCreatedResponse({
+		description: 'Meal Planner Of User',
+		type: MealPlannerVM,
+	})
+	@HttpCode(200)
+	async getMealPlanner(@Param('id') userId: string): Promise<MealPlannerVM> {
+		return new MealPlannerVM(await this.getMealPlannerOfUser.execute(userId));
 	}
 }

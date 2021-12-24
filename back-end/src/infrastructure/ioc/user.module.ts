@@ -1,6 +1,7 @@
 import { AddTaskToUser } from '../../application/use_cases/AddTaskToUser';
 import { CreateUser } from '../../application/use_cases/CreateUser';
 import { EncryptionService } from '../services/EncryptionService';
+import { GetMealPlannerOfUser } from './../../application/use_cases/GetMealPlannerOfUser';
 import { IEncryptionService } from '../../application/ports/services/EncryptionService';
 import { ITaskWriteRepository } from '../../application/ports/task/TaskWriteRepository.interface';
 import { IUserReadRepository } from '../../application/ports/user/UserReadRepository.interface';
@@ -19,6 +20,7 @@ import { UserWriteRepository } from '../database/repositories/user/UserWriteRepo
 		CreateUser,
 		AddTaskToUser,
 		LoginUser,
+		GetMealPlannerOfUser,
 		{ provide: IUserReadRepository, useClass: UserReadRepository },
 		{ provide: IUserWriteRepository, useClass: UserWriteRepository },
 		{ provide: ITaskWriteRepository, useClass: TaskWriteRepository },

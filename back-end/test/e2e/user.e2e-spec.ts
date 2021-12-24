@@ -112,4 +112,20 @@ describe('UserController (e2e)', () => {
 					expect(res.body.message).toBe('Bad Password');
 				}));
 	});
+
+	describe('/users/:id/get-meal-planner (GET)', () => {
+		it('GIVEN valid user id SHOULD return mealPlanner.', async () =>
+			request(app.getHttpServer())
+				.get('/users/0f9a61c0-9c3f-4fe9-afe0-47876d18f8c0/get-meal-planner')
+				.expect(200)
+				.expect((res: request.Response) => {
+					expect(res.body.monday).toBeDefined();
+					expect(res.body.tuesday).toBeDefined();
+					expect(res.body.wednesday).toBeDefined();
+					expect(res.body.thursday).toBeDefined();
+					expect(res.body.friday).toBeDefined();
+					expect(res.body.saturday).toBeDefined();
+					expect(res.body.sunday).toBeDefined();
+				}));
+	});
 });

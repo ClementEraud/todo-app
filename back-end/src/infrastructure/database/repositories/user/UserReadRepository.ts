@@ -39,6 +39,18 @@ export class UserReadRepository implements IUserReadRepository {
 		});
 	}
 
+	async findByIdOrDie(userId: string): Promise<User> {
+		const user = await this.manager.findOne(UserSchema, userId, {
+			relations,
+		});
+
+		if (!user) {
+			throw new UserNotFound();
+		}
+
+		return user;
+	}
+
 	async findOneByUsernameOrDie(username: string): Promise<User> {
 		const foundUsers = await this.manager.find(UserSchema, {
 			relations,

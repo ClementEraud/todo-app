@@ -16,6 +16,14 @@ export abstract class IUserReadRepository {
 	abstract findById(userId: string): Promise<User>;
 
 	/**
+	 * Finds a user by its ID and returns it.
+	 * @param {string} userId
+	 * @returns {Promise<User>}
+	 * @throws {UserNotFound}
+	 */
+	abstract findByIdOrDie(userId: string): Promise<User>;
+
+	/**
 	 * Finds a user by username or die if no user or multiple users for this username.
 	 * @param {string} username
 	 * @returns {Promise<User>}
