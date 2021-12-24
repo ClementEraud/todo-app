@@ -23,6 +23,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 // import i18n (needs to be bundled ;))
 import './i18n';
 import { CustomLoader } from './presentation/CustomLoader';
+import { useGetMealPlanner } from './core/hooks/useGetMealPlanner';
 
 const theme = createTheme({
 	palette: {
@@ -56,6 +57,13 @@ const appModule = new AppModule([
 		hook: {
 			name: 'useLogout',
 			function: useLogout,
+		},
+		providers: [UserService],
+	},
+	{
+		hook: {
+			name: 'useGetMealPlanner',
+			function: useGetMealPlanner,
 		},
 		providers: [UserService],
 	},

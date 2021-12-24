@@ -1,4 +1,5 @@
 import { CreateUserCommand } from './../commands/CreateUserCommand';
+import { MealPlanner } from './../models/MealPlanner';
 import { User } from '../models/User';
 
 export abstract class IUserService {
@@ -33,4 +34,9 @@ export abstract class IUserService {
 	 * Logs-out user and deletes user from WebStorage.
 	 */
 	abstract logout(): void;
+
+	/**
+	 * Get Meal Planner from API.
+	 */
+	abstract getMealPlanner(): Promise<MealPlanner>;
 }

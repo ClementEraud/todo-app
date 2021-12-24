@@ -11,9 +11,10 @@ import {
 	TableRow,
 	Typography,
 } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../index';
 import { MealOfTheDay } from '../../../core/models/MealOfTheDay';
-import { User } from '../../../core/models/User';
+import { MealPlanner as MealPlannerModel } from '../../../core/models/MealPlanner';
 import { useTranslation } from 'react-i18next';
 
 interface Meals {
@@ -24,16 +25,28 @@ interface Meals {
 
 export const MealPlanner = () => {
 	const { t } = useTranslation('mealPlanner');
-	const appModule = React.useContext(AppContext);
-	const connectedUser: User = appModule.hooks.useConnectedUser();
+	const appModule = useContext(AppContext);
+	const [mealsOfWeek, setMealsOfTheWeek] = useState<Meals[]>([]);
+	const [mealPlanner, setMealPlanner] = useState<MealPlannerModel>();
 
-	const mealsOfWeek: Meals[] = Object.keys(connectedUser.mealPlanner).map(
-		(key: string) => ({
-			day: key,
-			lunch: (connectedUser.mealPlanner[key] as MealOfTheDay).lunch,
-			dinner: (connectedUser.mealPlanner[key] as MealOfTheDay).dinner,
-		}),
+	const { isLoading } = appModule.hooks.useGetMealPlanner(
+		(mealPlanner: MealPlannerModel) => setMealPlanner(mealPlanner),
+		(error: Error) => {
+			console.error(error);
+		},
 	);
+
+	useEffect(() => {
+		if (mealPlanner && !isLoading) {
+			setMealsOfTheWeek(
+				Object.keys(mealPlanner).map((key: string) => ({
+					day: key,
+					lunch: (mealPlanner[key] as MealOfTheDay).lunch,
+					dinner: (mealPlanner[key] as MealOfTheDay).dinner,
+				})),
+			);
+		}
+	}, [mealPlanner]);
 
 	return (
 		<Box
