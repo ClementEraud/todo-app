@@ -16,6 +16,7 @@ import { AppContext } from '../../../index';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import MenuIcon from '@mui/icons-material/Menu';
+import { NavigationDrawer } from './NavigationDrawer';
 import { Outlet } from 'react-router-dom';
 import { User } from '../../../core/models/User';
 import { store } from '../../../core/store';
@@ -105,6 +106,8 @@ export const UserPage = () => {
 						display: { xs: 'none', sm: 'block' },
 						flexShrink: 0,
 						'& .MuiDrawer-paper': {
+							backgroundImage:
+								'linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15))',
 							width: drawerWidth,
 							boxSizing: 'border-box',
 						},
@@ -113,6 +116,7 @@ export const UserPage = () => {
 					anchor="left">
 					<Toolbar />
 					<Divider />
+					<NavigationDrawer />
 				</Drawer>
 				<Box sx={{ ml: { sm: `${drawerWidth}px` } }}>
 					<Outlet />

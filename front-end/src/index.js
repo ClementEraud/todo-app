@@ -5,7 +5,6 @@ import HomePage from './presentation/views/HomePage/HomePage';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Box } from '@mui/material';
 import { useLoginUser } from './core/hooks/useLoginUser';
 import { useLogout } from './core/hooks/useLogout';
 import { UserService } from './providers/UserService';
@@ -24,6 +23,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import './i18n';
 import { CustomLoader } from './presentation/CustomLoader';
 import { useGetMealPlanner } from './core/hooks/useGetMealPlanner';
+import { Tasks } from './presentation/views/Tasks/Tasks';
 
 const theme = createTheme({
 	palette: {
@@ -84,6 +84,7 @@ ReactDOM.render(
 						</Route>
 						<Route path="/user-page" element={<UserPage />}>
 							<Route path="" element={<MealPlanner />}></Route>
+							<Route path="tasks" element={<Tasks />}></Route>
 						</Route>
 					</Routes>
 				</ThemeProvider>
