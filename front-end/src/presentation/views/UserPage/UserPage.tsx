@@ -100,6 +100,7 @@ export const UserPage = () => {
 					}}>
 					<Toolbar />
 					<Divider />
+					<NavigationDrawer />
 				</Drawer>
 				<Drawer
 					sx={{
