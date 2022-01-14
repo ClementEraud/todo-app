@@ -2,17 +2,16 @@ import { APP_FILTER } from '@nestjs/core';
 import { ExceptionsFilter } from '../../src/presentation/filters/ExceptionsFilter';
 import { Test } from '@nestjs/testing/test';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from '../../src/infrastructure/ioc/user.module';
 
 /**
  * Create Testing Module
  * @param {string} datasetPath Path of dataset to use
  * @returns {Promise<TestingModule>}
  */
-export const buildTestModule = async (datasetPath: string) =>
+export const buildTestModule = async (datasetPath: string, modules) =>
 	await Test.createTestingModule({
 		imports: [
-			UserModule,
+			...modules,
 			TypeOrmModule.forRoot({
 				type: 'sqlite',
 				database: ':memory:',

@@ -3,6 +3,7 @@ import { ExceptionsFilter } from '../../src/presentation/filters/ExceptionsFilte
 import { HttpAdapterHost } from '@nestjs/core';
 import { INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
+import { UserModule } from './../../src/infrastructure/ioc/user.module';
 import { buildTestModule } from './utils';
 
 describe('UserController (e2e)', () => {
@@ -10,7 +11,9 @@ describe('UserController (e2e)', () => {
 	let moduleFixture: TestingModule;
 
 	beforeAll(async () => {
-		moduleFixture = await buildTestModule('test/e2e/dataset-user.ts');
+		moduleFixture = await buildTestModule('test/e2e/dataset-user.ts', [
+			UserModule,
+		]);
 		app = moduleFixture.createNestApplication();
 		await app.init();
 		const { httpAdapter } = app.get(HttpAdapterHost);

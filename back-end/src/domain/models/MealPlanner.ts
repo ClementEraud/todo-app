@@ -1,6 +1,17 @@
 import { MealOfTheDay } from './MealOfTheDay';
 import { v4 as uuidv4 } from 'uuid';
 
+export type Day =
+	| 'monday'
+	| 'tuesday'
+	| 'wednesday'
+	| 'thursday'
+	| 'friday'
+	| 'saturday'
+	| 'sunday';
+
+export type LunchOrDinner = 'lunch' | 'dinner';
+
 export class MealPlanner {
 	id: string;
 	monday: MealOfTheDay;
@@ -29,5 +40,9 @@ export class MealPlanner {
 		this.friday = friday ? friday : new MealOfTheDay();
 		this.saturday = saturday ? saturday : new MealOfTheDay();
 		this.sunday = sunday ? sunday : new MealOfTheDay();
+	}
+
+	public updateMeal(day: Day, lunchOrDinner: LunchOrDinner, meal: string) {
+		this[day][lunchOrDinner] = meal;
 	}
 }
