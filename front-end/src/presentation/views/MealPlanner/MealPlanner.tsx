@@ -14,6 +14,7 @@ import {
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../index';
 import { MealOfTheDay } from '../../../core/models/MealOfTheDay';
+import { MealPlannerCell } from './MealPlannerCell';
 import { MealPlanner as MealPlannerModel } from '../../../core/models/MealPlanner';
 import { useTranslation } from 'react-i18next';
 
@@ -28,6 +29,13 @@ export const MealPlanner = () => {
 	const appModule = useContext(AppContext);
 	const [mealsOfWeek, setMealsOfTheWeek] = useState<Meals[]>([]);
 	const [mealPlanner, setMealPlanner] = useState<MealPlannerModel>();
+
+	const tableCellStyle = {
+		width: '40%',
+		':hover': {
+			bgcolor: 'gray',
+		},
+	};
 
 	const { isLoading } = appModule.hooks.useGetMealPlanner(
 		(mealPlanner: MealPlannerModel) => setMealPlanner(mealPlanner),
@@ -86,8 +94,8 @@ export const MealPlanner = () => {
 								<TableCell component="th" scope="row">
 									{t(`daysOfTheWeek.${meal.day}`)}
 								</TableCell>
-								<TableCell>{meal.lunch}</TableCell>
-								<TableCell>{meal.dinner}</TableCell>
+								<MealPlannerCell meal={meal.lunch} sx={tableCellStyle} />
+								<MealPlannerCell meal={meal.dinner} sx={tableCellStyle} />
 							</TableRow>
 						))}
 					</TableBody>
