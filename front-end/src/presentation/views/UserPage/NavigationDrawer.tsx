@@ -34,7 +34,7 @@ export const NavigationDrawer = () => {
 		<List sx={{ width: '100%', maxWidth: 360 }}>
 			{navigationList.map(item => (
 				<ListItem disablePadding key={item.key}>
-					<Tooltip title={item.tooltip}>
+					<Tooltip title={item.tooltip} placement="right">
 						<ListItemButton
 							selected={location.pathname === item.link}
 							onClick={() => navigation(item.link)}>
