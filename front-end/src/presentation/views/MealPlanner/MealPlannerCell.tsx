@@ -6,9 +6,14 @@ import { useState } from 'react';
 
 export interface MealPlannerCellProps extends TableCellProps {
 	meal: string;
+	onMealUpdated: (newMeal: string) => void;
 }
 
-export const MealPlannerCell = ({ meal, ...args }: MealPlannerCellProps) => {
+export const MealPlannerCell = ({
+	meal,
+	onMealUpdated,
+	...args
+}: MealPlannerCellProps) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [currentMeal, setCurrentMeal] = useState(meal);
 	const dblTouchTapMaxDelay = 300;
@@ -21,6 +26,7 @@ export const MealPlannerCell = ({ meal, ...args }: MealPlannerCellProps) => {
 		if (event.key == 'Enter') {
 			setCurrentMeal(event.target.value);
 			setIsEditing(false);
+			onMealUpdated(event.target.value);
 		}
 	};
 

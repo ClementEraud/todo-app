@@ -18,7 +18,7 @@ import { MealPlannerCell } from './MealPlannerCell';
 import { MealPlanner as MealPlannerModel } from '../../../core/models/MealPlanner';
 import { useTranslation } from 'react-i18next';
 
-interface Meals {
+interface Meal {
 	day: string;
 	lunch: string;
 	dinner: string;
@@ -27,8 +27,9 @@ interface Meals {
 export const MealPlanner = () => {
 	const { t } = useTranslation('mealPlanner');
 	const appModule = useContext(AppContext);
-	const [mealsOfWeek, setMealsOfTheWeek] = useState<Meals[]>([]);
+	const [mealsOfWeek, setMealsOfTheWeek] = useState<Meal[]>([]);
 	const [mealPlanner, setMealPlanner] = useState<MealPlannerModel>();
+	const [updateMealPlanner] = appModule.hooks.useUpdateMealPlanner();
 
 	const tableCellStyle = {
 		width: '40%',
@@ -55,6 +56,16 @@ export const MealPlanner = () => {
 			);
 		}
 	}, [mealPlanner]);
+
+	const onMealUpdate =
+		(currentMeal: Meal, lunchOrDinner: 'lunch' | 'dinner') =>
+		(newMeal: string) => {
+			updateMealPlanner({
+				day: currentMeal.day,
+				lunchOrDinner: lunchOrDinner,
+				meal: newMeal,
+			});
+		};
 
 	return (
 		<Box
@@ -94,8 +105,16 @@ export const MealPlanner = () => {
 								<TableCell component="th" scope="row">
 									{t(`daysOfTheWeek.${meal.day}`)}
 								</TableCell>
-								<MealPlannerCell meal={meal.lunch} sx={tableCellStyle} />
-								<MealPlannerCell meal={meal.dinner} sx={tableCellStyle} />
+								<MealPlannerCell
+									meal={meal.lunch}
+									onMealUpdated={onMealUpdate(meal, 'lunch')}
+									sx={tableCellStyle}
+								/>
+								<MealPlannerCell
+									meal={meal.dinner}
+									onMealUpdated={onMealUpdate(meal, 'dinner')}
+									sx={tableCellStyle}
+								/>
 							</TableRow>
 						))}
 					</TableBody>

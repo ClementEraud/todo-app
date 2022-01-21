@@ -17,6 +17,7 @@ import { useSignUpUser } from './core/hooks/useSignUpUser';
 import { useConnectedUser } from './core/hooks/useConnectedUser';
 import { MealPlanner } from './presentation/views/MealPlanner/MealPlanner';
 import { UserPage } from './presentation/views/UserPage/UserPage';
+import { useUpdateMealPlanner } from './core/hooks/useUpdateMealPlanner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 // import i18n (needs to be bundled ;))
@@ -24,6 +25,7 @@ import './i18n';
 import { CustomLoader } from './presentation/CustomLoader';
 import { useGetMealPlanner } from './core/hooks/useGetMealPlanner';
 import { Tasks } from './presentation/views/Tasks/Tasks';
+import { MealPlannerService } from './providers/MealPlannerService';
 
 const theme = createTheme({
 	palette: {
@@ -66,6 +68,13 @@ const appModule = new AppModule([
 			function: useGetMealPlanner,
 		},
 		providers: [UserService],
+	},
+	{
+		hook: {
+			name: 'useUpdateMealPlanner',
+			function: useUpdateMealPlanner,
+		},
+		providers: [MealPlannerService, UserService],
 	},
 ]);
 
