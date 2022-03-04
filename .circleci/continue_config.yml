@@ -69,10 +69,17 @@ jobs:
           name: Build Check
           working_directory: ~/project/front-end
           command: npm run build
-  build-back:
+  build:
     docker:
       - image: circleci/node:14.15.0
     working_directory: ~/project
+    parameters:
+      image:
+        default: ""
+        type: string
+      registry:
+        default: ""
+        type: string
     steps:
       - checkout
       - setup_remote_docker:
@@ -82,31 +89,18 @@ jobs:
           command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
       - run:
           name: Build docker image
-          command: docker build -t rg.fr-par.scw.cloud/clement-registry/todo-back-end back-end
+          command: docker build -t rg.fr-par.scw.cloud/clement-registry/<<parameters.registry>> <<parameters.image>>
       - run:
           name: Push image to registry
-          command: docker push rg.fr-par.scw.cloud/clement-registry/todo-back-end
-  build-front:
-    docker:
-      - image: circleci/node:14.15.0
-    working_directory: ~/project
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 19.03.13
-      - run:
-          name: Login to Scaleway image registry
-          command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
-      - run:
-          name: Build docker image
-          command: docker build -t rg.fr-par.scw.cloud/clement-registry/todo-front-end front-end
-      - run:
-          name: Push image to registry
-          command: docker push rg.fr-par.scw.cloud/clement-registry/todo-front-end
+          command: docker push rg.fr-par.scw.cloud/clement-registry/<<parameters.registry>>
   deploy:
     docker:
       - image: circleci/node:14.15.0
     working_directory: ~/project
+    parameters:
+      service:
+        default: ""
+        type: string
     steps:
       - checkout
       - setup_remote_docker:
@@ -119,52 +113,48 @@ jobs:
           command: unset DOCKER_HOST && docker context create scaleway --docker host=ssh://root@51.159.163.97
       - run:
           name: Delete containers on remote host
-          command: docker-compose --context scaleway down
+          command: docker-compose --context scaleway stop <<parameters.service>> && docker-compose --context scaleway rm <<parameters.service>>
       - run:
           name: Pulling images
-          command: docker-compose --context scaleway pull
+          command: docker-compose --context scaleway pull <<parameters.service>>
       - run:
           name: Up containers on remote host
-          command: docker-compose --context scaleway up -d
+          command: docker-compose --context scaleway up -d <<parameters.service>>
 
 workflows:
   version: 2
-  build-back-end:
+  build-and-deploy-back-end:
     when: << pipeline.parameters.run-build-back-end-job >>
     jobs:
       - back-end-checks
-      - build-back:
+      - build:
+          image: "back-end"
+          registry: "todo-back-end"
           requires:
             - back-end-checks
           filters:
             branches:
               only:
                 - main
-  build-front-end:
+      - deploy:
+          service: "web"
+          requires:
+            - build
+
+  build-and-deploy-front-end:
     when: << pipeline.parameters.run-build-front-end-job >>
     jobs:
       - front-end-checks
-      - build-front:
+      - build:
+          image: "front-end"
+          registry: "todo-front-end"
           requires:
             - front-end-checks
           filters:
             branches:
               only:
                 - main
-  deploy:
-    when:
-      or:
-        [
-          << pipeline.parameters.run-build-front-end-job >>,
-          << pipeline.parameters.run-build-back-end-job >>,
-        ]
-    jobs:
-      - hold:
-          type: approval
       - deploy:
+          service: "api"
           requires:
-            - hold
-          filters:
-            branches:
-              only:
-                - main
+            - build
