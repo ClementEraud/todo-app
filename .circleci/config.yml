@@ -1,149 +1,30 @@
 version: 2.1
 
-jobs:
-  back-end-checks:
-    docker:
-      - image: circleci/node:14.15.0
-    working_directory: ~/project
-    steps:
-      - checkout
-      - restore_cache:
-          key: npm_install_api-{{ checksum "back-end/package.json" }}-{{ checksum "back-end/package-lock.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Install Tools
-          working_directory: ~/project/back-end
-          command: sudo npm install -g npm@latest && npm i
-      - save_cache:
-          key: npm_install_api-{{ checksum "back-end/package.json" }}-{{ checksum "back-end/package-lock.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Build Check
-          working_directory: ~/project/back-end
-          command: npm run build
-      - run:
-          name: Lint Check
-          working_directory: ~/project/back-end
-          command: npm run lint
-      - run:
-          name: Format Check
-          working_directory: ~/project/back-end
-          command: npm run format:check
-      - run:
-          name: Unit Test
-          working_directory: ~/project/back-end
-          command: npm run test
-      - run:
-          name: End-to-End Test
-          working_directory: ~/project/back-end
-          command: npm run test:e2e
-  front-end-checks:
-    docker:
-      - image: circleci/node:14.15.0
-    working_directory: ~/project
-    steps:
-      - checkout
-      - restore_cache:
-          key: npm_install_api-{{ checksum "front-end/package.json" }}-{{ checksum "front-end/package-lock.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Install Tools
-          working_directory: ~/project/front-end
-          command: sudo npm install -g npm@latest && npm i
-      - save_cache:
-          key: npm_install_api-{{ checksum "front-end/package.json" }}-{{ checksum "front-end/package-lock.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Build Check
-          working_directory: ~/project/front-end
-          command: npm run build
-  build-back:
-    docker:
-      - image: circleci/node:14.15.0
-    working_directory: ~/project
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 19.03.13
-      - run:
-          name: Login to Scaleway image registry
-          command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
-      - run:
-          name: Build docker image
-          command: docker build -t rg.fr-par.scw.cloud/clement-registry/todo-back-end back-end
-      - run:
-          name: Push image to registry
-          command: docker push rg.fr-par.scw.cloud/clement-registry/todo-back-end
-  build-front:
-    docker:
-      - image: circleci/node:14.15.0
-    working_directory: ~/project
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 19.03.13
-      - run:
-          name: Login to Scaleway image registry
-          command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
-      - run:
-          name: Build docker image
-          command: docker build -t rg.fr-par.scw.cloud/clement-registry/todo-front-end front-end
-      - run:
-          name: Push image to registry
-          command: docker push rg.fr-par.scw.cloud/clement-registry/todo-front-end
-  deploy:
-    docker:
-      - image: circleci/node:14.15.0
-    working_directory: ~/project
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 19.03.13
-      - run:
-          name: Login to Scaleway image registry
-          command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
-      - run:
-          name: Setup Docker context
-          command: unset DOCKER_HOST && docker context create scaleway --docker host=ssh://root@51.159.163.97
-      - run:
-          name: Delete containers on remote host
-          command: docker-compose --context scaleway down
-      - run:
-          name: Pulling images
-          command: docker-compose --context scaleway pull
-      - run:
-          name: Up containers on remote host
-          command: docker-compose --context scaleway up -d db api web
+# this allows you to use CircleCI's dynamic configuration feature
+setup: true
+
+# the path-filtering orb is required to continue a pipeline based on
+# the path of an updated fileset
+orbs:
+  path-filtering: circleci/path-filtering@0.1.1
 
 workflows:
-  version: 2
-  build-and-deploy:
+  # the always-run workflow is always triggered, regardless of the pipeline parameters.
+  always-run:
     jobs:
-      - back-end-checks
-      - front-end-checks
-      - build-back:
-          requires:
-            - back-end-checks
-          filters:
-            branches:
-              only:
-                - main
-      - build-front:
-          requires:
-            - front-end-checks
-          filters:
-            branches:
-              only:
-                - main
-      - deploy:
-          requires:
-            - build-back
-            - build-front
-          filters:
-            branches:
-              only:
-                - main
+      # the path-filtering/filter job determines which pipeline
+      # parameters to update.
+      - path-filtering/filter:
+          name: check-updated-files
+          # 3-column, whitespace-delimited mapping. One mapping per
+          # line:
+          # <regex path-to-test> <parameter-to-set> <value-of-pipeline-parameter>
+          mapping: |
+            back-end/.* run-build-back-end-job true
+            front-end/.* run-build-front-end-job true
+          base-revision: main
+          # this is the path of the configuration we should trigger once
+          # path filtering and pipeline parameter value updates are
+          # complete. In this case, we are using the parent dynamic
+          # configuration itself.
+          config-path: .circleci/continue_config.yml
