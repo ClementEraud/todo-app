@@ -7,36 +7,60 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
+      - restore_cache:
+          key: npm_install_api-{{ checksum "back-end/package.json" }}-{{ checksum "back-end/package-lock.json" }}
+          paths:
+            - node_modules
       - run:
           name: Install Tools
-          command: cd back-end && sudo npm install -g npm@latest && npm i
+          working_directory: ~/project/back-end
+          command: sudo npm install -g npm@latest && npm i
+      - save_cache:
+          key: npm_install_api-{{ checksum "back-end/package.json" }}-{{ checksum "back-end/package-lock.json" }}
+          paths:
+            - node_modules
       - run:
           name: Build Check
-          command: cd back-end && npm run build
+          working_directory: ~/project/back-end
+          command: npm run build
       - run:
           name: Lint Check
-          command: cd back-end && npm run lint
+          working_directory: ~/project/back-end
+          command: npm run lint
       - run:
           name: Format Check
-          command: cd back-end && npm run format:check
+          working_directory: ~/project/back-end
+          command: npm run format:check
       - run:
           name: Unit Test
-          command: cd back-end && npm run test
+          working_directory: ~/project/back-end
+          command: npm run test
       - run:
           name: End-to-End Test
-          command: cd back-end && npm run test:e2e
+          working_directory: ~/project/back-end
+          command: npm run test:e2e
   front-end-checks:
     docker:
       - image: circleci/node:14.15.0
     working_directory: ~/project
     steps:
       - checkout
+      - restore_cache:
+          key: npm_install_api-{{ checksum "front-end/package.json" }}-{{ checksum "front-end/package-lock.json" }}
+          paths:
+            - node_modules
       - run:
           name: Install Tools
-          command: cd front-end && sudo npm install -g npm@latest && npm i
+          working_directory: ~/project/front-end
+          command: sudo npm install -g npm@latest && npm i
+      - save_cache:
+          key: npm_install_api-{{ checksum "front-end/package.json" }}-{{ checksum "front-end/package-lock.json" }}
+          paths:
+            - node_modules
       - run:
           name: Build Check
-          command: cd front-end && npm run build
+          working_directory: ~/project/front-end
+          command: npm run build
   build-back:
     docker:
       - image: circleci/node:14.15.0
