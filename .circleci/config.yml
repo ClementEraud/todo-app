@@ -90,10 +90,10 @@ jobs:
           command: docker-compose --context scaleway down
       - run:
           name: Pulling images
-          command: docker-compose --context scaleway -f docker-compose.prod.yml pull
+          command: docker-compose --context scaleway pull
       - run:
           name: Up containers on remote host
-          command: docker-compose --context scaleway -f docker-compose.prod.yml up -d db api web
+          command: docker-compose --context scaleway up -d db api web
 
 workflows:
   version: 2
