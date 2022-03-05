@@ -1,5 +1,5 @@
 # build environment
-FROM node:current-alpine3.14 as build
+FROM node:16-alpine3.14 as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
@@ -8,6 +8,7 @@ RUN npm install -g npm@latest
 RUN npm ci
 RUN npm install react-scripts@3.4.1 -g --silent
 COPY . ./
+RUN export NODE_OPTIONS=--openssl-legacy-provider
 RUN npm run build
 
 # production environment
