@@ -71,7 +71,8 @@
 		"dev": "npm-watch",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
-		"prettify": "prettier -w src"
+		"prettify": "prettier -w src",
+		"prettier-check": "prettier --check src"
 	},
 	"pre-commit": [
 		"lint:fix",

@@ -9,30 +9,43 @@ parameters:
     default: false
 
 jobs:
-  back-end-checks:
+  prepare-dependencies:
     docker:
-      - image: circleci/node:14.15.0
+      - image: circleci/node:16.10.0
+    parameters:
+      folder:
+        default: ""
+        type: string
     working_directory: ~/project
     steps:
       - checkout
       - restore_cache:
-          key: npm_install_api-{{ checksum "back-end/package.json" }}-{{ checksum "back-end/package-lock.json" }}
+          key: npm_install_api-{{ checksum "<<parameters.folder>>/package-lock.json" }}
           paths:
-            - node_modules
+            - <<parameters.folder>>/node_modules
       - run:
           name: Install Tools
-          working_directory: ~/project/back-end
-          command: sudo npm install -g npm@latest && npm i
+          working_directory: ~/project/<<parameters.folder>>
+          command: ls && sudo npm install -g npm@latest && npm i
       - save_cache:
-          key: npm_install_api-{{ checksum "back-end/package.json" }}-{{ checksum "back-end/package-lock.json" }}
+          key: npm_install_api-{{ checksum "<<parameters.folder>>/package-lock.json" }}
           paths:
-            - node_modules
+            - <<parameters.folder>>/node_modules
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  back-end-checks:
+    docker:
+      - image: circleci/node:16.10.0
+    working_directory: ~/project
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
       - run:
-          name: Build Check
-          working_directory: ~/project/back-end
-          command: npm run build
-      - run:
-          name: Lint Check
+          name: Linter Check
           working_directory: ~/project/back-end
           command: npm run lint
       - run:
@@ -47,31 +60,27 @@ jobs:
           name: End-to-End Test
           working_directory: ~/project/back-end
           command: npm run test:e2e
+
   front-end-checks:
     docker:
-      - image: circleci/node:14.15.0
+      - image: circleci/node:16.10.0
     working_directory: ~/project
     steps:
       - checkout
-      - restore_cache:
-          key: npm_install_api-{{ checksum "front-end/package.json" }}-{{ checksum "front-end/package-lock.json" }}
-          paths:
-            - node_modules
+      - attach_workspace:
+          at: .
       - run:
-          name: Install Tools
+          name: Linter Check
           working_directory: ~/project/front-end
-          command: sudo npm install -g npm@latest && npm i
-      - save_cache:
-          key: npm_install_api-{{ checksum "front-end/package.json" }}-{{ checksum "front-end/package-lock.json" }}
-          paths:
-            - node_modules
+          command: npm run lint
       - run:
-          name: Build Check
+          name: Prettier Check
           working_directory: ~/project/front-end
-          command: npm run build
+          command: npm run prettier-check
+
   build:
     docker:
-      - image: circleci/node:14.15.0
+      - image: circleci/node:16.10.0
     working_directory: ~/project
     parameters:
       image:
@@ -93,9 +102,10 @@ jobs:
       - run:
           name: Push image to registry
           command: docker push rg.fr-par.scw.cloud/clement-registry/<<parameters.registry>>
+
   deploy:
     docker:
-      - image: circleci/node:14.15.0
+      - image: circleci/node:16.10.0
     working_directory: ~/project
     parameters:
       service:
@@ -126,7 +136,11 @@ workflows:
   build-and-deploy-back-end:
     when: << pipeline.parameters.run-build-back-end-job >>
     jobs:
-      - back-end-checks
+      - prepare-dependencies:
+          folder: "back-end"
+      - back-end-checks:
+          requires:
+            - prepare-dependencies
       - build:
           image: "back-end"
           registry: "todo-back-end"
@@ -144,7 +158,11 @@ workflows:
   build-and-deploy-front-end:
     when: << pipeline.parameters.run-build-front-end-job >>
     jobs:
-      - front-end-checks
+      - prepare-dependencies:
+          folder: "front-end"
+      - front-end-checks:
+          requires:
+            - prepare-dependencies
       - build:
           image: "front-end"
           registry: "todo-front-end"
