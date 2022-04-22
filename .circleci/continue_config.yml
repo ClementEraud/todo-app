@@ -123,13 +123,13 @@ jobs:
           command: unset DOCKER_HOST && docker context create scaleway --docker host=ssh://root@51.159.163.97
       - run:
           name: Delete containers on remote host
-          command: docker-compose --context scaleway stop <<parameters.service>> && docker-compose --context scaleway rm -f <<parameters.service>>
+          command: docker-compose --context scaleway --skip-hostname-check  stop <<parameters.service>> && docker-compose --context scaleway rm -f <<parameters.service>>
       - run:
           name: Pulling images
-          command: docker-compose --context scaleway pull <<parameters.service>>
+          command: docker-compose --context scaleway --skip-hostname-check  pull <<parameters.service>>
       - run:
           name: Up containers on remote host
-          command: docker-compose --context scaleway up -d <<parameters.service>>
+          command: docker-compose --context scaleway --skip-hostname-check  up -d <<parameters.service>>
 
 workflows:
   version: 2
