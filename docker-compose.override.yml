@@ -6,9 +6,9 @@ services:
       context: ./front-end
       dockerfile: Dockerfile-dev
     ports:
-      - "3000:3000"
+      - "3300:3000"
     volumes:
-      - "${HOME}/Project/todo-app/front-end/src:/app/src"
+      - "${HOME}/progression/projects/todo-app/front-end/src:/app/src"
     depends_on:
       - api
   api:
@@ -20,7 +20,7 @@ services:
     ports:
       - "3001:3000"
     volumes:
-      - "${HOME}/Project/todo-app/back-end/src:/app/src"
+      - "${HOME}/progression/projects/todo-app/back-end/src:/app/src"
     depends_on:
       - db
   db:
