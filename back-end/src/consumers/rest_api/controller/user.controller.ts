@@ -47,10 +47,8 @@ export class UserController {
 		type: UserVM,
 	})
 	@HttpCode(200)
-	async login(@Body() userLogin: UserLoginInput): Promise<UserVM> {
-		return new UserVM(
-			await this.loginUser.execute(userLogin.username, userLogin.password),
-		);
+	async login(@Body() userLogin: UserLoginInput): Promise<string> {
+		return await this.loginUser.execute(userLogin.username, userLogin.password);
 	}
 
 	@Get(':id/get-meal-planner')
