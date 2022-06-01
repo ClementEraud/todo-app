@@ -6,7 +6,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './consumed/ioc/user.module';
 
 @Module({
-	imports: [UserModule, MealPlannerModule, TypeOrmModule.forRoot()],
+	imports: [
+		UserModule,
+		MealPlannerModule,
+		TypeOrmModule.forRoot()
+	],
 	providers: [
 		{
 			provide: APP_FILTER,

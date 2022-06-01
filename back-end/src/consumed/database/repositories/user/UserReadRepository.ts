@@ -52,15 +52,20 @@ export class UserReadRepository implements IUserReadRepository {
 	}
 
 	async findOneByUsernameOrDie(username: string): Promise<User> {
-		const foundUsers = await this.manager.find(UserSchema, {
-			relations,
-			where: { username },
-		});
-
-		if (foundUsers.length === 0 || foundUsers.length > 1) {
+		try {
+			const foundUsers = await this.manager.find(UserSchema, {
+				relations,
+				where: { username },
+			});
+			if (foundUsers.length === 0 || foundUsers.length > 1) {
+				throw new UserNotFound();
+			}
+	
+			return foundUsers[0];
+		} catch(err) {
+			console.error(err);
 			throw new UserNotFound();
 		}
 
-		return foundUsers[0];
 	}
 }
