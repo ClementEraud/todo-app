@@ -1,7 +1,7 @@
 import { IMealOfTheDayWriteRepository } from '../../application/ports/mealOfTheDay/MealOfTheDayWriteRepository.interface';
 import { IUserReadRepository } from '../../application/ports/user/UserReadRepository.interface';
 import { MealOfTheDayWriteRepository } from '../database/repositories/mealOfTheDay/MealOfTheDayWriteRepository';
-import { MealPlannerController } from '../../consumers/controller/mealPlanner.controller';
+import { MealPlannerController } from '../../consumers/rest_api/controller/mealPlanner.controller';
 import { Module } from '@nestjs/common/decorators/modules';
 import { UpdateMeal } from '../../application/use_cases/UpdateMeal';
 import { UserReadRepository } from '../database/repositories/user/UserReadRepository';

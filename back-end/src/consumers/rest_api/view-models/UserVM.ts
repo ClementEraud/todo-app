@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { MealPlannerVM } from './MealPlannerVM';
 import { TaskVM } from './TaskVM';
-import { User } from '../../domain/models/User';
+import { User } from '../../../domain/models/User';
 
 export class UserVM {
 	@ApiProperty({
