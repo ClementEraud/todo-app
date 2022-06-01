@@ -4,7 +4,7 @@ import { AddTaskToUser } from '../../application/use_cases/AddTaskToUser';
 import { CreateTaskInput } from '../inputs/CreateTaskInput';
 import { CreateUser } from '../../application/use_cases/CreateUser';
 import { CreateUserInput } from '../inputs/CreateUserInput';
-import { GetMealPlannerOfUser } from './../../application/use_cases/GetMealPlannerOfUser';
+import { GetMealPlannerOfUser } from '../../application/use_cases/GetMealPlannerOfUser';
 import { LoginUser } from '../../application/use_cases/LoginUser';
 import { MealPlannerVM } from '../view-models/MealPlannerVM';
 import { UserLoginInput } from '../inputs/UserLoginInput';

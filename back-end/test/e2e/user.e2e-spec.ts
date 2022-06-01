@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import { ExceptionsFilter } from '../../src/presentation/filters/ExceptionsFilter';
+import { ExceptionsFilter } from '../../src/consumers/filters/ExceptionsFilter';
 import { HttpAdapterHost } from '@nestjs/core';
 import { INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';

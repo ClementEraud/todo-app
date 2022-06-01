@@ -1,8 +1,8 @@
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Patch } from '@nestjs/common';
-import { MealPlannerVM } from './../view-models/MealPlannerVM';
-import { UpdateMeal } from './../../application/use_cases/UpdateMeal';
-import { UpdateMealPlannerInput } from './../inputs/UpdateMealPlannerInput';
+import { MealPlannerVM } from '../view-models/MealPlannerVM';
+import { UpdateMeal } from '../../application/use_cases/UpdateMeal';
+import { UpdateMealPlannerInput } from '../inputs/UpdateMealPlannerInput';
 
 @ApiTags('mealPlanners')
 @Controller('mealPlanners')

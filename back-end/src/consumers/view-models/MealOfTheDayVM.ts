@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MealOfTheDay } from './../../domain/models/MealOfTheDay';
+import { MealOfTheDay } from '../../domain/models/MealOfTheDay';
 
 export class MealOfTheDayVM {
 	@ApiProperty({

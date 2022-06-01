@@ -1,5 +1,5 @@
 import { APP_FILTER } from '@nestjs/core';
-import { ExceptionsFilter } from '../../src/presentation/filters/ExceptionsFilter';
+import { ExceptionsFilter } from '../../src/consumers/filters/ExceptionsFilter';
 import { Test } from '@nestjs/testing/test';
 import { TypeOrmModule } from '@nestjs/typeorm';
 

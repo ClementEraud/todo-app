@@ -9,7 +9,7 @@ import { IUserWriteRepository } from '../../application/ports/user/UserWriteRepo
 import { LoginUser } from '../../application/use_cases/LoginUser';
 import { Module } from '@nestjs/common';
 import { TaskWriteRepository } from '../database/repositories/task/TaskWriteRepository';
-import { UserController } from '../../presentation/controller/user.controller';
+import { UserController } from '../../consumers/controller/user.controller';
 import { UserReadRepository } from '../database/repositories/user/UserReadRepository';
 import { UserWriteRepository } from '../database/repositories/user/UserWriteRepository';
 
