@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import { ExceptionsFilter } from '../../src/presentation/filters/ExceptionsFilter';
+import { ExceptionsFilter } from '../../src/consumers/filters/ExceptionsFilter';
 import { HttpAdapterHost } from '@nestjs/core';
 import { INestApplication } from '@nestjs/common';
 import { MealPlannerModule } from '../../src/consumed/ioc/mealPlanner.module';
