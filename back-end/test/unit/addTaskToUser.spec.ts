@@ -1,10 +1,10 @@
 import { AddTaskToUser } from '../../src/application/use_cases/AddTaskToUser';
 import { MealPlanner } from './../../src/domain/models/MealPlanner';
 import { Task } from '../../src/domain/models/Task';
-import { TaskWriteRepository } from '../../src/infrastructure/in_memory/repositories/task/TaskWriteRepository';
+import { TaskWriteRepository } from '../../src/consumed/in_memory/repositories/task/TaskWriteRepository';
 import { User } from '../../src/domain/models/User';
-import { UserReadRepository } from '../../src/infrastructure/in_memory/repositories/user/UserReadRepository';
-import { UserWriteRepository } from '../../src/infrastructure/in_memory/repositories/user/UserWriteRepository';
+import { UserReadRepository } from '../../src/consumed/in_memory/repositories/user/UserReadRepository';
+import { UserWriteRepository } from '../../src/consumed/in_memory/repositories/user/UserWriteRepository';
 
 describe('AddTaskToUser', () => {
 	let useCase: AddTaskToUser;

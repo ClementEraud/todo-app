@@ -1,4 +1,4 @@
-import { UserNotFound } from './../../../../domain/exceptions/UserNotFound';
+import { UserNotFound } from '../../../../domain/exceptions/UserNotFound';
 /* eslint-disable sort-imports */
 import { User } from '../../../../domain/models/User';
 import { IUserReadRepository } from '../../../../application/ports/user/UserReadRepository.interface';

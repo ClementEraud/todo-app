@@ -3,7 +3,7 @@ import { ExceptionsFilter } from '../../src/presentation/filters/ExceptionsFilte
 import { HttpAdapterHost } from '@nestjs/core';
 import { INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
-import { UserModule } from './../../src/infrastructure/ioc/user.module';
+import { UserModule } from '../../src/consumed/ioc/user.module';
 import { buildTestModule } from './utils';
 
 describe('UserController (e2e)', () => {

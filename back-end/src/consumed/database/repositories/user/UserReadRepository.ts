@@ -2,7 +2,7 @@ import { Connection, EntityManager, QueryRunner } from 'typeorm';
 import { IUserReadRepository } from '../../../../application/ports/user/UserReadRepository.interface';
 import { InjectConnection } from '@nestjs/typeorm';
 import { User } from '../../../../domain/models/User';
-import { UserNotFound } from './../../../../domain/exceptions/UserNotFound';
+import { UserNotFound } from '../../../../domain/exceptions/UserNotFound';
 import { UserSchema } from '../../mapper/UserSchema';
 
 const relations = [

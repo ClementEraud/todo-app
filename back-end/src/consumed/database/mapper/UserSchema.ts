@@ -1,5 +1,5 @@
 import { EntitySchema } from 'typeorm';
-import { MealPlanner } from './../../../domain/models/MealPlanner';
+import { MealPlanner } from '../../../domain/models/MealPlanner';
 import { Task } from '../../../domain/models/Task';
 import { User } from '../../../domain/models/User';
 

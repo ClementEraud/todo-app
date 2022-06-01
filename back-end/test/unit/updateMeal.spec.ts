@@ -1,10 +1,10 @@
 import { MealOfTheDay } from '../../src/domain/models/MealOfTheDay';
-import { MealOfTheDayWriteRepository } from '../../src/infrastructure/in_memory/repositories/mealOfTheDay/MealOfTheDayWriteRepository';
+import { MealOfTheDayWriteRepository } from '../../src/consumed/in_memory/repositories/mealOfTheDay/MealOfTheDayWriteRepository';
 import { MealPlanner } from '../../src/domain/models/MealPlanner';
 import { Task } from '../../src/domain/models/Task';
 import { UpdateMeal } from '../../src/application/use_cases/UpdateMeal';
 import { User } from '../../src/domain/models/User';
-import { UserReadRepository } from '../../src/infrastructure/in_memory/repositories/user/UserReadRepository';
+import { UserReadRepository } from '../../src/consumed/in_memory/repositories/user/UserReadRepository';
 
 describe('UpdateMeal', () => {
 	let useCase: UpdateMeal;

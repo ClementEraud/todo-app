@@ -10,7 +10,7 @@ export class User {
 	tasks: Task[];
 	username: string;
 	password: string;
-	mealPlanner: MealPlanner;
+	mealPlanner?: MealPlanner;
 
 	constructor(
 		firstName: string,

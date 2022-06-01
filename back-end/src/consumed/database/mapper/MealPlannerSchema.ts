@@ -1,5 +1,5 @@
 import { EntitySchema } from 'typeorm';
-import { MealOfTheDay } from './../../../domain/models/MealOfTheDay';
+import { MealOfTheDay } from '../../../domain/models/MealOfTheDay';
 import { MealPlanner } from '../../../domain/models/MealPlanner';
 
 export const MealPlannerSchema = new EntitySchema<MealPlanner>({
