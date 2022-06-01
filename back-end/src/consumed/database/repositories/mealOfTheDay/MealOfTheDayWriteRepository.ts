@@ -1,8 +1,8 @@
 import { Connection, EntityManager, QueryRunner } from 'typeorm';
 import { IMealOfTheDayWriteRepository } from '../../../../application/ports/mealOfTheDay/MealOfTheDayWriteRepository.interface';
 import { InjectConnection } from '@nestjs/typeorm';
-import { MealOfTheDay } from './../../../../domain/models/MealOfTheDay';
-import { MealOfTheDaySchema } from './../../mapper/MealOfTheDaySchema';
+import { MealOfTheDay } from '../../../../domain/models/MealOfTheDay';
+import { MealOfTheDaySchema } from '../../mapper/MealOfTheDaySchema';
 
 export class MealOfTheDayWriteRepository
 	implements IMealOfTheDayWriteRepository

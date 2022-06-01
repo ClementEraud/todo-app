@@ -4,7 +4,7 @@ import { LoginUser } from '../../src/application/use_cases/LoginUser';
 import { MealPlanner } from './../../src/domain/models/MealPlanner';
 import { Task } from '../../src/domain/models/Task';
 import { User } from '../../src/domain/models/User';
-import { UserReadRepository } from '../../src/infrastructure/in_memory/repositories/user/UserReadRepository';
+import { UserReadRepository } from '../../src/consumed/in_memory/repositories/user/UserReadRepository';
 
 describe('LoginUser', () => {
 	let useCase: LoginUser;

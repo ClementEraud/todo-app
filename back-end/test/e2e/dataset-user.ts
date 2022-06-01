@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import { UserSchema } from '../../src/infrastructure/database/mapper/UserSchema';
+import { UserSchema } from '../../src/consumed/database/mapper/UserSchema';
 
 export class Dataset1633385179161 implements MigrationInterface {
 	name = 'Dataset1633385179161';

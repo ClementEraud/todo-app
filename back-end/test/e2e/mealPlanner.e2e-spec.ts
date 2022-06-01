@@ -2,9 +2,9 @@ import * as request from 'supertest';
 import { ExceptionsFilter } from '../../src/presentation/filters/ExceptionsFilter';
 import { HttpAdapterHost } from '@nestjs/core';
 import { INestApplication } from '@nestjs/common';
-import { MealPlannerModule } from '../../src/infrastructure/ioc/mealPlanner.module';
+import { MealPlannerModule } from '../../src/consumed/ioc/mealPlanner.module';
 import { TestingModule } from '@nestjs/testing';
-import { UserModule } from './../../src/infrastructure/ioc/user.module';
+import { UserModule } from '../../src/consumed/ioc/user.module';
 import { buildTestModule } from './utils';
 
 describe('MealPlannerController (e2e)', () => {

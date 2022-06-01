@@ -2,8 +2,8 @@ import { CreateUser } from '../../src/application/use_cases/CreateUser';
 import { EncryptionServiceFake } from '../fakes/EncryptionServiceStubs';
 import { MissingRequiredProperties } from './../../src/domain/exceptions/MissingRequiredProperties';
 import { User } from '../../src/domain/models/User';
-import { UserReadRepository } from '../../src/infrastructure/in_memory/repositories/user/UserReadRepository';
-import { UserWriteRepository } from '../../src/infrastructure/in_memory/repositories/user/UserWriteRepository';
+import { UserReadRepository } from '../../src/consumed/in_memory/repositories/user/UserReadRepository';
+import { UserWriteRepository } from '../../src/consumed/in_memory/repositories/user/UserWriteRepository';
 import { UsernameAlreadyUsed } from '../../src/domain/exceptions/UsernameAlreadyUsed';
 
 describe('CreateUser', () => {
