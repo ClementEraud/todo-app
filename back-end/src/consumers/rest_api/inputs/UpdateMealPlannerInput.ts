@@ -1,6 +1,6 @@
-import { Day, LunchOrDinner } from '../../domain/models/MealPlanner';
+import { Day, LunchOrDinner } from '../../../domain/models/MealPlanner';
 import { ApiProperty } from '@nestjs/swagger';
-import { UpdateMealCommand } from '../../application/command/update-meal';
+import { UpdateMealCommand } from '../../../application/command/update-meal';
 
 export class UpdateMealPlannerInput implements UpdateMealCommand {
 	@ApiProperty({

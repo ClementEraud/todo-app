@@ -1,5 +1,5 @@
 import { APP_FILTER } from '@nestjs/core';
-import { ExceptionsFilter } from './consumers/filters/ExceptionsFilter';
+import { ExceptionsFilter } from './consumers/rest_api/filters/ExceptionsFilter';
 import { MealPlannerModule } from './consumed/ioc/mealPlanner.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';

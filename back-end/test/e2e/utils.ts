@@ -1,5 +1,5 @@
 import { APP_FILTER } from '@nestjs/core';
-import { ExceptionsFilter } from '../../src/consumers/filters/ExceptionsFilter';
+import { ExceptionsFilter } from '../../src/consumers/rest_api/filters/ExceptionsFilter';
 import { Test } from '@nestjs/testing/test';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -16,7 +16,7 @@ export const buildTestModule = async (datasetPath: string, modules) =>
 				type: 'sqlite',
 				database: ':memory:',
 				dropSchema: true,
-				entities: ['src/infrastructure/database/mapper/*.ts'],
+				entities: ['src/consumed/database/mapper/*.ts'],
 				migrations: [datasetPath],
 				migrationsRun: true,
 				logging: false,

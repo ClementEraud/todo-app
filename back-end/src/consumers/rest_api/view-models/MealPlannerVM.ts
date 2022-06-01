@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { MealOfTheDayVM } from './MealOfTheDayVM';
-import { MealPlanner } from '../../domain/models/MealPlanner';
+import { MealPlanner } from '../../../domain/models/MealPlanner';
 
 export class MealPlannerVM {
 	@ApiProperty({

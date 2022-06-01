@@ -1,11 +1,11 @@
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
-import { AddTaskToUser } from '../../application/use_cases/AddTaskToUser';
+import { AddTaskToUser } from '../../../application/use_cases/AddTaskToUser';
 import { CreateTaskInput } from '../inputs/CreateTaskInput';
-import { CreateUser } from '../../application/use_cases/CreateUser';
+import { CreateUser } from '../../../application/use_cases/CreateUser';
 import { CreateUserInput } from '../inputs/CreateUserInput';
-import { GetMealPlannerOfUser } from '../../application/use_cases/GetMealPlannerOfUser';
-import { LoginUser } from '../../application/use_cases/LoginUser';
+import { GetMealPlannerOfUser } from '../../../application/use_cases/GetMealPlannerOfUser';
+import { LoginUser } from '../../../application/use_cases/LoginUser';
 import { MealPlannerVM } from '../view-models/MealPlannerVM';
 import { UserLoginInput } from '../inputs/UserLoginInput';
 import { UserVM } from '../view-models/UserVM';
