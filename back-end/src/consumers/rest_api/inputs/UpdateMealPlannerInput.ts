@@ -1,14 +1,7 @@
 import { Day, LunchOrDinner } from '../../../domain/models/MealPlanner';
 import { ApiProperty } from '@nestjs/swagger';
-import { UpdateMealCommand } from '../../../application/command/update-meal';
 
-export class UpdateMealPlannerInput implements UpdateMealCommand {
-	@ApiProperty({
-		description: 'User ID.',
-		required: true,
-	})
-	userId: string;
-
+export class UpdateMealPlannerInput {
 	@ApiProperty({
 		description: 'Day of the meal to update.',
 		required: true,

@@ -24,7 +24,8 @@ export class LoginUser implements UseCase {
 			}
 	
 			return this.jwtService.sign({
-				id: userFound.id,
+				userId: userFound.id,
+				username: userFound.username
 			});
 		} catch(err) {
 			console.error(err)

@@ -1,10 +1,12 @@
 import { BadPassword } from '../../src/domain/exceptions/BadPassword';
 import { EncryptionServiceFake } from '../fakes/EncryptionServiceStubs';
+import { JwtServiceStub } from '../fakes/JwtServiceStub';
 import { LoginUser } from '../../src/application/use_cases/LoginUser';
 import { MealPlanner } from './../../src/domain/models/MealPlanner';
 import { Task } from '../../src/domain/models/Task';
 import { User } from '../../src/domain/models/User';
 import { UserReadRepository } from '../../src/consumed/in_memory/repositories/user/UserReadRepository';
+
 
 describe('LoginUser', () => {
 	let useCase: LoginUser;
@@ -24,15 +26,13 @@ describe('LoginUser', () => {
 		useCase = new LoginUser(
 			new UserReadRepository(userList),
 			new EncryptionServiceFake(),
+			new JwtServiceStub()
 		);
 	});
 
-	it('GIVEN a valid username and password SHOULD return the user', async () => {
-		const user = await useCase.execute('username', 'password');
-		expect(user.firstName).toBe('Verna');
-		expect(user.lastName).toBe('Tran');
-		expect(user.tasks.length).toBe(1);
-		expect(user.mealPlanner).toBeDefined();
+	it('GIVEN a valid username and password SHOULD return a JwtToken', async () => {
+		const token = await useCase.execute('username', 'password');
+		expect(token).toBeDefined();
 	});
 
 	it('GIVEN a wrong password SHOULD throw a BadPassword Error', async () => {
