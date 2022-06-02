@@ -26,6 +26,10 @@ const ExceptionsResponseMapper = (exception: any) => ({
 			missingProperties: exception.missingProperties,
 		},
 	},
+	UnauthorizedException: {
+		statusCode: 401,
+		message: 'Unauthorized'
+	}
 });
 
 @Catch()

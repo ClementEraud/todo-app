@@ -9,6 +9,7 @@ import { buildTestModule } from './utils';
 describe('UserController (e2e)', () => {
 	let app: INestApplication;
 	let moduleFixture: TestingModule;
+	let validToken: string;
 
 	beforeAll(async () => {
 		moduleFixture = await buildTestModule('test/e2e/dataset-user.ts', [
@@ -69,21 +70,6 @@ describe('UserController (e2e)', () => {
 				}));
 	});
 
-	describe('/users/:id/add-task (POST)', () => {
-		it('GIVEN valid task SHOULD add task to user.', async () =>
-			request(app.getHttpServer())
-				.post('/users/0f9a61c0-9c3f-4fe9-afe0-47876d18f8c0/add-task')
-				.send({ title: 'Task 1', description: 'Task description' })
-				.expect(201)
-				.expect((res: request.Response) => {
-					expect(res.body.firstName).toBe('Tyler');
-					expect(res.body.lastName).toBe('Chavez');
-					expect(res.body.tasks.length).toBe(1);
-					expect(res.body.tasks[0].title).toBe('Task 1');
-					expect(res.body.tasks[0].description).toBe('Task description');
-				}));
-	});
-
 	describe('/users/login (POST)', () => {
 		it('GIVEN valid username and password SHOULD return user.', async () =>
 			request(app.getHttpServer())
@@ -91,10 +77,8 @@ describe('UserController (e2e)', () => {
 				.send({ username: 'TylerChavez', password: 'password' })
 				.expect(200)
 				.expect((res: request.Response) => {
-					expect(res.body.firstName).toBe('Tyler');
-					expect(res.body.lastName).toBe('Chavez');
-					expect(res.body.tasks.length).toBe(1);
-					expect(res.body.mealPlanner).toBeDefined();
+					expect(res).toBeDefined()
+					validToken = res.text;
 				}));
 
 		it('GIVEN not existing username SHOULD return 400 Bad Request with User Not Found message.', async () =>
@@ -116,10 +100,27 @@ describe('UserController (e2e)', () => {
 				}));
 	});
 
+	describe('/users/:id/add-task (POST)', () => {
+		it('GIVEN valid task SHOULD add task to user.', async () =>
+			request(app.getHttpServer())
+				.post('/users/me/add-task')
+				.set('Authorization', 'bearer ' + validToken)
+				.send({ title: 'Task 1', description: 'Task description' })
+				.expect(201)
+				.expect((res: request.Response) => {
+					expect(res.body.firstName).toBe('Tyler');
+					expect(res.body.lastName).toBe('Chavez');
+					expect(res.body.tasks.length).toBe(1);
+					expect(res.body.tasks[0].title).toBe('Task 1');
+					expect(res.body.tasks[0].description).toBe('Task description');
+				}));
+	});
+
 	describe('/users/:id/get-meal-planner (GET)', () => {
 		it('GIVEN valid user id SHOULD return mealPlanner.', async () =>
 			request(app.getHttpServer())
-				.get('/users/0f9a61c0-9c3f-4fe9-afe0-47876d18f8c0/get-meal-planner')
+				.get('/users/me/get-meal-planner')
+				.set('Authorization', 'bearer ' + validToken)
 				.expect(200)
 				.expect((res: request.Response) => {
 					expect(res.body.monday).toBeDefined();

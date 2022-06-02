@@ -26,25 +26,33 @@ describe('MealPlannerController (e2e)', () => {
 
 	describe('/mealPlanners (PATCH)', () => {
 		it('GIVEN valid meal planner params SHOULD return updated mealPlanner.', async () =>
-			request(app.getHttpServer())
-				.patch('/mealPlanners')
-				.send({
-					userId: '0f9a61c0-9c3f-4fe9-afe0-47876d18f8c0',
-					day: 'monday',
-					lunchOrDinner: 'lunch',
-					meal: 'Soup',
-				})
-				.expect(200)
-				.expect((res: request.Response) => {
-					expect(res.body.monday.lunch).toEqual('Soup');
-				})
-				.then(() =>
-					request(app.getHttpServer())
-						.get('/users/0f9a61c0-9c3f-4fe9-afe0-47876d18f8c0/get-meal-planner')
-						.expect(200)
-						.expect((res: request.Response) => {
-							expect(res.body.monday.lunch).toEqual('Soup');
-						}),
-				));
+		request(app.getHttpServer())
+		.post('/users/login')
+		.send({ username: 'TylerChavez', password: 'password' })
+		.then(res => res.text)
+		.then(token => request(app.getHttpServer())
+			.patch('/mealPlanners')
+			.set('Authorization', 'bearer ' + token)
+			.send({
+				userId: '0f9a61c0-9c3f-4fe9-afe0-47876d18f8c0',
+				day: 'monday',
+				lunchOrDinner: 'lunch',
+				meal: 'Soup',
+			})
+			.expect(200)
+			.expect((res: request.Response) => {
+				expect(res.body.monday.lunch).toEqual('Soup');
+			})
+			.then(() =>
+				request(app.getHttpServer())
+					.get('/users/me/get-meal-planner')
+					.set('Authorization', 'bearer ' + token)
+					.expect(200)
+					.expect((res: request.Response) => {
+						expect(res.body.monday.lunch).toEqual('Soup');
+					}),
+			))
+		)
+		
 	});
 });

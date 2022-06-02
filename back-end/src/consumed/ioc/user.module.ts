@@ -7,6 +7,7 @@ import { ITaskWriteRepository } from '../../application/ports/task/TaskWriteRepo
 import { IUserReadRepository } from '../../application/ports/user/UserReadRepository.interface';
 import { IUserWriteRepository } from '../../application/ports/user/UserWriteRepository.interface';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from '../../application/auth/jwt.strategy';
 import { LoginUser } from '../../application/use_cases/LoginUser';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
@@ -14,13 +15,14 @@ import { TaskWriteRepository } from '../database/repositories/task/TaskWriteRepo
 import { UserController } from '../../consumers/rest_api/controller/user.controller';
 import { UserReadRepository } from '../database/repositories/user/UserReadRepository';
 import { UserWriteRepository } from '../database/repositories/user/UserWriteRepository';
+import { jwtConstants } from '../../application/auth/constants';
 
 @Module({
 	imports: [
 		PassportModule,
 		JwtModule.register({
-			secret: 'secret',
-			signOptions: { expiresIn: '60s' },
+			secret: jwtConstants.secret,
+			signOptions: { expiresIn: '3600s' },
 		}),
 	],
 	controllers: [UserController],
@@ -33,6 +35,7 @@ import { UserWriteRepository } from '../database/repositories/user/UserWriteRepo
 		{ provide: IUserWriteRepository, useClass: UserWriteRepository },
 		{ provide: ITaskWriteRepository, useClass: TaskWriteRepository },
 		{ provide: IEncryptionService, useClass: EncryptionService },
+		JwtStrategy
 	],
 })
 export class UserModule {}
