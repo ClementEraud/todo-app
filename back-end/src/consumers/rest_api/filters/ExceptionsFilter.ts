@@ -28,8 +28,8 @@ const ExceptionsResponseMapper = (exception: any) => ({
 	},
 	UnauthorizedException: {
 		statusCode: 401,
-		message: 'Unauthorized'
-	}
+		message: 'Unauthorized',
+	},
 });
 
 @Catch()

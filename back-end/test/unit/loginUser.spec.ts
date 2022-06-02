@@ -7,7 +7,6 @@ import { Task } from '../../src/domain/models/Task';
 import { User } from '../../src/domain/models/User';
 import { UserReadRepository } from '../../src/consumed/in_memory/repositories/user/UserReadRepository';
 
-
 describe('LoginUser', () => {
 	let useCase: LoginUser;
 	const userList: User[] = [
@@ -26,7 +25,7 @@ describe('LoginUser', () => {
 		useCase = new LoginUser(
 			new UserReadRepository(userList),
 			new EncryptionServiceFake(),
-			new JwtServiceStub()
+			new JwtServiceStub(),
 		);
 	});
 

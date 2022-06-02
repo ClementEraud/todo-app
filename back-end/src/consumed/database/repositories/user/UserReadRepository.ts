@@ -60,12 +60,11 @@ export class UserReadRepository implements IUserReadRepository {
 			if (foundUsers.length === 0 || foundUsers.length > 1) {
 				throw new UserNotFound();
 			}
-	
+
 			return foundUsers[0];
-		} catch(err) {
+		} catch (err) {
 			console.error(err);
 			throw new UserNotFound();
 		}
-
 	}
 }

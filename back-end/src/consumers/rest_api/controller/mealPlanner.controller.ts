@@ -11,7 +11,7 @@ export class MealPlannerController {
 	constructor(private readonly updateMeal: UpdateMeal) {}
 
 	@UseGuards(JwtAuthGuard)
-	@Patch()
+	@Patch('me')
 	@ApiCreatedResponse({
 		description: 'Update Meal Planner.',
 		type: MealPlannerVM,
@@ -20,6 +20,8 @@ export class MealPlannerController {
 		@Request() req,
 		@Body() updateMeal: UpdateMealPlannerInput,
 	): Promise<MealPlannerVM> {
-		return new MealPlannerVM(await this.updateMeal.execute({userId: req.user.userId, ...updateMeal}));
+		return new MealPlannerVM(
+			await this.updateMeal.execute({ userId: req.user.userId, ...updateMeal }),
+		);
 	}
 }
