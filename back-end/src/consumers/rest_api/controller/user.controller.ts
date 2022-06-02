@@ -1,5 +1,13 @@
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { Body, Controller, Get, HttpCode, Post, Request, UseGuards } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Get,
+	HttpCode,
+	Post,
+	Request,
+	UseGuards,
+} from '@nestjs/common';
 import { AddTaskToUser } from '../../../application/use_cases/AddTaskToUser';
 import { CreateTaskInput } from '../inputs/CreateTaskInput';
 import { CreateUser } from '../../../application/use_cases/CreateUser';
@@ -10,7 +18,6 @@ import { LoginUser } from '../../../application/use_cases/LoginUser';
 import { MealPlannerVM } from '../view-models/MealPlannerVM';
 import { UserLoginInput } from '../inputs/UserLoginInput';
 import { UserVM } from '../view-models/UserVM';
-
 
 @ApiTags('users')
 @Controller('users')
@@ -42,7 +49,6 @@ export class UserController {
 		return await this.loginUser.execute(userLogin.username, userLogin.password);
 	}
 
-
 	// Routes with authentication
 	@UseGuards(JwtAuthGuard)
 	@Post('me/add-task')
@@ -54,7 +60,9 @@ export class UserController {
 		@Request() req,
 		@Body() createTask: CreateTaskInput,
 	): Promise<UserVM> {
-		return new UserVM(await this.addTaskUser.execute(req.user.userId, createTask));
+		return new UserVM(
+			await this.addTaskUser.execute(req.user.userId, createTask),
+		);
 	}
 
 	@UseGuards(JwtAuthGuard)
@@ -65,6 +73,8 @@ export class UserController {
 	})
 	@HttpCode(200)
 	async getMealPlanner(@Request() req): Promise<MealPlannerVM> {
-		return new MealPlannerVM(await this.getMealPlannerOfUser.execute(req.user.userId));
+		return new MealPlannerVM(
+			await this.getMealPlannerOfUser.execute(req.user.userId),
+		);
 	}
 }

@@ -77,7 +77,7 @@ describe('UserController (e2e)', () => {
 				.send({ username: 'TylerChavez', password: 'password' })
 				.expect(200)
 				.expect((res: request.Response) => {
-					expect(res).toBeDefined()
+					expect(res).toBeDefined();
 					validToken = res.text;
 				}));
 

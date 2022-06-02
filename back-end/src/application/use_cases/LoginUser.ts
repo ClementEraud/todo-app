@@ -10,7 +10,7 @@ export class LoginUser implements UseCase {
 	constructor(
 		private readonly userReadRepository: IUserReadRepository,
 		private readonly encryptionService: IEncryptionService,
-		private readonly jwtService: JwtService
+		private readonly jwtService: JwtService,
 	) {}
 
 	async execute(username: string, password: string): Promise<string> {
@@ -18,18 +18,18 @@ export class LoginUser implements UseCase {
 			const userFound = await this.userReadRepository.findOneByUsernameOrDie(
 				username,
 			);
-	
+
 			if (!this.encryptionService.compare(password, userFound.password)) {
 				throw new BadPassword();
 			}
-	
+
 			return this.jwtService.sign({
 				userId: userFound.id,
-				username: userFound.username
+				username: userFound.username,
 			});
-		} catch(err) {
-			console.error(err)
-			throw err
+		} catch (err) {
+			console.error(err);
+			throw err;
 		}
 	}
 }

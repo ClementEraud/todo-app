@@ -35,7 +35,7 @@ import { jwtConstants } from '../../application/auth/constants';
 		{ provide: IUserWriteRepository, useClass: UserWriteRepository },
 		{ provide: ITaskWriteRepository, useClass: TaskWriteRepository },
 		{ provide: IEncryptionService, useClass: EncryptionService },
-		JwtStrategy
+		JwtStrategy,
 	],
 })
 export class UserModule {}
