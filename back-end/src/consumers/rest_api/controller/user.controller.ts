@@ -12,6 +12,7 @@ import { AddTaskToUser } from '../../../application/use_cases/AddTaskToUser';
 import { CreateTaskInput } from '../inputs/CreateTaskInput';
 import { CreateUser } from '../../../application/use_cases/CreateUser';
 import { CreateUserInput } from '../inputs/CreateUserInput';
+import { GetCurrentUser } from '../../../application/use_cases/GetCurrentUser';
 import { GetMealPlannerOfUser } from '../../../application/use_cases/GetMealPlannerOfUser';
 import { JwtAuthGuard } from '../../../application/auth/jwt-auth.guard';
 import { LoginUser } from '../../../application/use_cases/LoginUser';
@@ -27,6 +28,7 @@ export class UserController {
 		private readonly addTaskUser: AddTaskToUser,
 		private readonly loginUser: LoginUser,
 		private readonly getMealPlannerOfUser: GetMealPlannerOfUser,
+		private readonly getCurrentUser: GetCurrentUser,
 	) {}
 
 	// Routes without authentication
@@ -50,6 +52,16 @@ export class UserController {
 	}
 
 	// Routes with authentication
+	@UseGuards(JwtAuthGuard)
+	@Get('me')
+	@ApiCreatedResponse({
+		description: 'Currently connected user',
+		type: UserVM
+	})
+	async getUser(@Request() req): Promise<UserVM> {
+		return new UserVM(await this.getCurrentUser.execute(req.user.userId))
+	}
+
 	@UseGuards(JwtAuthGuard)
 	@Post('me/add-task')
 	@ApiCreatedResponse({
@@ -77,4 +89,6 @@ export class UserController {
 			await this.getMealPlannerOfUser.execute(req.user.userId),
 		);
 	}
+
+
 }

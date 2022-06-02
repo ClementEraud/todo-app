@@ -4,14 +4,18 @@ import { IUserService } from '../core/ports/UserService.interface';
 import { MealPlanner } from './../core/models/MealPlanner';
 import { User } from '../core/models/User';
 
-export class UserService implements IUserService {
-	private currentUser: User | undefined;
+/* class decorator */
+function staticImplements<T>() {
+	return <U extends T>(constructor: U) => {constructor};
+}
+@staticImplements<IUserService>()
+export class UserService {
 
-	async login(
+	static async login(
 		username: string,
 		password: string,
 		rememberMe: boolean,
-	): Promise<User> {
+	): Promise<string> {
 		const config = await ConfigProvider.getConfig();
 
 		const response = await fetch(
@@ -29,24 +33,44 @@ export class UserService implements IUserService {
 			},
 		);
 
-		const responseBody = await response.json();
-
 		if (!response.ok) {
-			throw new Error(responseBody.message);
+			const responseJson = await response.json()
+			throw new Error(responseJson.message);
 		}
 
-		this.currentUser = new User(responseBody);
+		const token = await response.text();
 
 		if (rememberMe) {
-			localStorage.setItem('user', JSON.stringify(this.currentUser));
+			localStorage.setItem('token', token);
 		} else {
-			sessionStorage.setItem('user', JSON.stringify(this.currentUser));
+			sessionStorage.setItem('token', token);
 		}
 
-		return this.currentUser;
+		return token;
 	}
 
-	async signUp(user: CreateUserCommand): Promise<User> {
+	static async getCurrentUser(token: string): Promise<User> {
+		const config = await ConfigProvider.getConfig();
+
+		const response = await fetch(
+			`http://${config.API_HOSTNAME}:${config.API_PORT}/users/me`,
+			{
+				method: 'GET',
+				headers: {
+					'Authorization': 'Bearer ' + token
+				},
+			},
+		);
+		const responseJson = await response.json()
+
+		if(!response.ok) {
+			throw new Error(responseJson.message)
+		}
+
+		return new User(responseJson)
+	}
+
+	static async signUp(user: CreateUserCommand): Promise<User> {
 		const config = await ConfigProvider.getConfig();
 
 		const response = await fetch(
@@ -67,35 +91,24 @@ export class UserService implements IUserService {
 			throw new Error(responseBody.message);
 		}
 
-		this.currentUser = new User(responseBody);
-		return this.currentUser;
+		return new User(responseBody);
 	}
 
-	getCurrentUser(): User | undefined {
-		if (!this.currentUser) {
-			if (sessionStorage.getItem('user')) {
-				this.currentUser = JSON.parse(sessionStorage.getItem('user') as string);
-			} else if (localStorage.getItem('user')) {
-				this.currentUser = JSON.parse(localStorage.getItem('user') as string);
-			}
-		}
-
-		return this.currentUser;
+	static logout(): void {
+		sessionStorage.removeItem('token');
+		localStorage.removeItem('token');
 	}
 
-	logout(): void {
-		this.currentUser = undefined;
-		sessionStorage.removeItem('user');
-		localStorage.removeItem('user');
-	}
-
-	async getMealPlanner(): Promise<MealPlanner> {
+	static async getMealPlanner(token: string): Promise<MealPlanner> {
 		const config = await ConfigProvider.getConfig();
 
 		const response = await fetch(
-			`http://${config.API_HOSTNAME}:${config.API_PORT}/users/${this.currentUser?.id}/get-meal-planner`,
+			`http://${config.API_HOSTNAME}:${config.API_PORT}/users/me/get-meal-planner`,
 			{
 				method: 'GET',
+				headers: {
+					'Authorization': 'Bearer ' + token
+				},
 			},
 		);
 

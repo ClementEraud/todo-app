@@ -3,9 +3,16 @@ import { IMealPlannerService } from '../core/ports/MealPlannerService.interface'
 import { MealPlanner } from './../core/models/MealPlanner';
 import { UpdateMealPlannerCommand } from '../core/commands/UpdateMealPlannerCommand';
 
-export class MealPlannerService implements IMealPlannerService {
-	async update(
+
+/* class decorator */
+function staticImplements<T>() {
+	return <U extends T>(constructor: U) => {constructor};
+}
+@staticImplements<IMealPlannerService>()
+export class MealPlannerService {
+	static async update(
 		updateMealPlannerCommand: UpdateMealPlannerCommand,
+		token: string,
 	): Promise<MealPlanner> {
 		const config = await ConfigProvider.getConfig();
 
@@ -16,6 +23,7 @@ export class MealPlannerService implements IMealPlannerService {
 				headers: {
 					'Content-Type': 'application/json',
 					accept: 'application/json',
+					'Authorization': 'Bearer ' + token
 				},
 				body: JSON.stringify(updateMealPlannerCommand),
 			},

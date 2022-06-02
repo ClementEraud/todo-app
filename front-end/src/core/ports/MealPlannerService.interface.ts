@@ -1,11 +1,12 @@
 import { MealPlanner } from '../models/MealPlanner';
 import { UpdateMealPlannerCommand } from './../commands/UpdateMealPlannerCommand';
 
-export abstract class IMealPlannerService {
+export interface IMealPlannerService {
 	/**
 	 * Update Meal Planner.
 	 */
-	abstract update(
+	update(
 		updateMealPlannerCommand: UpdateMealPlannerCommand,
+		token: string
 	): Promise<MealPlanner>;
 }

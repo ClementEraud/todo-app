@@ -1,6 +1,7 @@
 import { AddTaskToUser } from '../../application/use_cases/AddTaskToUser';
 import { CreateUser } from '../../application/use_cases/CreateUser';
 import { EncryptionService } from '../services/EncryptionService';
+import { GetCurrentUser } from '../../application/use_cases/GetCurrentUser';
 import { GetMealPlannerOfUser } from '../../application/use_cases/GetMealPlannerOfUser';
 import { IEncryptionService } from '../../application/ports/services/EncryptionService';
 import { ITaskWriteRepository } from '../../application/ports/task/TaskWriteRepository.interface';
@@ -9,7 +10,7 @@ import { IUserWriteRepository } from '../../application/ports/user/UserWriteRepo
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../../application/auth/jwt.strategy';
 import { LoginUser } from '../../application/use_cases/LoginUser';
-import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common/decorators/modules';
 import { PassportModule } from '@nestjs/passport';
 import { TaskWriteRepository } from '../database/repositories/task/TaskWriteRepository';
 import { UserController } from '../../consumers/rest_api/controller/user.controller';
@@ -31,6 +32,7 @@ import { jwtConstants } from '../../application/auth/constants';
 		AddTaskToUser,
 		LoginUser,
 		GetMealPlannerOfUser,
+		GetCurrentUser,
 		{ provide: IUserReadRepository, useClass: UserReadRepository },
 		{ provide: IUserWriteRepository, useClass: UserWriteRepository },
 		{ provide: ITaskWriteRepository, useClass: TaskWriteRepository },
