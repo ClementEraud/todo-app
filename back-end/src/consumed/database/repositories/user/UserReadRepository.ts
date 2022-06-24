@@ -26,7 +26,7 @@ export class UserReadRepository implements IUserReadRepository {
 		this.manager = this.queryRunner.manager;
 	}
 
-	async findAll(filters?: Partial<User>): Promise<User[]> {
+	async findAll(filters?: {username: string, firstName: string, lastName: string}): Promise<User[]> {
 		return await this.manager.find(UserSchema, {
 			relations,
 			where: filters,
@@ -34,13 +34,15 @@ export class UserReadRepository implements IUserReadRepository {
 	}
 
 	async findById(userId: string): Promise<User> {
-		return await this.manager.findOne(UserSchema, userId, {
+		return await this.manager.findOne(UserSchema, {
+			where: {id: userId},
 			relations,
 		});
 	}
 
 	async findByIdOrDie(userId: string): Promise<User> {
-		const user = await this.manager.findOne(UserSchema, userId, {
+		const user = await this.manager.findOne(UserSchema, {
+			where: {id: userId},
 			relations,
 		});
 
