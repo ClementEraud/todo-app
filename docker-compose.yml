@@ -12,8 +12,7 @@ services:
     image: rg.fr-par.scw.cloud/clement-registry/todo-back-end
     ports:
       - "3000:3000"
-    environment:
-      TYPEORM_HOST: db
+    env_file: "./back-end/.env"
     depends_on:
       - db
   web:
