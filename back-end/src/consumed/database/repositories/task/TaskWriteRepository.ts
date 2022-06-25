@@ -1,20 +1,16 @@
-import { Connection, EntityManager, QueryRunner } from 'typeorm';
 import { ITaskWriteRepository } from '../../../../application/ports/task/TaskWriteRepository.interface';
-import { InjectConnection } from '@nestjs/typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { Task } from '../../../../domain/models/Task';
 import { TaskSchema } from '../../mapper/TaskSchema';
 
 export class TaskWriteRepository implements ITaskWriteRepository {
-	readonly manager: EntityManager;
-	readonly queryRunner?: QueryRunner;
-
-	constructor(@InjectConnection() connection: Connection) {
-		this.queryRunner = connection.createQueryRunner();
-		this.manager = this.queryRunner.manager;
-	}
+	constructor(
+		@InjectRepository(TaskSchema) private taskRepository: Repository<Task>,
+	) {}
 
 	async insert(taskToCreate: Task): Promise<Task> {
-		await this.manager.insert(TaskSchema, taskToCreate);
+		await this.taskRepository.insert(taskToCreate);
 		return taskToCreate;
 	}
 }

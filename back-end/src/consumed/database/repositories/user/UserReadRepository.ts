@@ -1,6 +1,6 @@
-import { Connection, EntityManager, QueryRunner } from 'typeorm';
 import { IUserReadRepository } from '../../../../application/ports/user/UserReadRepository.interface';
-import { InjectConnection } from '@nestjs/typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { User } from '../../../../domain/models/User';
 import { UserNotFound } from '../../../../domain/exceptions/UserNotFound';
 import { UserSchema } from '../../mapper/UserSchema';
@@ -18,31 +18,32 @@ const relations = [
 ];
 
 export class UserReadRepository implements IUserReadRepository {
-	readonly manager: EntityManager;
-	readonly queryRunner?: QueryRunner;
+	constructor(
+		@InjectRepository(UserSchema)
+		private userRepository: Repository<User>,
+	) {}
 
-	constructor(@InjectConnection() connection: Connection) {
-		this.queryRunner = connection.createQueryRunner();
-		this.manager = this.queryRunner.manager;
-	}
-
-	async findAll(filters?: {username: string, firstName: string, lastName: string}): Promise<User[]> {
-		return await this.manager.find(UserSchema, {
+	async findAll(filters?: {
+		username: string;
+		firstName: string;
+		lastName: string;
+	}): Promise<User[]> {
+		return await this.userRepository.find({
 			relations,
 			where: filters,
 		});
 	}
 
 	async findById(userId: string): Promise<User> {
-		return await this.manager.findOne(UserSchema, {
-			where: {id: userId},
+		return await this.userRepository.findOne({
+			where: { id: userId },
 			relations,
 		});
 	}
 
 	async findByIdOrDie(userId: string): Promise<User> {
-		const user = await this.manager.findOne(UserSchema, {
-			where: {id: userId},
+		const user = await this.userRepository.findOne({
+			where: { id: userId },
 			relations,
 		});
 
@@ -55,7 +56,7 @@ export class UserReadRepository implements IUserReadRepository {
 
 	async findOneByUsernameOrDie(username: string): Promise<User> {
 		try {
-			const foundUsers = await this.manager.find(UserSchema, {
+			const foundUsers = await this.userRepository.find({
 				relations,
 				where: { username },
 			});

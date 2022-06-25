@@ -11,9 +11,12 @@ import { JwtStrategy } from '../../application/auth/jwt.strategy';
 import { LoginUser } from '../../application/use_cases/LoginUser';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
+import { TaskSchema } from '../database/mapper/TaskSchema';
 import { TaskWriteRepository } from '../database/repositories/task/TaskWriteRepository';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from '../../consumers/rest_api/controller/user.controller';
 import { UserReadRepository } from '../database/repositories/user/UserReadRepository';
+import { UserSchema } from '../database/mapper/UserSchema';
 import { UserWriteRepository } from '../database/repositories/user/UserWriteRepository';
 import { jwtConstants } from '../../application/auth/constants';
 
@@ -24,6 +27,8 @@ import { jwtConstants } from '../../application/auth/constants';
 			secret: jwtConstants.secret,
 			signOptions: { expiresIn: '3600s' },
 		}),
+		TypeOrmModule.forFeature([UserSchema]),
+		TypeOrmModule.forFeature([TaskSchema]),
 	],
 	controllers: [UserController],
 	providers: [

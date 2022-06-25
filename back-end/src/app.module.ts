@@ -16,11 +16,14 @@ const {
 	TYPEORM_ENTITIES,
 	TYPEORM_MIGRATIONS,
 	TYPEORM_MIGRATIONS_RUN,
-	TYPEORM_SYNCHRONIZE } = process.env;
+	TYPEORM_SYNCHRONIZE,
+} = process.env;
 
 @Module({
-	imports: [UserModule, MealPlannerModule, TypeOrmModule.forRoot(
-		{
+	imports: [
+		UserModule,
+		MealPlannerModule,
+		TypeOrmModule.forRoot({
 			type: 'mysql',
 			host: TYPEORM_HOST,
 			username: TYPEORM_USERNAME,
@@ -31,9 +34,9 @@ const {
 			entities: [TYPEORM_ENTITIES],
 			migrations: [TYPEORM_MIGRATIONS],
 			migrationsRun: Boolean(TYPEORM_MIGRATIONS_RUN),
-			synchronize: Boolean(TYPEORM_SYNCHRONIZE)
-		}
-	)],
+			synchronize: Boolean(TYPEORM_SYNCHRONIZE),
+		}),
+	],
 	providers: [
 		{
 			provide: APP_FILTER,
