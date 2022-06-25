@@ -6,6 +6,7 @@ export class Dataset1633385179161 implements MigrationInterface {
 	name = 'Dataset1633385179161';
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.connection.synchronize();
 		await queryRunner.connection.createEntityManager().save(UserSchema, [
 			{
 				id: '0f9a61c0-9c3f-4fe9-afe0-47876d18f8c0',

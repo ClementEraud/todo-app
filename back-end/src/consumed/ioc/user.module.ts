@@ -9,6 +9,8 @@ import { IUserWriteRepository } from '../../application/ports/user/UserWriteRepo
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../../application/auth/jwt.strategy';
 import { LoginUser } from '../../application/use_cases/LoginUser';
+import { MealOfTheDaySchema } from '../database/mapper/MealOfTheDaySchema';
+import { MealPlannerSchema } from '../database/mapper/MealPlannerSchema';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { TaskSchema } from '../database/mapper/TaskSchema';
@@ -22,13 +24,15 @@ import { jwtConstants } from '../../application/auth/constants';
 
 @Module({
 	imports: [
+		TypeOrmModule.forFeature([UserSchema]),
+		TypeOrmModule.forFeature([TaskSchema]),
+		TypeOrmModule.forFeature([MealOfTheDaySchema]),
+		TypeOrmModule.forFeature([MealPlannerSchema]),
 		PassportModule,
 		JwtModule.register({
 			secret: jwtConstants.secret,
 			signOptions: { expiresIn: '3600s' },
 		}),
-		TypeOrmModule.forFeature([UserSchema]),
-		TypeOrmModule.forFeature([TaskSchema]),
 	],
 	controllers: [UserController],
 	providers: [

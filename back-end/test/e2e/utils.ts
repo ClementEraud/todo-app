@@ -13,9 +13,10 @@ export const buildTestModule = async (datasetPath: string, modules) =>
 		imports: [
 			...modules,
 			TypeOrmModule.forRoot({
-				type: 'sqlite',
+				type: 'better-sqlite3',
 				database: ':memory:',
 				dropSchema: true,
+				autoLoadEntities: true,
 				entities: ['src/consumed/database/mapper/*.ts'],
 				migrations: [datasetPath],
 				migrationsRun: true,

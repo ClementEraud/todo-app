@@ -17,7 +17,7 @@ describe('UserController (e2e)', () => {
 		]);
 		app = moduleFixture.createNestApplication();
 		await app.init();
-		const { httpAdapter } = app.get(HttpAdapterHost);
+		const httpAdapter = app.get(HttpAdapterHost);
 		app.useGlobalFilters(new ExceptionsFilter(httpAdapter));
 	});
 
