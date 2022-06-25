@@ -1,34 +1,33 @@
-import * as React from 'react';
 import * as yup from 'yup';
 import { Box, Button, Grid, Link, TextField } from '@mui/material';
-import { ChangeEvent, FormEvent, useContext, useState } from 'react';
-import { AppContext } from '../../../..';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { CreateUserCommand } from '../../../../core/commands/CreateUserCommand';
+import { CustomLoader } from '../../../CustomLoader';
+import { SAlert } from './styles';
 import Typography from '@mui/material/Typography';
+import { actions } from '../../../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 export const SignUp = () => {
 	const { t } = useTranslation('homePage');
-	const appModule = useContext(AppContext);
 	const [errors, setErrors] = useState({
 		firstName: false,
 		lastName: false,
 		username: false,
 		password: false,
 	});
-	const navigate = useNavigate();
-
-	const [user, setUser] = useState({
-		firstName: null,
-		lastName: null,
-		username: null,
-		password: null,
+	const [signUpError, setSignUpError] = useState<string | undefined>();
+	const [user, setUser] = useState<CreateUserCommand>({
+		firstName: undefined,
+		lastName: undefined,
+		username: undefined,
+		password: undefined,
 	});
-
-	const [signUpUser] = appModule.hooks.useSignUpUser(
-		() => navigate('/'),
-		(error: Error) => console.error(error),
+	const [signUpStarted, signUpFinished, signUpResult] = actions.signUp.useWatch(
+		{ createUserCommand: user },
 	);
+	const navigate = useNavigate();
 
 	const validationSchema = yup.object().shape({
 		firstName: yup.string().required(),
@@ -37,10 +36,24 @@ export const SignUp = () => {
 		password: yup.string().required(),
 	});
 
-	const handleSubmit = (event: FormEvent) => {
-		event.preventDefault();
-		signUpUser(user);
-	};
+	useEffect(() => {
+		if (!signUpStarted) {
+			return;
+		}
+
+		if (signUpFinished && signUpResult.error) {
+			setSignUpError(signUpResult.errorPayload.message);
+		}
+
+		if (signUpFinished && !signUpResult.error) {
+			setSignUpError(undefined);
+			navigate('/user-page');
+		}
+	}, [signUpStarted, signUpFinished, signUpResult]);
+
+	if (signUpStarted && !signUpFinished) {
+		return <CustomLoader />;
+	}
 
 	const handleDataChange = (
 		event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -62,7 +75,13 @@ export const SignUp = () => {
 			<Typography component="h1" variant="h5">
 				{t('signUpPage.title')}
 			</Typography>
-			<Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+			<Box
+				component="form"
+				onSubmit={() => {
+					actions.signUp.run({ createUserCommand: user });
+				}}
+				noValidate
+				sx={{ mt: 1 }}>
 				<TextField
 					margin="normal"
 					required
@@ -124,6 +143,7 @@ export const SignUp = () => {
 						</Link>
 					</Grid>
 				</Grid>
+				{signUpError && <SAlert severity="error">{signUpError}</SAlert>}
 			</Box>
 		</>
 	);

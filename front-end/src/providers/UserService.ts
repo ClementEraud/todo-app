@@ -1,3 +1,4 @@
+import { ApiError } from './ApiError';
 import { ConfigProvider } from './ConfigProvider';
 import { CreateUserCommand } from './../core/commands/CreateUserCommand';
 import { IUserService } from '../core/ports/UserService.interface';
@@ -5,13 +6,7 @@ import { MealPlanner } from './../core/models/MealPlanner';
 import { User } from '../core/models/User';
 
 export class UserService implements IUserService {
-	private currentUser: User | undefined;
-
-	async login(
-		username: string,
-		password: string,
-		rememberMe: boolean,
-	): Promise<User> {
+	async login(username: string, password: string): Promise<string> {
 		const config = await ConfigProvider.getConfig();
 
 		const response = await fetch(
@@ -29,21 +24,12 @@ export class UserService implements IUserService {
 			},
 		);
 
-		const responseBody = await response.json();
-
 		if (!response.ok) {
-			throw new Error(responseBody.message);
+			const error = (await response.json()) as ApiError;
+			throw error;
 		}
 
-		this.currentUser = new User(responseBody);
-
-		if (rememberMe) {
-			localStorage.setItem('user', JSON.stringify(this.currentUser));
-		} else {
-			sessionStorage.setItem('user', JSON.stringify(this.currentUser));
-		}
-
-		return this.currentUser;
+		return await response.text();
 	}
 
 	async signUp(user: CreateUserCommand): Promise<User> {
@@ -67,24 +53,14 @@ export class UserService implements IUserService {
 			throw new Error(responseBody.message);
 		}
 
-		this.currentUser = new User(responseBody);
-		return this.currentUser;
+		return new User(responseBody);
 	}
 
-	getCurrentUser(): User | undefined {
-		if (!this.currentUser) {
-			if (sessionStorage.getItem('user')) {
-				this.currentUser = JSON.parse(sessionStorage.getItem('user') as string);
-			} else if (localStorage.getItem('user')) {
-				this.currentUser = JSON.parse(localStorage.getItem('user') as string);
-			}
-		}
-
-		return this.currentUser;
+	getCurrentUser(token?: string): User | undefined {
+		throw new Error('Method not implemented.');
 	}
 
 	logout(): void {
-		this.currentUser = undefined;
 		sessionStorage.removeItem('user');
 		localStorage.removeItem('user');
 	}

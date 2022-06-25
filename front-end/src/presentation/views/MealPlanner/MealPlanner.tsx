@@ -11,8 +11,7 @@ import {
 	TableRow,
 	Typography,
 } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../index';
+import { useEffect, useState } from 'react';
 import { MealOfTheDay } from '../../../core/models/MealOfTheDay';
 import { MealPlannerCell } from './MealPlannerCell';
 import { MealPlanner as MealPlannerModel } from '../../../core/models/MealPlanner';
@@ -26,10 +25,8 @@ interface Meal {
 
 export const MealPlanner = () => {
 	const { t } = useTranslation('mealPlanner');
-	const appModule = useContext(AppContext);
 	const [mealsOfWeek, setMealsOfTheWeek] = useState<Meal[]>([]);
-	const [mealPlanner, setMealPlanner] = useState<MealPlannerModel>();
-	const [updateMealPlanner] = appModule.hooks.useUpdateMealPlanner();
+	const [mealPlanner] = useState<MealPlannerModel>();
 
 	const tableCellStyle = {
 		width: '40%',
@@ -38,15 +35,8 @@ export const MealPlanner = () => {
 		},
 	};
 
-	const { isLoading } = appModule.hooks.useGetMealPlanner(
-		(mealPlanner: MealPlannerModel) => setMealPlanner(mealPlanner),
-		(error: Error) => {
-			console.error(error);
-		},
-	);
-
 	useEffect(() => {
-		if (mealPlanner && !isLoading) {
+		if (mealPlanner) {
 			setMealsOfTheWeek(
 				Object.keys(mealPlanner).map((key: string) => ({
 					day: key,
@@ -56,16 +46,6 @@ export const MealPlanner = () => {
 			);
 		}
 	}, [mealPlanner]);
-
-	const onMealUpdate =
-		(currentMeal: Meal, lunchOrDinner: 'lunch' | 'dinner') =>
-		(newMeal: string) => {
-			updateMealPlanner({
-				day: currentMeal.day,
-				lunchOrDinner: lunchOrDinner,
-				meal: newMeal,
-			});
-		};
 
 	return (
 		<Box
@@ -107,12 +87,14 @@ export const MealPlanner = () => {
 								</TableCell>
 								<MealPlannerCell
 									meal={meal.lunch}
-									onMealUpdated={onMealUpdate(meal, 'lunch')}
+									// eslint-disable-next-line @typescript-eslint/no-empty-function
+									onMealUpdated={() => {}}
 									sx={tableCellStyle}
 								/>
 								<MealPlannerCell
 									meal={meal.dinner}
-									onMealUpdated={onMealUpdate(meal, 'dinner')}
+									// eslint-disable-next-line @typescript-eslint/no-empty-function
+									onMealUpdated={() => {}}
 									sx={tableCellStyle}
 								/>
 							</TableRow>

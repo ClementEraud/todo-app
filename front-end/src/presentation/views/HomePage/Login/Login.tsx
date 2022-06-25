@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../../index';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -11,34 +10,41 @@ import Link from '@mui/material/Link';
 import { SAlert } from './styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { actions } from '../../../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const Login = () => {
 	const { t } = useTranslation('homePage');
-	const appModule = useContext(AppContext);
 	const [error, setError] = useState<string | undefined>();
 	const [usernameError, setUsernameError] = useState<boolean>(false);
 	const [passwordError, setPasswordError] = useState<boolean>(false);
 	const [username, setUsername] = useState<string | undefined>();
 	const [password, setPassword] = useState<string | undefined>();
+	const [rememberMe, setRememberMe] = useState(false);
 	const navigate = useNavigate();
-	const connectedUser = appModule.hooks.useConnectedUser();
-	const [handleSubmit, isLoading] = appModule.hooks.useLoginUser(
-		() => {
-			setError(undefined);
-			navigate('/user-page');
-		},
-		(error: Error) => {
-			setError(error.message);
-		},
+	const [loginStarted, loginFinished, loginResult] = actions.loginUser.useWatch(
+		{ username, password, rememberMe },
 	);
 
 	useEffect(() => {
-		if (connectedUser) {
+		if (!loginStarted) {
+			return;
+		}
+
+		if (loginFinished && loginResult.error) {
+			setError(loginResult.errorPayload.message);
+		}
+
+		if (loginFinished && !loginResult.error) {
+			setError(undefined);
 			navigate('/user-page');
 		}
-	}, []);
+	}, [loginStarted, loginFinished, loginResult]);
+
+	if (loginStarted && !loginFinished) {
+		return <CustomLoader />;
+	}
 
 	const handleUsernameChange = (
 		event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -64,16 +70,19 @@ const Login = () => {
 		}
 	};
 
-	if (isLoading) {
-		return <CustomLoader />;
-	}
+	const handleSubmit = () => {
+		actions.loginUser.run(
+			{ username, password, rememberMe },
+			{ respectCache: false },
+		);
+	};
 
 	return (
 		<>
 			<Typography component="h1" variant="h5">
 				{t('loginPage.title')}
 			</Typography>
-			<Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+			<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
 				<TextField
 					margin="normal"
 					required
@@ -100,6 +109,8 @@ const Login = () => {
 				/>
 				<FormControlLabel
 					control={<Checkbox value="remember" color="primary" />}
+					value={rememberMe}
+					onChange={(event, checked) => setRememberMe(checked)}
 					name="rememberMe"
 					id="rememberMe"
 					label={t('loginPage.form.rememberMe') as string}

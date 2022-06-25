@@ -9,25 +9,19 @@ import {
 	IconButton,
 	ThemeProvider,
 	Toolbar,
-	Typography,
 	createTheme,
 } from '@mui/material';
-import { AppContext } from '../../../index';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { IStore } from '../../../core/interfaces/Store.interface';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavigationDrawer } from './NavigationDrawer';
 import { Outlet } from 'react-router-dom';
-import { User } from '../../../core/models/User';
-import { store } from '../../../core/store';
-import { useContext } from 'react';
+import { TodoStore } from '../../../store/store';
 
 export const UserPage = () => {
-	const appModule = useContext(AppContext);
-	const onLogout = appModule.hooks.useLogout();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
-	const isDarkMode = store.useState(s => s.isDarkMode);
-	const connectedUser: User = appModule.hooks.useConnectedUser();
+	const isDarkMode = TodoStore.useState((s: IStore) => s.isDarkMode);
 	const drawerWidth = 100;
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
@@ -40,7 +34,7 @@ export const UserPage = () => {
 	});
 
 	const switchThemeMode = () => {
-		store.update(s => {
+		TodoStore.update(s => {
 			s.isDarkMode = !isDarkMode;
 		});
 	};
@@ -65,11 +59,11 @@ export const UserPage = () => {
 							onClick={handleDrawerToggle}>
 							<MenuIcon />
 						</IconButton>
-						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						{/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 							{connectedUser
 								? `${connectedUser.firstName} ${connectedUser.lastName}`
 								: ''}
-						</Typography>
+						</Typography> */}
 						<IconButton
 							size="large"
 							edge="start"
@@ -79,7 +73,8 @@ export const UserPage = () => {
 							onClick={switchThemeMode}>
 							{isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
 						</IconButton>
-						<Button color="inherit" onClick={onLogout}>
+						{/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+						<Button color="inherit" onClick={() => {}}>
 							Logout
 						</Button>
 					</Toolbar>

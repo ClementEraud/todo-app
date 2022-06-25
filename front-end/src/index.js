@@ -5,27 +5,19 @@ import HomePage from './presentation/views/HomePage/HomePage';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useLoginUser } from './core/hooks/useLoginUser';
-import { useLogout } from './core/hooks/useLogout';
-import { UserService } from './providers/UserService';
-import { AppModule } from './AppModule';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { SignUp } from './presentation/views/HomePage/SignUp/SignUp';
 import { ForgotPassword } from './presentation/views/HomePage/ForgotPassword/ForgotPassword';
 import Login from './presentation/views/HomePage/Login/Login';
-import { useSignUpUser } from './core/hooks/useSignUpUser';
-import { useConnectedUser } from './core/hooks/useConnectedUser';
 import { MealPlanner } from './presentation/views/MealPlanner/MealPlanner';
 import { UserPage } from './presentation/views/UserPage/UserPage';
-import { useUpdateMealPlanner } from './core/hooks/useUpdateMealPlanner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { createRoot } from 'react-dom/client';
 
 // import i18n (needs to be bundled ;))
 import './i18n';
 import { CustomLoader } from './presentation/CustomLoader';
-import { useGetMealPlanner } from './core/hooks/useGetMealPlanner';
 import { Tasks } from './presentation/views/Tasks/Tasks';
-import { MealPlannerService } from './providers/MealPlannerService';
 
 const theme = createTheme({
 	palette: {
@@ -33,54 +25,9 @@ const theme = createTheme({
 	},
 });
 
-const appModule = new AppModule([
-	{
-		hook: {
-			name: 'useLoginUser',
-			function: useLoginUser,
-		},
-		providers: [UserService],
-	},
-	{
-		hook: {
-			name: 'useSignUpUser',
-			function: useSignUpUser,
-		},
-		providers: [UserService],
-	},
-	{
-		hook: {
-			name: 'useConnectedUser',
-			function: useConnectedUser,
-		},
-		providers: [UserService],
-	},
-	{
-		hook: {
-			name: 'useLogout',
-			function: useLogout,
-		},
-		providers: [UserService],
-	},
-	{
-		hook: {
-			name: 'useGetMealPlanner',
-			function: useGetMealPlanner,
-		},
-		providers: [UserService],
-	},
-	{
-		hook: {
-			name: 'useUpdateMealPlanner',
-			function: useUpdateMealPlanner,
-		},
-		providers: [MealPlannerService, UserService],
-	},
-]);
-
-export const AppContext = React.createContext(appModule);
-
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
 	<React.StrictMode>
 		<Suspense fallback={<CustomLoader />}>
 			<BrowserRouter>
@@ -100,7 +47,6 @@ ReactDOM.render(
 			</BrowserRouter>
 		</Suspense>
 	</React.StrictMode>,
-	document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

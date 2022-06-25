@@ -10,14 +10,17 @@ const ExceptionsResponseMapper = (exception: any) => ({
 	UserNotFound: {
 		statusCode: 404,
 		message: 'User Not Found',
+		code: 'USER_NOT_FOUND',
 	},
 	BadPassword: {
 		statusCode: 400,
 		message: 'Bad Password',
+		code: 'BAD_PASSWORD',
 	},
 	UsernameAlreadyUsed: {
 		statusCode: 400,
 		message: 'Username already used',
+		code: 'USERNAME_ALREADY_USED',
 	},
 	MissingRequiredProperties: {
 		statusCode: 400,
@@ -25,10 +28,12 @@ const ExceptionsResponseMapper = (exception: any) => ({
 			label: exception.message,
 			missingProperties: exception.missingProperties,
 		},
+		code: 'MISSING_REQUIRED_PROPERTIES',
 	},
 	UnauthorizedException: {
 		statusCode: 401,
 		message: 'Unauthorized',
+		code: 'UNAUTHORIZED',
 	},
 });
 
@@ -54,7 +59,8 @@ export class ExceptionsFilter implements ExceptionFilter {
 			statusCode: httpStatus,
 			timestamp: new Date().toISOString(),
 			path: httpAdapter.getRequestUrl(ctx.getRequest()),
-			message: exceptionResponse ? exceptionResponse.message : undefined,
+			message: exceptionResponse && exceptionResponse.message,
+			code: exceptionResponse && exceptionResponse.code,
 		};
 
 		httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);

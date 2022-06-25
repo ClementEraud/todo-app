@@ -1,17 +1,26 @@
-import * as React from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { Avatar } from '@mui/material';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Outlet } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
+import { TodoStore } from '../../../store/store';
 
 const HomePage = () => {
 	const imageLink = () => {
 		const rnd = Math.floor(Math.random() * (1 - 6) + 6);
 		return `${process.env.PUBLIC_URL}/pictures/${rnd}.jpg`;
 	};
+	const token = TodoStore.useState(s => s.token);
+	const navigate = useNavigate();
+ 
+	useEffect(() => {
+    if(token) {
+      navigate('/user-page')
+    }
+  }, [token])
 
 	return (
 		<Grid container component="main" sx={{ height: '100vh' }}>

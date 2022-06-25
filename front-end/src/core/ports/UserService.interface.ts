@@ -7,21 +7,17 @@ export abstract class IUserService {
 	 * Returns current user.
 	 * @returns {User | undefined} User or undefined if no user is connected.
 	 */
-	abstract getCurrentUser(): User | undefined;
+	abstract getCurrentUser(token?: string): User | undefined;
 
 	/**
 	 * Calls login endpoint of API.
 	 * @param {string} username
 	 * @param {string} password
 	 * @param {boolean} rememberMe
-	 * @returns {Promise<User>} Connected user.
+	 * @returns {Promise<string>} Token.
 	 * @throws Error if username or password is wrong.
 	 */
-	abstract login(
-		username: string,
-		password: string,
-		rememberMe: boolean,
-	): Promise<User>;
+	abstract login(username: string, password: string): Promise<string>;
 
 	/**
 	 * Calls sign-up endpoint of API.
