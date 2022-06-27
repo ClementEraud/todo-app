@@ -115,21 +115,4 @@ describe('UserController (e2e)', () => {
 					expect(res.body.tasks[0].description).toBe('Task description');
 				}));
 	});
-
-	describe('/users/:id/get-meal-planner (GET)', () => {
-		it('GIVEN valid user id SHOULD return mealPlanner.', async () =>
-			request(app.getHttpServer())
-				.get('/users/me/get-meal-planner')
-				.set('Authorization', 'bearer ' + validToken)
-				.expect(200)
-				.expect((res: request.Response) => {
-					expect(res.body.monday).toBeDefined();
-					expect(res.body.tuesday).toBeDefined();
-					expect(res.body.wednesday).toBeDefined();
-					expect(res.body.thursday).toBeDefined();
-					expect(res.body.friday).toBeDefined();
-					expect(res.body.saturday).toBeDefined();
-					expect(res.body.sunday).toBeDefined();
-				}));
-	});
 });

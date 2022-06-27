@@ -2,7 +2,6 @@ import { ApiError } from './ApiError';
 import { ConfigProvider } from './ConfigProvider';
 import { CreateUserCommand } from './../core/commands/CreateUserCommand';
 import { IUserService } from '../core/ports/UserService.interface';
-import { MealPlanner } from './../core/models/MealPlanner';
 import { User } from '../core/models/User';
 
 export class UserService implements IUserService {
@@ -56,31 +55,24 @@ export class UserService implements IUserService {
 		return new User(responseBody);
 	}
 
-	getCurrentUser(token?: string): User | undefined {
-		throw new Error('Method not implemented.');
-	}
-
-	logout(): void {
-		sessionStorage.removeItem('user');
-		localStorage.removeItem('user');
-	}
-
-	async getMealPlanner(): Promise<MealPlanner> {
-		const config = await ConfigProvider.getConfig();
+	async getCurrentUser(token?: string): Promise<User> {
+		const { API_HOSTNAME, API_PORT } = await ConfigProvider.getConfig();
 
 		const response = await fetch(
-			`http://${config.API_HOSTNAME}:${config.API_PORT}/users/${this.currentUser?.id}/get-meal-planner`,
+			`http://${API_HOSTNAME}:${API_PORT}/users/me`,
 			{
 				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
 			},
 		);
-
 		const responseBody = await response.json();
 
 		if (!response.ok) {
 			throw new Error(responseBody.message);
 		}
 
-		return responseBody as MealPlanner;
+		return responseBody as User;
 	}
 }

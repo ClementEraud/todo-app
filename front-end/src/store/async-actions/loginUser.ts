@@ -7,9 +7,11 @@ export const loginUser = (userService: IUserService) =>
 	createAsyncAction(
 		async ({ username, password, rememberMe }) => {
 			try {
-				const token = await userService.login(username, password);
+				const token: string = await userService.login(username, password);
 				if (rememberMe) {
 					localStorage.setItem('token', token);
+				} else {
+					sessionStorage.setItem('token', token);
 				}
 
 				return successResult(token);

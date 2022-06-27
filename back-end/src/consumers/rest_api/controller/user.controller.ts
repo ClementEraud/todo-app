@@ -12,10 +12,9 @@ import { AddTaskToUser } from '../../../application/use_cases/AddTaskToUser';
 import { CreateTaskInput } from '../inputs/CreateTaskInput';
 import { CreateUser } from '../../../application/use_cases/CreateUser';
 import { CreateUserInput } from '../inputs/CreateUserInput';
-import { GetMealPlannerOfUser } from '../../../application/use_cases/GetMealPlannerOfUser';
+import { GetUserFromId } from '../../../application/use_cases/GetUserFromId';
 import { JwtAuthGuard } from '../../../application/auth/jwt-auth.guard';
 import { LoginUser } from '../../../application/use_cases/LoginUser';
-import { MealPlannerVM } from '../view-models/MealPlannerVM';
 import { UserLoginInput } from '../inputs/UserLoginInput';
 import { UserVM } from '../view-models/UserVM';
 
@@ -26,7 +25,7 @@ export class UserController {
 		private readonly createUser: CreateUser,
 		private readonly addTaskUser: AddTaskToUser,
 		private readonly loginUser: LoginUser,
-		private readonly getMealPlannerOfUser: GetMealPlannerOfUser,
+		private readonly getUserFromId: GetUserFromId,
 	) {}
 
 	// Routes without authentication
@@ -66,15 +65,13 @@ export class UserController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Get('me/get-meal-planner')
+	@Get('me')
 	@ApiCreatedResponse({
-		description: 'Meal Planner Of User',
-		type: MealPlannerVM,
+		description: 'Get connected user from token',
+		type: UserVM,
 	})
 	@HttpCode(200)
-	async getMealPlanner(@Request() req): Promise<MealPlannerVM> {
-		return new MealPlannerVM(
-			await this.getMealPlannerOfUser.execute(req.user.userId),
-		);
+	async getMe(@Request() req): Promise<UserVM> {
+		return new UserVM(await this.getUserFromId.execute(req.user.userId));
 	}
 }

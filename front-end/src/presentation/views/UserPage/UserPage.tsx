@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
 	AppBar,
 	Box,
@@ -9,23 +8,37 @@ import {
 	IconButton,
 	ThemeProvider,
 	Toolbar,
+	Typography,
 	createTheme,
 } from '@mui/material';
+import { Outlet, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { TodoStore, actions } from '../../../store/store';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { IStore } from '../../../core/interfaces/Store.interface';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavigationDrawer } from './NavigationDrawer';
-import { Outlet } from 'react-router-dom';
-import { TodoStore } from '../../../store/store';
+import { User } from '../../../core/models/User';
 
 export const UserPage = () => {
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const isDarkMode = TodoStore.useState((s: IStore) => s.isDarkMode);
+	const [connectedUser, setConnectedUser] = useState<User>();
+	const navigate = useNavigate();
 	const drawerWidth = 100;
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
+
+	const [getUserFinished, getUserResult] = actions.getCurrentUser.useBeckon();
+
+	useEffect(() => {
+		if (getUserFinished && getUserResult.error) {
+			navigate('/');
+		}
+		setConnectedUser(getUserResult.payload as User);
+	}, [getUserFinished, getUserResult]);
 
 	const theme = createTheme({
 		palette: {
@@ -37,6 +50,16 @@ export const UserPage = () => {
 		TodoStore.update(s => {
 			s.isDarkMode = !isDarkMode;
 		});
+	};
+
+	const logout = () => {
+		localStorage.removeItem('token');
+		sessionStorage.removeItem('token');
+		TodoStore.update(s => {
+			s.token = null;
+			s.currentUser = undefined;
+		});
+		navigate('/');
 	};
 
 	return (
@@ -59,11 +82,11 @@ export const UserPage = () => {
 							onClick={handleDrawerToggle}>
 							<MenuIcon />
 						</IconButton>
-						{/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 							{connectedUser
 								? `${connectedUser.firstName} ${connectedUser.lastName}`
 								: ''}
-						</Typography> */}
+						</Typography>
 						<IconButton
 							size="large"
 							edge="start"
@@ -73,8 +96,7 @@ export const UserPage = () => {
 							onClick={switchThemeMode}>
 							{isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
 						</IconButton>
-						{/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-						<Button color="inherit" onClick={() => {}}>
+						<Button color="inherit" onClick={logout}>
 							Logout
 						</Button>
 					</Toolbar>

@@ -43,16 +43,7 @@ describe('MealPlannerController (e2e)', () => {
 						.expect(200)
 						.expect((res: request.Response) => {
 							expect(res.body.monday.lunch).toEqual('Soup');
-						})
-						.then(() =>
-							request(app.getHttpServer())
-								.get('/users/me/get-meal-planner')
-								.set('Authorization', 'bearer ' + token)
-								.expect(200)
-								.expect((res: request.Response) => {
-									expect(res.body.monday.lunch).toEqual('Soup');
-								}),
-						),
+						}),
 				));
 	});
 });

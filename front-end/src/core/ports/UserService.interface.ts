@@ -1,5 +1,4 @@
 import { CreateUserCommand } from './../commands/CreateUserCommand';
-import { MealPlanner } from './../models/MealPlanner';
 import { User } from '../models/User';
 
 export abstract class IUserService {
@@ -7,7 +6,7 @@ export abstract class IUserService {
 	 * Returns current user.
 	 * @returns {User | undefined} User or undefined if no user is connected.
 	 */
-	abstract getCurrentUser(token?: string): User | undefined;
+	abstract getCurrentUser(token?: string): Promise<User>;
 
 	/**
 	 * Calls login endpoint of API.
@@ -25,14 +24,4 @@ export abstract class IUserService {
 	 * @returns {Promise<User>} User created.
 	 */
 	abstract signUp(user: CreateUserCommand): Promise<User>;
-
-	/**
-	 * Logs-out user and deletes user from WebStorage.
-	 */
-	abstract logout(): void;
-
-	/**
-	 * Get Meal Planner from API.
-	 */
-	abstract getMealPlanner(): Promise<MealPlanner>;
 }

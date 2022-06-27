@@ -1,7 +1,7 @@
 import { AddTaskToUser } from '../../application/use_cases/AddTaskToUser';
 import { CreateUser } from '../../application/use_cases/CreateUser';
 import { EncryptionService } from '../services/EncryptionService';
-import { GetMealPlannerOfUser } from '../../application/use_cases/GetMealPlannerOfUser';
+import { GetUserFromId } from '../../application/use_cases/GetUserFromId';
 import { IEncryptionService } from '../../application/ports/services/EncryptionService';
 import { ITaskWriteRepository } from '../../application/ports/task/TaskWriteRepository.interface';
 import { IUserReadRepository } from '../../application/ports/user/UserReadRepository.interface';
@@ -39,7 +39,7 @@ import { jwtConstants } from '../../application/auth/constants';
 		CreateUser,
 		AddTaskToUser,
 		LoginUser,
-		GetMealPlannerOfUser,
+		GetUserFromId,
 		{ provide: IUserReadRepository, useClass: UserReadRepository },
 		{ provide: IUserWriteRepository, useClass: UserWriteRepository },
 		{ provide: ITaskWriteRepository, useClass: TaskWriteRepository },

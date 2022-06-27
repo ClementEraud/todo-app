@@ -15,12 +15,12 @@ const HomePage = () => {
 	};
 	const token = TodoStore.useState(s => s.token);
 	const navigate = useNavigate();
- 
+
 	useEffect(() => {
-    if(token) {
-      navigate('/user-page')
-    }
-  }, [token])
+		if (token) {
+			navigate('/user-page');
+		}
+	}, [token]);
 
 	return (
 		<Grid container component="main" sx={{ height: '100vh' }}>
