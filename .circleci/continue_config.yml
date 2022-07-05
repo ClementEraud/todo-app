@@ -116,20 +116,23 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
       - run:
+          name: Add ssh to known hosts
+          command: ssh-keyscan -H 51.159.163.97 >> ~/.ssh/known_hosts
+      - run:
           name: Login to Scaleway image registry
           command: docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY
       - run:
           name: Setup Docker context
-          command: unset DOCKER_TLS_VERIFY && unset DOCKER_HOST && docker context create scaleway --docker host=ssh://root@51.159.163.97
+          command: unset DOCKER_HOST && docker context create scaleway --docker host=ssh://root@51.159.163.97
       - run:
           name: Delete containers on remote host
-          command: unset DOCKER_TLS_VERIFY && docker-compose --context scaleway --tls-verify=false --skip-hostname-check  stop <<parameters.service>> && docker-compose --context scaleway --tls-verify=false --skip-hostname-check rm -f <<parameters.service>>
+          command: docker-compose --context scaleway stop <<parameters.service>> && docker-compose --context scaleway rm -f <<parameters.service>>
       - run:
           name: Pulling images
-          command: unset DOCKER_TLS_VERIFY && docker-compose --context scaleway --tls-verify=false --skip-hostname-check  pull <<parameters.service>>
+          command: docker-compose --context scaleway pull <<parameters.service>>
       - run:
           name: Up containers on remote host
-          command: unset DOCKER_TLS_VERIFY && docker-compose --context scaleway --tls-verify=false --skip-hostname-check  up -d <<parameters.service>>
+          command: docker-compose --context scaleway up -d <<parameters.service>>
 
 workflows:
   version: 2
