@@ -1,0 +1,79 @@
+name: build_and_deploy_backend
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'back-end/**'
+
+defaults:
+  run:
+    shell: bash
+    working-directory: back-end
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - name: Prepare dependencies
+        run: 'npm install'
+
+      - name: Linter Check
+        run: 'npm run lint'
+
+      - name: Format Check
+        run: 'npm run format:check'
+
+      - name: Unit Test  
+        run: 'npm run test'
+
+      - name: End-to-End Test
+        run: 'npm run test:e2e'
+
+  build:
+    runs-on: ubuntu-latest
+    needs: checks
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Scaleway image registry
+        env:
+          SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
+        run: 'docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY'
+      - name: Build docker image
+        run: 'docker build -t rg.fr-par.scw.cloud/clement-registry/todo-back-end .'
+      - name: Push image to registry
+        run: 'docker push rg.fr-par.scw.cloud/clement-registry/todo-back-end'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Scaleway image registry
+        env:
+          SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
+        run: 'docker login rg.fr-par.scw.cloud/clement-registry -u nologin -p $SCW_SECRET_KEY'
+      - run: 'mkdir ~/.ssh'
+      - name: Add ssh to known hosts
+        run: 'ssh-keyscan -H 51.159.163.97 >> ~/.ssh/known_hosts'
+      - name: Add ssh key
+        env:
+            SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
+            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: 'echo "$SSH_PUBLIC_KEY" >> ~/.ssh/id_rsa.pub'
+      - name: Setup Docker context
+        run: 'unset DOCKER_HOST && docker context create scaleway --docker host=ssh://root@51.159.163.97'
+      - name: Delete containers on remote host
+        run: 'docker-compose --context scaleway stop api && docker-compose --context scaleway rm -f api'
+      - name: Pulling images
+        run: 'docker-compose --context scaleway pull api'
+      - name: Up containers on remote host
+        run: 'docker-compose --context scaleway up -d api'
